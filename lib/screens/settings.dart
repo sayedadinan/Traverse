@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:traverse_1/screens/appinfo.dart';
+import 'package:traverse_1/screens/identity.dart';
 import 'package:traverse_1/screens/privacy.dart';
 import '../data/functions/profile.dart';
 import 'home.dart';
@@ -82,11 +83,13 @@ class _SettingsState extends State<Settings> {
         // 'trail': Icons.arrow_forward_ios,
         'action': () {
           signoutUser();
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => const Privacy(),
-            ),
-          );
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => const Identity()));
+          // Navigator.of(context).push(
+          //   MaterialPageRoute(
+          //     builder: (context) => const Privacy(),
+          //   ),
+          // );
         },
       },
       // Add other items here

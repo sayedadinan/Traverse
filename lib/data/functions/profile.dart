@@ -130,12 +130,22 @@ getUserLogged() async {
 }
 
 ///////////////////////signout///////////////////////////////...................................
-signoutUser() async {
-  final List<Map<String, dynamic>> user = await profileDB.query('profile',
-      where: 'isLogin = ?', whereArgs: [1], limit: 1);
+
+Future<void> signoutUser() async {
+  final List<Map<String, dynamic>> user = await profileDB.query(
+    'profile',
+    where: 'isLogin = ?',
+    whereArgs: [1],
+    limit: 1,
+  );
+
   if (user.isNotEmpty) {
     int id = user.first['id'];
-    profileDB.update('profile', {'isLogin': 0},
-        where: 'id = ?', whereArgs: [id]);
+    await profileDB.update(
+      'profile',
+      {'isLogin': 0},
+      where: 'id = ?',
+      whereArgs: [id],
+    );
   }
 }
