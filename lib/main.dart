@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:traverse_1/data/functions/tripdata.dart';
 
 import 'data/functions/profile.dart';
 // import 'screens/identity.dart';
-import 'screens/splash.dart';
+import 'screens/intro_screens/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeProfileDB();
+  initializationtrip();
   runApp(const MyApp());
 }
 

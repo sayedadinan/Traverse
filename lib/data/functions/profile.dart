@@ -24,7 +24,7 @@ Future<void> refreshdata() async {
     final student = Profile.fromMap(map);
     profileList.value.add(student);
   }
-  // profileList.notifyListeners();
+  profileList.notifyListeners();
 }
 
 Future<void> refreshRefreshid(int id) async {
@@ -35,38 +35,23 @@ Future<void> refreshRefreshid(int id) async {
     final student = Profile.fromMap(map);
     profileData.value.add(student);
   }
-  // profileData.notifyListeners();
+  profileData.notifyListeners();
 }
 
 ///////////////////////////////////Data.adding///////////////////////////////////////////////////..................................
-// Future<int> addProfile(Profile value) async {
-//   try {
-//     var a = await profileDB.rawInsert(
-//       'INSERT INTO profile (imagex, username, email, password, islogin) VALUES(?,?,?,?)',
-//       [value.imagex, value.username, value.email, value.password],
-//     );
-//     log('settaanu$a');
-//     refreshdata();
-//     return id;
-//   } catch (e) {
-//     // Handle any errors that occur during data insertion.
-//     log('Error inserting dataaaa: $e');
-//   }
-// }
+
 Future<int> addProfile(Profile value) async {
   try {
     var a = await profileDB.rawInsert(
       'INSERT INTO profile (imagex, username, email, password, islogin) VALUES(?,?,?,?,?)',
       [value.imagex, value.username, value.email, value.password, 1],
     );
-    // log(value.imagex);
+
     log('settaanu$a');
-    await refreshdata(); // Wait for data refresh before returning
     return a; // Return the ID of the inserted row
   } catch (e) {
-    // Handle any errors that occur during data insertion.
     log('Error inserting dataaaa: $e');
-    return -1; // Return -1 to indicate an error
+    return -1;
   }
 }
 
@@ -89,11 +74,8 @@ Future<void> editProfiledata(id, imagex, username, email, password) async {
 
 ///////////////////////////////////authentication/////////////////////////////////////////////////////.............................
 Future<Profile?> validateprofile(String username, String password) async {
-  final List<Map<String, dynamic>> users = await profileDB.query(
-    'profile',
-    where: 'username = ? AND password = ?',
-    whereArgs: [username, password],
-  );
+  final List<Map<String, dynamic>> users = await profileDB.query('profile',
+      where: 'username = ? AND password = ?', whereArgs: [username, password]);
 
   if (users.isNotEmpty) {
     int id = users.first['id'];
@@ -148,4 +130,65 @@ Future<void> signoutUser() async {
       whereArgs: [id],
     );
   }
+}
+
+///////////////////////////getuser//////////////////////////////////////../
+
+Future<void> getprofile(int id) async {
+  final data = await profileDB
+      .rawQuery("SELECT * FROM profile WHERE id = ?", [id.toString()]);
+  profileData.value.clear();
+  for (var result in data) {
+    final main = Profile.fromMap(result);
+    profileData.value.add(main);
+  }
+  profileData.notifyListeners();
+}
+
+///////////////////////////////////////////////////////////////ONLY FOR TEST////////////////////////////////////////////////////////////////////
+Future<void> inintdb() async {
+  await openDatabase(
+    'data',
+    version: 1,
+    onCreate: (db, version) async {
+      await db
+          .execute('CREATE TABLE usu(id PRIMARY KEY, username TEXT, age TEX)');
+    },
+  );
+}
+
+Future<void> adding(String name, String age) async {
+  await profileDB
+      .rawInsert('INSERT INTO usu(name,age)VALUES(?,?)', [name, age]);
+}
+
+Future<void> updated(String name, String age) async {
+  await profileDB.rawUpdate(
+      'UPDATE usu SET name = ?,age = ? WHERE name=? AND age = ?', [name, age]);
+}
+
+Future<void> read() async {
+  await profileDB.query('SELECT * FROM usu');
+}
+
+Future<void> delete(String name) async {
+  await profileDB.rawDelete('DELETE FROM usu WHERE name = ?', [name]);
+}
+
+Future<void> crtdb() async {
+  await openDatabase(
+    'path',
+    version: 1,
+    onCreate: (db, version) async =>
+        db.execute('CREATE TABLE test (id PRIMARY KEY, name TEXT, age TEXT)'),
+  );
+}
+
+Future<void> add(String name, String age) async {
+  await profileDB
+      .rawInsert('INSERT INTO test(name, age)VALUES(?,?)', [name, age]);
+}
+
+Future<void> craet() async {
+  await openDatabase('CREATE TABLE fouzan(id PRIMARY KEY, name TEXT,age TEXT)');
 }

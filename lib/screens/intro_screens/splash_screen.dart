@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:traverse_1/data/models/profile/user.dart';
-import 'package:traverse_1/screens/home.dart';
-import 'package:traverse_1/screens/identity.dart';
-import '../data/functions/profile.dart';
+import 'package:traverse_1/screens/intro_screens/app_board.dart';
+import 'package:traverse_1/screens/home_page.dart';
+import 'package:traverse_1/screens/intro_screens/identity_page.dart';
+import '../../data/functions/profile.dart';
 
 class Splashscreen extends StatefulWidget {
   const Splashscreen({super.key});
@@ -32,7 +33,7 @@ class _SplashscreenState extends State<Splashscreen> {
                 image: AssetImage('assets/car traverse.png'),
               ),
               Text(
-                'Lets goo...',
+                'Lets go..',
                 style: TextStyle(fontSize: 50, color: Colors.yellow),
               ),
             ],
@@ -50,7 +51,10 @@ class _SplashscreenState extends State<Splashscreen> {
       // User is logged in, navigate to bottomNavigationBar
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
-          builder: (context) => const Homescreen(),
+          builder: (context) => Homescreen(
+            tripid: userData.id!,
+            profileid: userData.id!,
+          ),
         ),
         (route) => false,
       );

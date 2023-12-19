@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:traverse_1/screens/signup.dart';
+import 'package:traverse_1/screens/intro_screens/sign_up_page.dart';
 
 class Applaunch extends StatelessWidget {
   const Applaunch({super.key});
@@ -29,8 +29,8 @@ class Applaunch extends StatelessWidget {
                 backgroundColor: MaterialStateProperty.all(Colors.amber),
               ),
               onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => const Signup()));
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => Signup()));
               },
               child: const Text('Get started'),
             ),

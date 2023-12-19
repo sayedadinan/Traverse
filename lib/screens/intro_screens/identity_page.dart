@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:traverse_1/screens/home.dart';
-import 'package:traverse_1/screens/signup.dart';
+// import 'package:traverse_1/screens/home.dart';
+import 'package:traverse_1/screens/intro_screens/sign_up_page.dart';
 
-import 'login.dart';
+import 'login_page.dart';
 
 class Identity extends StatelessWidget {
   const Identity({super.key});
@@ -67,16 +67,6 @@ class Identity extends StatelessWidget {
                   'Log in',
                   style: TextStyle(color: Colors.amber),
                 ),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const Homescreen(),
-                    ),
-                  );
-                },
-                child: const Text('Continue as Guest'),
               ),
             ],
           ),

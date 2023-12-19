@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:traverse_1/data/functions/profile.dart';
-import 'package:traverse_1/screens/home.dart';
-import 'package:traverse_1/screens/signup.dart';
+import 'package:traverse_1/data/functions/tripdata.dart';
+import 'package:traverse_1/screens/home_page.dart';
+import 'package:traverse_1/screens/intro_screens/sign_up_page.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -48,7 +49,7 @@ class _LoginState extends State<Login> {
                   decoration: InputDecoration(
                     fillColor: const Color.fromARGB(255, 244, 241, 241),
                     filled: true,
-                    labelText: 'user name',
+                    labelText: 'User Name',
                     hintText: 'Enter your name',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
@@ -75,7 +76,7 @@ class _LoginState extends State<Login> {
                   decoration: InputDecoration(
                     fillColor: const Color.fromARGB(255, 244, 241, 241),
                     filled: true,
-                    labelText: 'password',
+                    labelText: 'Password',
                     hintText: 'Enter your password',
                     suffixIcon: IconButton(
                       onPressed: () {
@@ -143,7 +144,11 @@ class _LoginState extends State<Login> {
       final user = await validateprofile(username, password);
       if (user != null) {
         Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => const Homescreen()),
+          MaterialPageRoute(
+              builder: (context) => Homescreen(
+                    tripid: user.id!,
+                    profileid: user.id!,
+                  )),
           (route) => false,
         );
       } else {

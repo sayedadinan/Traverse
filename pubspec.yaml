@@ -40,6 +40,7 @@ dependencies:
   table_calendar: ^3.0.9
   image_picker: ^1.0.4
   carousel_slider: ^4.2.1
+  cr_calendar: ^1.2.1
   
   
   
@@ -71,6 +72,8 @@ flutter:
   assets:
     - assets/applounch.png
     - assets/car traverse.png
+    - assets/user.png
+    - assets/placeholder for traverse.jpg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

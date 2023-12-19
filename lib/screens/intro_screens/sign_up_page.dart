@@ -1,14 +1,10 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:traverse_1/data/models/profile/user.dart';
-// import 'package:traverse_1/screens/home.dart';
-import 'package:traverse_1/screens/login.dart';
-import 'package:traverse_1/screens/home.dart';
-
-import '../data/functions/profile.dart';
-// import 'login.dart';
+import 'package:traverse_1/screens/intro_screens/login_page.dart';
+import 'package:traverse_1/screens/home_page.dart';
+import '../../data/functions/profile.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -43,21 +39,15 @@ class _SignupState extends State<Signup> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // const Text(
-                //   'Glad to see You,\nmake account',
-                //   style: TextStyle(
-                //     fontSize: 32,
-                //     fontWeight: FontWeight.w500,
-                //     color: Color.fromARGB(255, 37, 62, 207),
-                //   ),
-                // ),
-                InkWell(
-                  onTap: () {
-                    pickImageFromGallery();
-                  },
-                  child: const CircleAvatar(
-                    radius: 80,
-                    // backgroundImage: AssetImage('assets/car traverse.png'),
+                const SizedBox(
+                  height: 90,
+                ),
+                const Text(
+                  ' Glad to see You,\nCreate a account',
+                  style: TextStyle(
+                    fontSize: 42,
+                    fontWeight: FontWeight.w500,
+                    color: Color.fromARGB(255, 37, 62, 207),
                   ),
                 ),
                 const SizedBox(
@@ -70,6 +60,11 @@ class _SignupState extends State<Signup> {
                       if (value!.isEmpty) {
                         return "username is required";
                       }
+                      final namePattern = RegExp(r'^[a-zA-Z]+(?: [a-zA-Z]+)*$');
+
+                      if (!namePattern.hasMatch(value)) {
+                        return 'Please enter a valid name';
+                      }
                       return null;
                     },
                     controller: _userController,
@@ -79,35 +74,42 @@ class _SignupState extends State<Signup> {
                     decoration: InputDecoration(
                       fillColor: const Color.fromARGB(255, 244, 241, 241),
                       filled: true,
-                      labelText: 'user name',
+                      labelText: 'User Name',
                       hintText: 'Enter your name',
-                      errorText: validateuser ? 'value cant be Empty' : null,
+                      // errorText: validateuser ? 'value cant be Empty' : null,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
                   ),
-                  // child: TextFormField(
-                  //   validator: (value) {
-                  //     if (value!.isEmpty) {
-                  //       return "username is required";
-                  //     }
-                  //     return null;
-                  //   },
-                  //   controller: _userController,
-
-                  //   // keyboardType: TextInputType.visiblePassword,
-                  //   // obscureText: true,
-                  //   decoration: InputDecoration(
-                  //     fillColor: const Color.fromARGB(255, 244, 241, 241),
-                  //     filled: true,
-                  //     labelText: 'user name',
-                  //     hintText: 'Enter your name',
-                  //     border: OutlineInputBorder(
-                  //       borderRadius: BorderRadius.circular(12),
-                  //     ),
-                  //   ),
-                  // ),
+                ),
+                const SizedBox(
+                  height: 17,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 17, right: 17),
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Email is required';
+                      } else if (!isValidEmail(value)) {
+                        return 'Enter a valid email';
+                      }
+                      return null;
+                    },
+                    controller: _emailController,
+                    keyboardType: TextInputType.visiblePassword,
+                    decoration: InputDecoration(
+                      fillColor: const Color.fromARGB(255, 244, 241, 241),
+                      filled: true,
+                      labelText: 'Email',
+                      hintText: 'Enter your Email',
+                      // errorText: validateemail ? 'value cant be Empty' : null,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  ),
                 ),
                 const SizedBox(
                   height: 17,
@@ -117,38 +119,13 @@ class _SignupState extends State<Signup> {
                   child: TextFormField(
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return "email is required";
+                        return "password is required";
+                      }
+                      if (value.length <= 5) {
+                        return "password minimum 6 letters ";
                       }
                       return null;
                     },
-                    controller: _emailController,
-
-                    // keyboardType: TextInputType.visiblePassword,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      fillColor: const Color.fromARGB(255, 244, 241, 241),
-                      filled: true,
-                      labelText: 'Email',
-                      hintText: 'Enter your Email',
-                      errorText: validateemail ? 'value cant be Empty' : null,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 17,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 17, right: 17),
-                  child: TextFormField(
-                    // validator: (value) {
-                    //   if (value!.isEmpty) {
-                    //     return "password is required";
-                    //   }
-                    //   return null;
-                    // },
                     controller: _passController,
 
                     // keyboardType: TextInputType.visiblePassword,
@@ -156,10 +133,10 @@ class _SignupState extends State<Signup> {
                     decoration: InputDecoration(
                       fillColor: const Color.fromARGB(255, 244, 241, 241),
                       filled: true,
-                      labelText: 'password',
+                      labelText: 'Password',
                       hintText: 'Enter your password',
-                      errorText:
-                          validatepassword ? 'value cant be Empty' : null,
+                      // errorText:
+                      //     validatepassword ? 'value cant be Empty' : null,
                       suffixIcon: IconButton(
                         onPressed: () {
                           setState(() {
@@ -184,10 +161,13 @@ class _SignupState extends State<Signup> {
                   child: TextFormField(
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return "password is required";
+                        return "confirm password is required";
                       } else if (_passController.text !=
                           _confirmpassController.text) {
                         return "password don't match";
+                      }
+                      if (value.length <= 5) {
+                        return "password minimum 6 letters ";
                       }
                       return null;
                     },
@@ -198,9 +178,9 @@ class _SignupState extends State<Signup> {
                     decoration: InputDecoration(
                       fillColor: const Color.fromARGB(255, 244, 241, 241),
                       filled: true,
-                      labelText: ' confirm password',
+                      labelText: ' Confirm Password',
                       hintText: 'Enter your password',
-                      errorText: validateconfirm ? 'value cant be Empty' : null,
+                      // errorText: validateconfirm ? 'password dont' : null,
                       suffixIcon: IconButton(
                         onPressed: () {
                           setState(() {
@@ -230,9 +210,10 @@ class _SignupState extends State<Signup> {
                     ),
                   ),
                   onPressed: () {
-                    // if (formKey.currentState!.validate()) {}
+                    if (formKey.currentState!.validate()) {
+                      addProfileclick(context);
+                    }
                     log('heloooo');
-                    addProfileclick(context);
                   },
                   child: const Text(
                     'Next',
@@ -263,61 +244,57 @@ class _SignupState extends State<Signup> {
     );
   }
 
+  bool isValidEmail(String email) {
+    final emailRegex = RegExp(
+      r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+      caseSensitive: false,
+      multiLine: false,
+    );
+    return emailRegex.hasMatch(email);
+  }
+
   Future<void> addProfileclick(BuildContext context) async {
     final nameExists = await checkIfNameExists(_userController.text);
     if (nameExists) {
-      // Show an error message if the username already exists in the database.
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text(
-            'This username is already registered. Please use a different username.'),
-        behavior: SnackBarBehavior.floating,
-      ));
-      return;
-    }
-    setState(() {
-      _userController.text.isEmpty ? validateuser = true : validateuser = false;
-      _emailController.text.isEmpty
-          ? validateemail = true
-          : validateemail = false;
-      _passController.text.isEmpty
-          ? validatepassword = true
-          : validatepassword = false;
-      _confirmpassController.text.isEmpty
-          ? validateconfirm = true
-          : validateconfirm = false;
-    });
-    if (validateuser == false &&
-        validateemail == false &&
-        validatepassword == false &&
-        validateconfirm == false &&
-        validateconfirm == validatepassword) {
-      var user = Profile(
-          username: _userController.text,
-          email: _emailController.text,
-          password: _passController.text,
-          imagex: imagex.toString());
-      // final nameExists = await checkIfNameExists(username);
-      int userId = await addProfile(user);
-      user.id = userId;
-
-      // final result = addProfile(user);
-      // print(result);
-      // Navigator.pop(context, result);
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => const Homescreen(),
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+              'This username is already registered. Please use a different username.'),
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: Colors.amber,
         ),
       );
+      return;
     }
-  }
 
-  Future pickImageFromGallery() async {
-    final returnedImage =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (returnedImage == null) return;
+    // Perform form validation and set validation flags
     setState(() {
-      imagepath = File(returnedImage.path);
-      imagex = imagepath.toString();
+      validateuser = _userController.text.isEmpty;
+      validateemail =
+          _emailController.text.isEmpty || !isValidEmail(_emailController.text);
+      validatepassword = _passController.text.isEmpty;
+      validateconfirm = _confirmpassController.text.isEmpty ||
+          (_passController.text != _confirmpassController.text);
     });
+
+    var user = Profile(
+      username: _userController.text,
+      email: _emailController.text,
+      password: _passController.text,
+      imagex: imagex.toString(),
+    );
+
+    int userId = await addProfile(user);
+    user.id = userId;
+
+    // Navigate to the Home screen after successful registration
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => Homescreen(
+          profileid: userId,
+          tripid: userId,
+        ),
+      ),
+    );
   }
 }
