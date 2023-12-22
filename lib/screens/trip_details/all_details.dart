@@ -3,16 +3,22 @@ import 'package:traverse_1/data/functions/tripdata.dart';
 import 'package:traverse_1/data/models/trip/trip_model.dart';
 import 'trip_details_page.dart';
 
-class All extends StatelessWidget {
+class Alldetails extends StatelessWidget {
+  final int userId;
+  const Alldetails({super.key, required this.userId});
+
   @override
   Widget build(BuildContext context) {
+    getalltrip(userId);
+
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 37, 58, 239),
+      backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         title: const Text(
           'All Trip Data',
-          style: TextStyle(color: Colors.amber, fontSize: 30),
+          style: TextStyle(
+              color: Color.fromARGB(255, 255, 249, 249), fontSize: 30),
         ),
       ),
       body: ValueListenableBuilder<List<Tripmodel>>(
@@ -23,6 +29,7 @@ class All extends StatelessWidget {
             itemBuilder: (context, index) {
               final trip = trips[index];
               return Card(
+                color: Colors.green[200],
                 elevation: 4,
                 margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                 shape: RoundedRectangleBorder(
@@ -30,7 +37,9 @@ class All extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => Tripdetails1(trip: trip)));
+                        builder: (context) => Tripdetails1(
+                              trip: trip,
+                            )));
                   },
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -46,8 +55,10 @@ class All extends StatelessWidget {
                       ListTile(
                         contentPadding: const EdgeInsets.all(16),
                         title: Text(trip.tripname,
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 27)),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 27,
+                                color: Colors.green[800])),
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [

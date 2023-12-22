@@ -1,7 +1,10 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:traverse_1/data/models/trip/trip_model.dart';
+// import 'package:traverse_1/screens/trip_adding/trip_add2.dart';
+import 'package:traverse_1/screens/trip_details/trip_editing.dart';
+import '../../data/functions/tripdata.dart';
 
 class Tripdetails1 extends StatefulWidget {
   const Tripdetails1({
@@ -18,7 +21,8 @@ class Tripdetails1 extends StatefulWidget {
 class _Tripdetails1State extends State<Tripdetails1>
     with SingleTickerProviderStateMixin {
   late TabController tabController;
-
+  String? imagePath;
+  File? profileimage;
   @override
   void initState() {
     super.initState();
@@ -28,13 +32,33 @@ class _Tripdetails1State extends State<Tripdetails1>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 37, 58, 239),
+      backgroundColor: const Color.fromARGB(255, 30, 28, 28),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         title: Text(
           widget.trip.tripname,
           style: const TextStyle(color: Colors.amber, fontSize: 30),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => Editingtrip(
+                        profileid: widget.trip.id,
+                        trip: widget.trip,
+                      )));
+            },
+            icon: const Icon(Icons.edit),
+          ),
+          IconButton(
+              onPressed: () {
+                showDeleteConfirmationDialog(context, () {
+                  deletetrip(widget.trip.id, widget.trip.userid);
+                  Navigator.of(context).pop();
+                });
+              },
+              icon: Icon(Icons.delete))
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -70,11 +94,11 @@ class _Tripdetails1State extends State<Tripdetails1>
                 children: [
                   Text(
                     widget.trip.destination,
-                    style: const TextStyle(fontSize: 28, color: Colors.amber),
+                    style: TextStyle(fontSize: 28, color: Colors.green[100]),
                   ),
                   Text(
                     widget.trip.startingDate,
-                    style: const TextStyle(fontSize: 28, color: Colors.amber),
+                    style: TextStyle(fontSize: 28, color: Colors.green[100]),
                   ),
                 ],
               ),
@@ -84,8 +108,8 @@ class _Tripdetails1State extends State<Tripdetails1>
                 padding: const EdgeInsets.only(bottom: 23),
                 child: TabBar(
                   controller: tabController,
-                  labelColor: Colors.amber,
-                  labelStyle: TextStyle(fontSize: 25),
+                  labelColor: Colors.green,
+                  labelStyle: const TextStyle(fontSize: 25),
                   unselectedLabelColor: Colors.grey,
                   tabs: const [
                     Tab(text: 'Media'),
@@ -101,14 +125,29 @@ class _Tripdetails1State extends State<Tripdetails1>
                 controller: tabController,
                 children: [
                   Container(
-                    child: const Column(
+                    child: Column(
                       children: [
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Text(
-                              'Starting date',
-                              style: TextStyle(fontSize: 20),
-                            )
+                              'You can add images',
+                              style:
+                                  TextStyle(color: Colors.amber, fontSize: 30),
+                            ),
+                            IconButton(
+                                onPressed: () {
+                                  pickImageFromGallery();
+                                },
+                                icon: Icon(
+                                  Icons.add_a_photo_outlined,
+                                  color: Colors.amber,
+                                ))
+                            // Text(
+                            //   'Starting date',
+                            //   style:
+                            //       TextStyle(fontSize: 20, color: Colors.amber),
+                            // )
                           ],
                         )
                       ],
@@ -117,21 +156,22 @@ class _Tripdetails1State extends State<Tripdetails1>
                   Container(
                     child: Column(
                       children: [
-                        const Row(
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Text(
                               'Starting date',
-                              style:
-                                  TextStyle(fontSize: 28, color: Colors.amber),
+                              style: TextStyle(
+                                  fontSize: 28, color: Colors.green[100]),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 39,
                             ),
-                            Text(
+                            const Text(
                               'Ending date',
-                              style:
-                                  TextStyle(fontSize: 28, color: Colors.amber),
+                              style: TextStyle(
+                                  fontSize: 28,
+                                  color: Color.fromARGB(255, 218, 210, 102)),
                             ),
                           ],
                         ),
@@ -221,7 +261,7 @@ class _Tripdetails1State extends State<Tripdetails1>
                             // )
                           ],
                         ),
-                        Divider(
+                        const Divider(
                           thickness: 3,
                           indent: 25,
                           endIndent: 25,
@@ -236,7 +276,8 @@ class _Tripdetails1State extends State<Tripdetails1>
                           children: [
                             Text(
                               'Starting date',
-                              style: TextStyle(fontSize: 20),
+                              style:
+                                  TextStyle(fontSize: 20, color: Colors.amber),
                             )
                           ],
                         )
@@ -252,6 +293,52 @@ class _Tripdetails1State extends State<Tripdetails1>
           ],
         ),
       ),
+    );
+  }
+
+  Future pickImageFromGallery() async {
+    final returnedImage =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (returnedImage == null) return;
+    setState(() {
+      profileimage = File(returnedImage.path);
+      imagePath = returnedImage.path.toString();
+    });
+  }
+
+  Future<void> showDeleteConfirmationDialog(
+      BuildContext context, Function deleteFunction) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirm Deletion'),
+          content: const SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Are you sure you want to delete this item?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text('Delete'),
+              onPressed: () {
+                deletetrip(widget.trip.id, widget.trip.userid);
+                deleteFunction(); // Call the delete function passed as an argument
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

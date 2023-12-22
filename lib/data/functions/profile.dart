@@ -65,8 +65,10 @@ Future<void> editProfiledata(id, imagex, username, email, password) async {
       'password': password,
     };
 
-    await profileDB.update('profile', dataflow, where: 'id=?', whereArgs: [id]);
+    var a = await profileDB
+        .update('profile', dataflow, where: 'id=?', whereArgs: [id]);
     refreshdata();
+    print(a);
   } catch (e) {
     log('Error editing data: $e');
   }

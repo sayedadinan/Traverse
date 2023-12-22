@@ -6,7 +6,8 @@ import '../../custom_widgets/elevatedbuttons.dart';
 import '../../custom_widgets/trip_add/textfields.dart';
 
 class Add1 extends StatefulWidget {
-  const Add1({Key? key}) : super(key: key);
+  final int profileid;
+  const Add1({Key? key, required this.profileid}) : super(key: key);
 
   @override
   State<Add1> createState() => _Add1State();
@@ -148,6 +149,7 @@ class _Add1State extends State<Add1> {
                     if (formKey.currentState!.validate()) {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => Add2(
+                                profileid: widget.profileid,
                                 startDateController: _startDateController,
                                 endDateController: _endDateController,
                               )));

@@ -1,46 +1,56 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:traverse_1/custom_widgets/trip_add/companiens.dart';
-import 'package:traverse_1/screens/home_page.dart';
-// import 'package:carousel_slider/carousel_slider.dart';
-import '../../data/functions/tripdata.dart';
-import '../../data/models/trip/trip_model.dart';
+import 'package:traverse_1/data/models/trip/trip_model.dart';
+import 'package:traverse_1/screens/trip_details/all_details.dart';
+// import 'package:traverse_1/screens/trip_adding/trip_add1.dart';
+// import 'package:traverse_1/screens/trip_details/all_details.dart';
+// import 'package:traverse_1/screens/trip_details/trip_details_page.dart';
 import '../../custom_widgets/elevatedbuttons.dart';
 import '../../custom_widgets/trip_add/choichips.dart';
+import '../../custom_widgets/trip_add/companiens.dart';
 import '../../custom_widgets/trip_add/drop_down.dart';
 import '../../custom_widgets/trip_add/textfields.dart';
+import '../../data/functions/tripdata.dart';
 
-class Add2 extends StatefulWidget {
-  final int profileid;
-  final TextEditingController startDateController;
-  final TextEditingController endDateController;
-
-  const Add2({
-    Key? key,
-    required this.startDateController,
-    required this.endDateController,
+class Editingtrip extends StatefulWidget {
+  final int? profileid;
+  final Tripmodel trip;
+  const Editingtrip({
+    super.key,
     required this.profileid,
-  }) : super(key: key);
+    // required this.startDateController,
+    // required this.endDateController,
+    required this.trip,
+  });
 
   @override
-  State<Add2> createState() => _Add2State();
+  State<Editingtrip> createState() => _EditingtripState();
 }
 
-class _Add2State extends State<Add2> {
+class _EditingtripState extends State<Editingtrip> {
   final destinationController = TextEditingController();
   final budgetController = TextEditingController();
   final tripNameController = TextEditingController();
+  final startDateController = TextEditingController();
+  final endDateController = TextEditingController();
   String triptypeController = 'Other';
   String transport = 'Flight';
   final formKey = GlobalKey<FormState>();
   String? imagePath;
   File? profileimage;
-  final List<String> imageList = [
-    'assets/car traverse.png',
-    'assets/applounch.png',
-  ];
+  @override
+  void initState() {
+    super.initState();
+    tripNameController.text = widget.trip.tripname;
+    destinationController.text = widget.trip.destination;
+    budgetController.text = widget.trip.budget.toString();
+    triptypeController = widget.trip.triptype;
+    transport = widget.trip.transport;
+    imagePath = widget.trip.coverpic;
+    startDateController.text = widget.trip.startingDate;
+    endDateController.text = widget.trip.endingDate;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,23 +92,6 @@ class _Add2State extends State<Add2> {
                             //         'assets/user.png',
                             //       ),
                           ),
-
-                          // child: ClipRRect(
-                          //   borderRadius: BorderRadius.circular(20),
-                          //   child: CarouselSlider(
-                          //     options: CarouselOptions(
-                          //       aspectRatio: 1.0,
-                          //       enlargeCenterPage: true,
-                          //       autoPlay: true,
-                          //     ),
-                          //     items: imageList.map((imagePath) {
-                          //       return Image.asset(
-                          //         imagePath,
-                          //         fit: BoxFit.cover,
-                          //       );
-                          //     }).toList(),
-                          //   ),
-                          // ),
                         ),
                       ),
                     ),
@@ -211,7 +204,8 @@ class _Add2State extends State<Add2> {
                         'Family',
                         'Other'
                       ],
-                      initialValue: triptypeController,
+                      initialValue: 'Business',
+                      // initialValue: triptypeController,
                       onChanged: (String newValue) {
                         if (newValue.isNotEmpty) {
                           setState(() {
@@ -227,58 +221,81 @@ class _Add2State extends State<Add2> {
                       },
                     ),
                   ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      fillColor: const Color.fromARGB(255, 244, 241, 241),
-                      filled: true,
-                      labelText: 'Add companions',
-                      hintText: 'Enter companion name',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 18,
-                  ),
                   Row(
-                    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
-                        child: MyCompanion(
-                          context: context,
-                          functionCheck: true,
-                          text: '  Select companions',
+                        child: Container(
+                          width: 160,
+                          child: TextFormField(
+                            controller: startDateController,
+                            decoration: InputDecoration(
+                              fillColor:
+                                  const Color.fromARGB(255, 244, 241, 241),
+                              filled: true,
+                              labelText: 'Starting Date',
+                              hintText: 'Give date',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                          ),
                         ),
                       ),
+                      SizedBox(
+                        width: 10,
+                      ),
                       Expanded(
-                        child: MyCompanion(
-                          text: '  Show companions',
-                          context: context,
+                        child: Container(
+                          width: 160,
+                          child: TextFormField(
+                            controller: endDateController,
+                            decoration: InputDecoration(
+                              fillColor:
+                                  const Color.fromARGB(255, 244, 241, 241),
+                              filled: true,
+                              labelText: 'Ending Date',
+                              hintText: 'Give date',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(
-                    height: 25,
+                  const SizedBox(
+                    height: 10,
                   ),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: MyCompanion(
+                            context: context,
+                            functionCheck: true,
+                            text: '  Select companions',
+                          ),
+                        ),
+                        Expanded(
+                          child: MyCompanion(
+                            text: '  Show companions',
+                            context: context,
+                          ),
+                        ),
+                      ]),
                   Elebuttons(
                     function: () async {
-                      if (formKey.currentState!.validate()) {
-                        await addtrip();
-                      }
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => Homescreen(
-                          profileid: widget.profileid,
-                        ),
-                      ));
+                      editTripClicked(context);
+                      // Navigator.of(context).push(MaterialPageRoute(
+                      //   builder: (context) => Alldetails(
+                      //     userId: tripId,
+                      //   ),
+                      // ));
                     },
                     text: 'Finish',
                     butcolor: const Color.fromARGB(255, 37, 62, 207),
                     textcolor: Colors.amber,
-                  ),
-                  SizedBox(
-                    height: 25,
                   ),
                 ],
               ),
@@ -287,38 +304,51 @@ class _Add2State extends State<Add2> {
         ));
   }
 
-  Future pickImageFromGallery() async {
-    final returnedImage =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (returnedImage == null) return;
-    setState(() {
-      profileimage = File(returnedImage.path);
-      imagePath = returnedImage.path.toString();
-    });
+  Future<void> pickImageFromGallery() async {
+    try {
+      final pickedImage =
+          await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (pickedImage == null) return;
+
+      setState(() {
+        profileimage = File(pickedImage.path);
+        imagePath = pickedImage.path;
+      });
+    } catch (e) {
+      ('Error picking image: $e');
+    }
   }
 
-  Future<void> addtrip() async {
-    try {
-      var trip = Tripmodel(
-          tripname: tripNameController.text,
-          destination: destinationController.text,
-          budget: double.parse(budgetController.text),
-          triptype: triptypeController,
-          transport: transport,
-          startingDate: widget.startDateController.text,
-          endingDate: widget.endDateController.text,
-          coverpic: imagePath,
-          userid: widget.profileid);
-
-      int tripId = await tripadding(trip);
-      if (tripId != -1) {
-        trip.id = tripId;
-        print('Trip added successfully with ID: $tripId');
-      } else {
-        print('Failed to add trip');
-      }
-    } catch (e) {
-      print('Error adding trip: $e');
+  Future<void> editTripClicked(BuildContext context) async {
+    if (formKey.currentState != null && formKey.currentState!.validate()) {
+      await editTrip(
+        tripNameController.text.toLowerCase(),
+        destinationController.text.toLowerCase(),
+        budgetController.text,
+        triptypeController,
+        transport,
+        imagePath,
+        startDateController.text.toLowerCase(),
+        endDateController.text.toLowerCase(),
+        widget.trip.id,
+      );
+      print('id number ${widget.trip.id}');
+      print(widget.trip.userid);
+      // Refresh the data after editing the trip details
+      // (Assuming refreshTripData is a function to refresh trip data)
+      await getalltrip(widget.trip.userid!);
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) => Alldetails(userId: widget.trip.userid!),
+      ));
+      // Navigator.of(context).pop();
+    } else {
+      // Show an error message if there are validation errors
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please correct the errors in the form.'),
+          backgroundColor: Colors.red,
+        ),
+      );
     }
   }
 }

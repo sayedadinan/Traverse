@@ -41,6 +41,7 @@ dependencies:
   image_picker: ^1.0.4
   carousel_slider: ^4.2.1
   cr_calendar: ^1.2.1
+  fluttercontactpicker: ^4.7.0
   
   
   
@@ -74,6 +75,11 @@ flutter:
     - assets/car traverse.png
     - assets/user.png
     - assets/placeholder for traverse.jpg
+    - assets/traverse image.jpg
+    - assets/traverse splash screen.jpg
+    - assets/traverse image 2.jpg
+    - assets/traverse 7.jpg
+    - assets/traverse 8.jpg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

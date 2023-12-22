@@ -1,10 +1,7 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-// import 'package:image_picker/image_picker.dart';
 import 'package:traverse_1/data/functions/profile.dart';
 import 'package:traverse_1/screens/user_details/edit_user.dart';
-// import '../../data/models/profile/user.dart';
 
 class Profilepage extends StatefulWidget {
   // final Profile profileid;

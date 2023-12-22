@@ -134,7 +134,6 @@ class _SettingsState extends State<Settings> {
       MaterialPageRoute(
         builder: (context) => Homescreen(
           profileid: widget.profileid,
-          tripid: widget.profileid,
         ),
       ),
     );
@@ -142,73 +141,77 @@ class _SettingsState extends State<Settings> {
 
   void _navigateToSearch() {
     if (ModalRoute.of(context)!.settings.name != '/add') {
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => Add1()));
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => Add1(
+                profileid: widget.profileid,
+              )));
     }
   }
-  // void _navigateToSearch() {
-  //   Navigator.of(context).push(MaterialPageRoute(builder: (context) => Add1()));
-  //   // Navigator.of(context).popUntil((route) => route.isFirst);
-  //   // Add your navigation logic for search here
-  //   // For example:
-  //   // Navigator.of(context).pushReplacement(
-  //   //   MaterialPageRoute(
-  //   //     builder: (context) => SearchScreen(profileid: widget.profileid),
-  //   //   ),
-  //   // );
-  // }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Settings'),
-      ),
-      body: ListView.builder(
-        itemCount: items.length,
-        itemBuilder: (context, index) {
-          final item = items[index];
-          return ListTile(
-            leading: Icon(item['icon'] as IconData),
-            title: Text(item['text'] as String),
-            // trailing: Icon(item['trail'] as IconData),
-            onTap: () {
-              if (item.containsKey('action')) {
-                final Function action = item['action'];
-                action();
-              }
-            },
-          );
-        },
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: BottomNavigationBar(
-          showUnselectedLabels: true,
-          currentIndex: _selectedIndex,
-          onTap: (int index) {
-            setState(() {
-              _selectedIndex = index;
-              switch (index) {
-                case 0:
-                  _navigateToHome();
-                  break;
-                case 1:
-                  _navigateToSearch();
-                  break;
-                // Add cases for other bottom navigation items if needed
-              }
-            });
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          title: const Text(
+            'Settings',
+            style: TextStyle(color: Colors.amber),
+          ),
+        ),
+        body: ListView.builder(
+          itemCount: items.length,
+          itemBuilder: (context, index) {
+            final item = items[index];
+            return ListTile(
+              leading: Icon(
+                item['icon'] as IconData,
+                color: Colors.green[40],
+              ),
+              title: Text(
+                item['text'] as String,
+                style: TextStyle(color: Colors.amber),
+              ),
+              // trailing: Icon(item['trail'] as IconData),
+              onTap: () {
+                if (item.containsKey('action')) {
+                  final Function action = item['action'];
+                  action();
+                }
+              },
+            );
           },
-          backgroundColor: Colors.yellow,
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-            BottomNavigationBarItem(icon: Icon(Icons.add), label: 'Add'),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.settings),
-              label: 'Settings',
-            ),
-          ],
+        ),
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: BottomNavigationBar(
+            showUnselectedLabels: true,
+            currentIndex: _selectedIndex,
+            onTap: (int index) {
+              setState(() {
+                _selectedIndex = index;
+                switch (index) {
+                  case 0:
+                    _navigateToHome();
+                    break;
+                  case 1:
+                    _navigateToSearch();
+                    break;
+                  // Add cases for other bottom navigation items if needed
+                }
+              });
+            },
+            backgroundColor: Colors.yellow,
+            items: const [
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+              BottomNavigationBarItem(icon: Icon(Icons.add), label: 'Add'),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.settings),
+                label: 'Settings',
+              ),
+            ],
+          ),
         ),
       ),
     );

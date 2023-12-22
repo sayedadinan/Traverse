@@ -28,6 +28,7 @@ class _SignupState extends State<Signup> {
 
   final formKey = GlobalKey<FormState>();
   bool isVisible = false;
+  bool confirmpass = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +48,7 @@ class _SignupState extends State<Signup> {
                   style: TextStyle(
                     fontSize: 42,
                     fontWeight: FontWeight.w500,
-                    color: Color.fromARGB(255, 37, 62, 207),
+                    color: Color.fromARGB(255, 63, 95, 65),
                   ),
                 ),
                 const SizedBox(
@@ -68,6 +69,7 @@ class _SignupState extends State<Signup> {
                       return null;
                     },
                     controller: _userController,
+                    keyboardType: TextInputType.name,
 
                     // keyboardType: TextInputType.visiblePassword,
                     // obscureText: true,
@@ -98,7 +100,7 @@ class _SignupState extends State<Signup> {
                       return null;
                     },
                     controller: _emailController,
-                    keyboardType: TextInputType.visiblePassword,
+                    keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       fillColor: const Color.fromARGB(255, 244, 241, 241),
                       filled: true,
@@ -174,7 +176,7 @@ class _SignupState extends State<Signup> {
                     controller: _confirmpassController,
 
                     // keyboardType: TextInputType.visiblePassword,
-                    obscureText: !isVisible,
+                    obscureText: !confirmpass,
                     decoration: InputDecoration(
                       fillColor: const Color.fromARGB(255, 244, 241, 241),
                       filled: true,
@@ -184,10 +186,10 @@ class _SignupState extends State<Signup> {
                       suffixIcon: IconButton(
                         onPressed: () {
                           setState(() {
-                            isVisible = !isVisible;
+                            confirmpass = !confirmpass;
                           });
                         },
-                        icon: Icon(isVisible
+                        icon: Icon(confirmpass
                             ? Icons.visibility
                             : Icons.visibility_off),
                       ),
@@ -206,7 +208,7 @@ class _SignupState extends State<Signup> {
                       const Size(350, 55),
                     ),
                     backgroundColor: MaterialStateProperty.all(
-                      const Color.fromARGB(255, 37, 62, 207),
+                      Color.fromARGB(255, 40, 57, 41),
                     ),
                   ),
                   onPressed: () {
@@ -292,7 +294,6 @@ class _SignupState extends State<Signup> {
       MaterialPageRoute(
         builder: (context) => Homescreen(
           profileid: userId,
-          tripid: userId,
         ),
       ),
     );

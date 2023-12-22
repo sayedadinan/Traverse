@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:traverse_1/data/models/profile/user.dart';
-import 'package:traverse_1/screens/intro_screens/app_board.dart';
+// import 'package:traverse_1/screens/intro_screens/app_board.dart';
 import 'package:traverse_1/screens/home_page.dart';
 import 'package:traverse_1/screens/intro_screens/identity_page.dart';
 import '../../data/functions/profile.dart';
@@ -21,24 +21,30 @@ class _SplashscreenState extends State<Splashscreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: Color.fromARGB(255, 37, 62, 207),
-      body: SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image(
-                width: 295,
-                image: AssetImage('assets/car traverse.png'),
+    return Scaffold(
+      body: Stack(
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/traverse splash screen.jpg'),
+                fit: BoxFit.fill,
               ),
-              Text(
-                'Lets go..',
-                style: TextStyle(fontSize: 50, color: Colors.yellow),
-              ),
-            ],
+            ),
           ),
-        ),
+          const Positioned(
+            top: 180, // Adjust the top position as needed
+            left: 102, // Adjust the left position as needed
+            child: Text(
+              'Shall We Go',
+              style: TextStyle(
+                fontSize: 60,
+                color: Color.fromARGB(255, 52, 102, 79),
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -52,7 +58,6 @@ class _SplashscreenState extends State<Splashscreen> {
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
           builder: (context) => Homescreen(
-            tripid: userData.id!,
             profileid: userData.id!,
           ),
         ),

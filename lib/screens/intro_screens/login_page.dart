@@ -102,7 +102,7 @@ class _LoginState extends State<Login> {
                     const Size(350, 55),
                   ),
                   backgroundColor: MaterialStateProperty.all(
-                    const Color.fromARGB(255, 37, 62, 207),
+                    Color.fromARGB(255, 40, 57, 41),
                   ),
                 ),
                 onPressed: () {
@@ -146,7 +146,6 @@ class _LoginState extends State<Login> {
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
               builder: (context) => Homescreen(
-                    tripid: user.id!,
                     profileid: user.id!,
                   )),
           (route) => false,

@@ -18,13 +18,11 @@ class Identity extends StatelessWidget {
             children: [
               const Text(
                 'MAKE',
-                style: TextStyle(
-                    color: Color.fromARGB(255, 37, 62, 207), fontSize: 50),
+                style: TextStyle(color: Colors.amber, fontSize: 50),
               ),
               const Text(
                 'IDENTITY',
-                style: TextStyle(
-                    color: Color.fromARGB(255, 37, 62, 207), fontSize: 50),
+                style: TextStyle(color: Colors.amber, fontSize: 50),
               ),
               ElevatedButton(
                 style: ButtonStyle(
@@ -32,7 +30,7 @@ class Identity extends StatelessWidget {
                     const Size(220, 25),
                   ),
                   backgroundColor: MaterialStateProperty.all(
-                    const Color.fromARGB(255, 37, 62, 207),
+                    Color.fromARGB(255, 40, 57, 41),
                   ),
                 ),
                 onPressed: () {
@@ -53,7 +51,7 @@ class Identity extends StatelessWidget {
                     const Size(220, 25),
                   ),
                   backgroundColor: MaterialStateProperty.all(
-                    const Color.fromARGB(255, 37, 62, 207),
+                    Color.fromARGB(255, 40, 57, 41),
                   ),
                 ),
                 onPressed: () {

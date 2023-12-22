@@ -1,4 +1,7 @@
+import 'package:traverse_1/data/models/trip/companion_model.dart';
+
 class Tripmodel {
+  final int? userid;
   int? id;
   final String tripname;
   final String destination;
@@ -8,7 +11,7 @@ class Tripmodel {
   final String startingDate;
   final String endingDate;
   final dynamic coverpic;
-
+  List<CompanionModel> companions;
   Tripmodel({
     required this.tripname,
     required this.destination,
@@ -19,6 +22,8 @@ class Tripmodel {
     required this.endingDate,
     this.coverpic,
     this.id,
+    this.companions = const [],
+    this.userid,
   });
 
   static Tripmodel fromMap(Map<String, dynamic> map) {
@@ -31,17 +36,19 @@ class Tripmodel {
     final startingDate = map['startingDate'] as String;
     final endingDate = map['endingDate'] as String;
     final coverpic = map['coverpic'] as dynamic;
-
+    final userid = map['userid'] as int;
     return Tripmodel(
-      tripname: tripname,
-      destination: destination,
-      budget: budget,
-      transport: transport,
-      triptype: triptype,
-      startingDate: startingDate,
-      endingDate: endingDate,
-      coverpic: coverpic,
-      id: id,
-    );
+        tripname: tripname,
+        destination: destination,
+        budget: budget,
+        transport: transport,
+        triptype: triptype,
+        startingDate: startingDate,
+        endingDate: endingDate,
+        coverpic: coverpic,
+        id: id,
+        userid: userid);
   }
+
+  toMap() {}
 }
