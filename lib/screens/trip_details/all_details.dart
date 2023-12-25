@@ -14,11 +14,12 @@ class Alldetails extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Colors.transparent,
         title: const Text(
           'All Trip Data',
           style: TextStyle(
-              color: Color.fromARGB(255, 255, 249, 249), fontSize: 30),
+              color: Color.fromARGB(255, 255, 249, 249), fontSize: 25),
         ),
       ),
       body: ValueListenableBuilder<List<Tripmodel>>(
@@ -44,14 +45,6 @@ class Alldetails extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      // ClipRRect(
-                      //   borderRadius: BorderRadius.circular(12),
-                      //   child: Image.asset(
-                      //     'assets/user.png',
-                      //     fit: BoxFit.cover,
-                      //     height: 60,
-                      //   ),
-                      // ),
                       ListTile(
                         contentPadding: const EdgeInsets.all(16),
                         title: Text(trip.tripname,

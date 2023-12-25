@@ -2,10 +2,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:traverse_1/data/models/trip/trip_model.dart';
+import 'package:traverse_1/screens/home_page.dart';
 import 'package:traverse_1/screens/trip_details/all_details.dart';
-// import 'package:traverse_1/screens/trip_adding/trip_add1.dart';
-// import 'package:traverse_1/screens/trip_details/all_details.dart';
-// import 'package:traverse_1/screens/trip_details/trip_details_page.dart';
 import '../../custom_widgets/elevatedbuttons.dart';
 import '../../custom_widgets/trip_add/choichips.dart';
 import '../../custom_widgets/trip_add/companiens.dart';
@@ -19,8 +17,6 @@ class Editingtrip extends StatefulWidget {
   const Editingtrip({
     super.key,
     required this.profileid,
-    // required this.startDateController,
-    // required this.endDateController,
     required this.trip,
   });
 
@@ -241,7 +237,7 @@ class _EditingtripState extends State<Editingtrip> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       Expanded(
@@ -277,6 +273,9 @@ class _EditingtripState extends State<Editingtrip> {
                             text: '  Select companions',
                           ),
                         ),
+                        const SizedBox(
+                          width: 12,
+                        ),
                         Expanded(
                           child: MyCompanion(
                             text: '  Show companions',
@@ -284,18 +283,16 @@ class _EditingtripState extends State<Editingtrip> {
                           ),
                         ),
                       ]),
+                  const SizedBox(
+                    height: 15,
+                  ),
                   Elebuttons(
                     function: () async {
                       editTripClicked(context);
-                      // Navigator.of(context).push(MaterialPageRoute(
-                      //   builder: (context) => Alldetails(
-                      //     userId: tripId,
-                      //   ),
-                      // ));
                     },
-                    text: 'Finish',
-                    butcolor: const Color.fromARGB(255, 37, 62, 207),
-                    textcolor: Colors.amber,
+                    text: 'Update',
+                    butcolor: const Color.fromARGB(255, 119, 200, 192),
+                    textcolor: Colors.orange,
                   ),
                 ],
               ),
@@ -337,9 +334,15 @@ class _EditingtripState extends State<Editingtrip> {
       // Refresh the data after editing the trip details
       // (Assuming refreshTripData is a function to refresh trip data)
       await getalltrip(widget.trip.userid!);
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => Alldetails(userId: widget.trip.userid!),
-      ));
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (context) => Homescreen(
+            profileid: widget.trip.userid!,
+          ),
+        ),
+        (route) =>
+            false, // Replace 'false' with the condition to stop removing routes
+      );
       // Navigator.of(context).pop();
     } else {
       // Show an error message if there are validation errors

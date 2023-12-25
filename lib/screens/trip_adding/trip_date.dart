@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:traverse_1/screens/trip_adding/trip_add2.dart';
+import 'package:traverse_1/screens/trip_adding/trip_details.dart';
 import 'package:intl/intl.dart';
 import '../../custom_widgets/elevatedbuttons.dart';
 import '../../custom_widgets/trip_add/textfields.dart';
@@ -156,8 +156,9 @@ class _Add1State extends State<Add1> {
                     }
                   },
                   text: 'Next',
-                  butcolor: Colors.amber, // Specify the button color
-                  textcolor: const Color.fromARGB(255, 37, 62, 207),
+                  butcolor: const Color.fromARGB(
+                      255, 119, 200, 192), // Specify the button color
+                  textcolor: Colors.orange,
                 ),
               ],
             ),

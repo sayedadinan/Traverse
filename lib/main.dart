@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:traverse_1/data/functions/properties_trip.dart';
 import 'package:traverse_1/data/functions/tripdata.dart';
 
 import 'data/functions/profile.dart';
@@ -9,6 +10,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeProfileDB();
   initializationtrip();
+  initproperties();
   runApp(const MyApp());
 }
 

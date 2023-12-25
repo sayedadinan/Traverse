@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:traverse_1/custom_widgets/bottomnav_bar.dart';
 import 'package:traverse_1/data/models/profile/user.dart';
 import 'package:traverse_1/screens/app_details/app_info.dart';
 import 'package:traverse_1/screens/intro_screens/identity_page.dart';
@@ -6,7 +7,7 @@ import 'package:traverse_1/screens/app_details/privacy_policy.dart';
 import '../../data/functions/profile.dart';
 import '../intro_screens/app_board.dart';
 import '../home_page.dart';
-import '../trip_adding/trip_add1.dart';
+import '../trip_adding/trip_date.dart';
 import '../user_details/profile_page.dart';
 
 class Settings extends StatefulWidget {
@@ -18,8 +19,6 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-  int _selectedIndex = 0;
-
   late List<Map<String, dynamic>> items;
 
   @override
@@ -128,26 +127,6 @@ class _SettingsState extends State<Settings> {
     ];
   }
 
-  void _navigateToHome() {
-    Navigator.of(context).popUntil((route) => route.isFirst);
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) => Homescreen(
-          profileid: widget.profileid,
-        ),
-      ),
-    );
-  }
-
-  void _navigateToSearch() {
-    if (ModalRoute.of(context)!.settings.name != '/add') {
-      Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => Add1(
-                profileid: widget.profileid,
-              )));
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -183,36 +162,7 @@ class _SettingsState extends State<Settings> {
             );
           },
         ),
-        bottomNavigationBar: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: BottomNavigationBar(
-            showUnselectedLabels: true,
-            currentIndex: _selectedIndex,
-            onTap: (int index) {
-              setState(() {
-                _selectedIndex = index;
-                switch (index) {
-                  case 0:
-                    _navigateToHome();
-                    break;
-                  case 1:
-                    _navigateToSearch();
-                    break;
-                  // Add cases for other bottom navigation items if needed
-                }
-              });
-            },
-            backgroundColor: Colors.yellow,
-            items: const [
-              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-              BottomNavigationBarItem(icon: Icon(Icons.add), label: 'Add'),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.settings),
-                label: 'Settings',
-              ),
-            ],
-          ),
-        ),
+        bottomNavigationBar: Bottomnavbar(profileid: widget.profileid),
       ),
     );
   }

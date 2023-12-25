@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:traverse_1/custom_widgets/trip_add/expense_detail.dart';
+import 'package:traverse_1/custom_widgets/trip_add/media_widget.dart';
+import 'package:traverse_1/data/functions/properties_trip.dart';
 import 'package:traverse_1/data/models/trip/trip_model.dart';
-// import 'package:traverse_1/screens/trip_adding/trip_add2.dart';
 import 'package:traverse_1/screens/trip_details/trip_editing.dart';
 import '../../data/functions/tripdata.dart';
 
@@ -31,9 +33,11 @@ class _Tripdetails1State extends State<Tripdetails1>
 
   @override
   Widget build(BuildContext context) {
+    getExpenses(widget.trip.id!);
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 30, 28, 28),
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Colors.transparent,
         title: Text(
           widget.trip.tripname,
@@ -57,7 +61,7 @@ class _Tripdetails1State extends State<Tripdetails1>
                   Navigator.of(context).pop();
                 });
               },
-              icon: Icon(Icons.delete))
+              icon: const Icon(Icons.delete))
         ],
       ),
       body: SingleChildScrollView(
@@ -120,58 +124,32 @@ class _Tripdetails1State extends State<Tripdetails1>
               ),
             ),
             Container(
-              height: 800, // Adjust height as needed
+              height: 700, // Adjust height as needed
               child: TabBarView(
                 controller: tabController,
                 children: [
-                  Container(
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Text(
-                              'You can add images',
-                              style:
-                                  TextStyle(color: Colors.amber, fontSize: 30),
-                            ),
-                            IconButton(
-                                onPressed: () {
-                                  pickImageFromGallery();
-                                },
-                                icon: Icon(
-                                  Icons.add_a_photo_outlined,
-                                  color: Colors.amber,
-                                ))
-                            // Text(
-                            //   'Starting date',
-                            //   style:
-                            //       TextStyle(fontSize: 20, color: Colors.amber),
-                            // )
-                          ],
-                        )
-                      ],
-                    ),
+                  Mymedia(
+                    trip: widget.trip,
                   ),
+                  // Text('working'),
                   Container(
                     child: Column(
                       children: [
-                        Row(
+                        const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Text(
                               'Starting date',
-                              style: TextStyle(
-                                  fontSize: 28, color: Colors.green[100]),
+                              style:
+                                  TextStyle(fontSize: 28, color: Colors.amber),
                             ),
-                            const SizedBox(
+                            SizedBox(
                               width: 39,
                             ),
-                            const Text(
+                            Text(
                               'Ending date',
-                              style: TextStyle(
-                                  fontSize: 28,
-                                  color: Color.fromARGB(255, 218, 210, 102)),
+                              style:
+                                  TextStyle(fontSize: 28, color: Colors.amber),
                             ),
                           ],
                         ),
@@ -270,19 +248,29 @@ class _Tripdetails1State extends State<Tripdetails1>
                     ),
                   ),
                   Container(
-                    child: const Column(
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              'Starting date',
-                              style:
-                                  TextStyle(fontSize: 20, color: Colors.amber),
-                            )
-                          ],
-                        )
-                      ],
+                    child: Expensedetails(
+                      trip: widget.trip,
                     ),
+                    // child: Column(
+                    //   children: [
+                    //     ElevatedButton(
+                    //       style: ElevatedButton.styleFrom(
+                    //         backgroundColor:
+                    //             const Color.fromARGB(255, 119, 200, 192),
+                    //       ),
+                    //       onPressed: () {
+                    //         Navigator.of(context).push(MaterialPageRoute(
+                    //             builder: (context) => Expenses(
+                    //                   trip: widget.trip,
+                    //                 )));
+                    //       },
+                    //       child: const Text(
+                    //         'Add expense',
+                    //         style: TextStyle(color: Colors.orange),
+                    //       ),
+                    //     )
+                    //   ],
+                    // ),
                   )
                   // Text('Details'),
                   // Text('Media'),

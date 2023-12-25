@@ -266,16 +266,17 @@ class _Add2State extends State<Add2> {
                     function: () async {
                       if (formKey.currentState!.validate()) {
                         await addtrip();
+
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => Homescreen(
+                            profileid: widget.profileid,
+                          ),
+                        ));
                       }
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => Homescreen(
-                          profileid: widget.profileid,
-                        ),
-                      ));
                     },
                     text: 'Finish',
-                    butcolor: const Color.fromARGB(255, 37, 62, 207),
-                    textcolor: Colors.amber,
+                    butcolor: const Color.fromARGB(255, 119, 200, 192),
+                    textcolor: Colors.orange,
                   ),
                   SizedBox(
                     height: 25,

@@ -38,7 +38,7 @@ class _SplashscreenState extends State<Splashscreen> {
             child: Text(
               'Shall We Go',
               style: TextStyle(
-                fontSize: 60,
+                fontSize: 40,
                 color: Color.fromARGB(255, 52, 102, 79),
                 fontWeight: FontWeight.bold,
               ),
