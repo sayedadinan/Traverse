@@ -17,7 +17,7 @@ class _BottomnavbarState extends State<Bottomnavbar> {
 
   void _navigateToAdd() {
     Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => Add1(
+        builder: (context) => AddDate(
               profileid: widget.profileid,
             )));
   }

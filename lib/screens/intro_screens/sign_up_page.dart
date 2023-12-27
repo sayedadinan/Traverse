@@ -57,6 +57,7 @@ class _SignupState extends State<Signup> {
                 Padding(
                   padding: const EdgeInsets.only(left: 17, right: 17),
                   child: TextFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {
                       if (value!.isEmpty) {
                         return "username is required";
@@ -91,6 +92,7 @@ class _SignupState extends State<Signup> {
                 Padding(
                   padding: const EdgeInsets.only(left: 17, right: 17),
                   child: TextFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Email is required';
@@ -119,6 +121,7 @@ class _SignupState extends State<Signup> {
                 Padding(
                   padding: const EdgeInsets.only(left: 17, right: 17),
                   child: TextFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {
                       if (value!.isEmpty) {
                         return "password is required";
@@ -161,6 +164,7 @@ class _SignupState extends State<Signup> {
                 Padding(
                   padding: const EdgeInsets.only(left: 17, right: 17),
                   child: TextFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {
                       if (value!.isEmpty) {
                         return "confirm password is required";

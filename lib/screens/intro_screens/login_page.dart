@@ -36,6 +36,7 @@ class _LoginState extends State<Login> {
               Padding(
                 padding: const EdgeInsets.only(left: 17, right: 17),
                 child: TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return "username is required";
@@ -63,6 +64,7 @@ class _LoginState extends State<Login> {
               Padding(
                 padding: const EdgeInsets.only(left: 17, right: 17),
                 child: TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return "password is required";

@@ -12,12 +12,12 @@ import '../../custom_widgets/trip_add/choichips.dart';
 import '../../custom_widgets/trip_add/drop_down.dart';
 import '../../custom_widgets/trip_add/textfields.dart';
 
-class Add2 extends StatefulWidget {
+class Addtripdetail extends StatefulWidget {
   final int profileid;
   final TextEditingController startDateController;
   final TextEditingController endDateController;
 
-  const Add2({
+  const Addtripdetail({
     Key? key,
     required this.startDateController,
     required this.endDateController,
@@ -25,10 +25,10 @@ class Add2 extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<Add2> createState() => _Add2State();
+  State<Addtripdetail> createState() => _AddtripdetailState();
 }
 
-class _Add2State extends State<Add2> {
+class _AddtripdetailState extends State<Addtripdetail> {
   final destinationController = TextEditingController();
   final budgetController = TextEditingController();
   final tripNameController = TextEditingController();
@@ -267,11 +267,13 @@ class _Add2State extends State<Add2> {
                       if (formKey.currentState!.validate()) {
                         await addtrip();
 
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => Homescreen(
-                            profileid: widget.profileid,
+                        Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                Homescreen(profileid: widget.profileid),
                           ),
-                        ));
+                          (route) => false,
+                        );
                       }
                     },
                     text: 'Finish',

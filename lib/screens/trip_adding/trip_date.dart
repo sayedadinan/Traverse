@@ -5,17 +5,17 @@ import 'package:intl/intl.dart';
 import '../../custom_widgets/elevatedbuttons.dart';
 import '../../custom_widgets/trip_add/textfields.dart';
 
-class Add1 extends StatefulWidget {
+class AddDate extends StatefulWidget {
   final int profileid;
-  const Add1({Key? key, required this.profileid}) : super(key: key);
+  const AddDate({Key? key, required this.profileid}) : super(key: key);
 
   @override
-  State<Add1> createState() => _Add1State();
+  State<AddDate> createState() => _AddDateState();
 }
 
-DateFormat dateFormat = DateFormat('dd-MM-yyyy');
+DateFormat dateFormat = DateFormat('dd-MMM-yyyy');
 
-class _Add1State extends State<Add1> {
+class _AddDateState extends State<AddDate> {
   late CalendarFormat _calendarFormat;
   late DateTime _focusedDay;
   late DateTime? _selectedDay;
@@ -24,6 +24,7 @@ class _Add1State extends State<Add1> {
   final TextEditingController _startDateController = TextEditingController();
   final TextEditingController _endDateController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+
   @override
   void initState() {
     super.initState();
@@ -46,7 +47,6 @@ class _Add1State extends State<Add1> {
           child: Form(
             key: formKey,
             child: Column(
-              // mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 TableCalendar(
                   calendarFormat: _calendarFormat,
@@ -77,7 +77,6 @@ class _Add1State extends State<Add1> {
                         }
                       });
                     } else {
-                      // Do not update the selection for past dates
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           padding: EdgeInsets.all(24),
@@ -89,19 +88,16 @@ class _Add1State extends State<Add1> {
                   },
                   calendarStyle: const CalendarStyle(
                     rangeStartDecoration: BoxDecoration(
-                      color:
-                          Colors.greenAccent, // Color for the range start date
+                      color: Colors.greenAccent,
                       shape: BoxShape.circle,
                     ),
                     rangeEndDecoration: BoxDecoration(
-                      color:
-                          Colors.orangeAccent, // Color for the range end date
+                      color: Colors.orangeAccent,
                       shape: BoxShape.circle,
                     ),
                   ),
                 ),
                 const SizedBox(height: 27),
-
                 Inputfield(
                   controller: _startDateController,
                   hinttext: 'Starting Date',
@@ -120,16 +116,11 @@ class _Add1State extends State<Add1> {
                   label: 'End Date',
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter a ending date';
+                      return 'Please enter an ending date';
                     }
-
                     return null;
                   },
                 ),
-                // const Inputfield(
-                //   hinttext: 'Ending date',
-                //   label: 'End Date',
-                // ),
                 const SizedBox(
                   height: 24,
                 ),
@@ -148,16 +139,21 @@ class _Add1State extends State<Add1> {
                   function: () {
                     if (formKey.currentState!.validate()) {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => Add2(
-                                profileid: widget.profileid,
-                                startDateController: _startDateController,
-                                endDateController: _endDateController,
-                              )));
+                        builder: (context) => Addtripdetail(
+                          profileid: widget.profileid,
+                          startDateController: _startDateController,
+                          endDateController: _endDateController,
+                        ),
+                      ));
                     }
                   },
                   text: 'Next',
                   butcolor: const Color.fromARGB(
-                      255, 119, 200, 192), // Specify the button color
+                    255,
+                    119,
+                    200,
+                    192,
+                  ),
                   textcolor: Colors.orange,
                 ),
               ],

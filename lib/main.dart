@@ -9,8 +9,8 @@ import 'screens/intro_screens/splash_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeProfileDB();
-  initializationtrip();
-  initproperties();
+  await initializationtrip();
+  await initproperties();
   runApp(const MyApp());
 }
 

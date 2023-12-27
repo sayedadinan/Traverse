@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:traverse_1/data/functions/tripdata.dart';
 import 'package:traverse_1/data/models/trip/expenses_model.dart';
 import 'package:traverse_1/data/models/trip/media_model.dart';
+
+// import 'package:traverse_1/data/functions/tripdata.dart';
 
 ValueNotifier<List<ExpenseModel>> propertydata =
     ValueNotifier<List<ExpenseModel>>([]);
@@ -101,12 +104,6 @@ Future<int> addExpense(ExpenseModel value) async {
 Future<List<Map<String, dynamic>>?> getExpenses(int tripid) async {
   List<Map<String, dynamic>> expenses =
       await db!.query('expense', where: 'tripID=?', whereArgs: [tripid]);
-  // propertydata.value = [];
-  // for (var data in expenses) {
-  //   final value = ExpenseModel.fromMap(data);
-  //   propertydata.value.add(value);
-  // }
-  // propertydata.notifyListeners();
   if (expenses.isNotEmpty) {
     return expenses;
   }
@@ -118,17 +115,26 @@ Future<int> getTotalExpense(int tripId) async {
       await db!.query('expense', where: 'tripID = ?', whereArgs: [tripId]);
   num total = 0;
   for (int i = 0; i < expenses.length; i++) {
-    total += expenses[i]['amount'];
+    total += int.parse(expenses[i]['sponsor']);
   }
   return total.toInt();
 }
 
-Future<int> getbalance(int tripid) async {
-  final expense = await getTotalExpense(tripid);
-  final List<Map<String, dynamic>> tripList =
-      await db!.query("tripdata", where: 'id = ?', whereArgs: [tripid]);
-  final trip = tripList.first;
-  final budget = int.parse(trip['budget']);
-  final balance = budget - expense;
-  return balance;
+Future<int> getbalance(int tripId) async {
+  final expense = await getTotalExpense(tripId);
+  final List<Map<String, dynamic>> expenses = await tripdb!.rawQuery(
+    'SELECT budget FROM tripdata WHERE id = ?',
+    [tripId],
+  );
+
+  if (expenses.isNotEmpty) {
+    final trip = expenses.first;
+    final budget =
+        trip['budget'] as double; // Assuming budget is of type double
+    final balance = (budget - expense).toInt();
+    return balance;
+  } else {
+    // Handle cases where the 'tripId' doesn't exist or the result is empty
+    return -1; // For example, returning -1 to indicate an error or absence of data
+  }
 }

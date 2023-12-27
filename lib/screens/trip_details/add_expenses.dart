@@ -61,8 +61,13 @@ class Expenses extends StatelessWidget {
                 textcolor: Colors.orange,
                 function: () async {
                   await addingExpense();
-                  getExpenses(trip.id!);
-                  Navigator.of(context).pop();
+                  await getExpenses(trip.id!);
+                  Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                      builder: (context) => Tripdetails1(trip: trip),
+                    ),
+                    (Route<dynamic> route) => false,
+                  );
                 }
                 // Navigator.of(context).pushReplacement(
                 //   MaterialPageRoute(

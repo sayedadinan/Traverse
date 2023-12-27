@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:traverse_1/custom_widgets/bottomnav_bar.dart';
-import 'package:traverse_1/data/models/profile/user.dart';
 import 'package:traverse_1/screens/app_details/app_info.dart';
 import 'package:traverse_1/screens/intro_screens/identity_page.dart';
 import 'package:traverse_1/screens/app_details/privacy_policy.dart';
 import '../../data/functions/profile.dart';
 import '../intro_screens/app_board.dart';
-import '../home_page.dart';
-import '../trip_adding/trip_date.dart';
 import '../user_details/profile_page.dart';
 
 class Settings extends StatefulWidget {

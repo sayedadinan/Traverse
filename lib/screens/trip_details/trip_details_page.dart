@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:traverse_1/custom_widgets/trip_add/details_tab.dart';
 import 'package:traverse_1/custom_widgets/trip_add/expense_detail.dart';
 import 'package:traverse_1/custom_widgets/trip_add/media_widget.dart';
 import 'package:traverse_1/data/functions/properties_trip.dart';
@@ -131,150 +132,12 @@ class _Tripdetails1State extends State<Tripdetails1>
                   Mymedia(
                     trip: widget.trip,
                   ),
-                  // Text('working'),
-                  Container(
-                    child: Column(
-                      children: [
-                        const Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(
-                              'Starting date',
-                              style:
-                                  TextStyle(fontSize: 28, color: Colors.amber),
-                            ),
-                            SizedBox(
-                              width: 39,
-                            ),
-                            Text(
-                              'Ending date',
-                              style:
-                                  TextStyle(fontSize: 28, color: Colors.amber),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 27),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Text(
-                                widget.trip.startingDate,
-                                style: const TextStyle(
-                                    fontSize: 24, color: Colors.amber),
-                              ),
-                              const SizedBox(
-                                width: 39,
-                              ),
-                              Text(
-                                widget.trip.endingDate,
-                                style: const TextStyle(
-                                    fontSize: 24, color: Colors.amber),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 39),
-                          child: Container(
-                            width: 170,
-                            height: 160,
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.amber),
-                                borderRadius: BorderRadius.circular(19)),
-                            child: Column(
-                              children: [
-                                const Text(
-                                  'Trip',
-                                  style: TextStyle(
-                                      color: Colors.amber, fontSize: 24),
-                                ),
-                                const Text(
-                                  'Budget',
-                                  style: TextStyle(
-                                      color: Colors.amber, fontSize: 24),
-                                ),
-                                const SizedBox(
-                                  height: 12,
-                                ),
-                                Text(
-                                  '₹' + widget.trip.budget.toString(),
-                                  style: const TextStyle(
-                                      fontSize: 24, color: Colors.amber),
-                                ),
-                                const Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'Balance:',
-                                      style: TextStyle(
-                                          fontSize: 18, color: Colors.amber),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            const SizedBox(
-                              width: 20,
-                            ),
-                            const Text(
-                              'Travel Type',
-                              style:
-                                  TextStyle(color: Colors.amber, fontSize: 29),
-                            ),
-                            ElevatedButton(
-                                style: const ButtonStyle(
-                                    minimumSize:
-                                        MaterialStatePropertyAll(Size(0, 18))),
-                                onPressed: () {},
-                                child: Text(widget.trip.triptype))
-                            // Text(
-                            //   widget.trip.triptype,
-                            //   style:
-                            //       TextStyle(color: Colors.amber, fontSize: 25),
-                            // )
-                          ],
-                        ),
-                        const Divider(
-                          thickness: 3,
-                          indent: 25,
-                          endIndent: 25,
-                        )
-                      ],
-                    ),
+                  Detailstab(
+                    trip: widget.trip,
                   ),
-                  Container(
-                    child: Expensedetails(
-                      trip: widget.trip,
-                    ),
-                    // child: Column(
-                    //   children: [
-                    //     ElevatedButton(
-                    //       style: ElevatedButton.styleFrom(
-                    //         backgroundColor:
-                    //             const Color.fromARGB(255, 119, 200, 192),
-                    //       ),
-                    //       onPressed: () {
-                    //         Navigator.of(context).push(MaterialPageRoute(
-                    //             builder: (context) => Expenses(
-                    //                   trip: widget.trip,
-                    //                 )));
-                    //       },
-                    //       child: const Text(
-                    //         'Add expense',
-                    //         style: TextStyle(color: Colors.orange),
-                    //       ),
-                    //     )
-                    //   ],
-                    // ),
+                  Expensedetails(
+                    trip: widget.trip,
                   )
-                  // Text('Details'),
-                  // Text('Media'),
-                  // Text('Expenses'),
                 ],
               ),
             ),

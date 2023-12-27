@@ -34,7 +34,7 @@ class _CalendarState extends State<Calendar> {
             TableCalendar(
               calendarFormat: _calendarFormat,
               focusedDay: _focusedDay,
-              firstDay: DateTime.utc(2021, 1, 1),
+              firstDay: DateTime.now(),
               lastDay: DateTime.utc(2030, 12, 31),
               selectedDayPredicate: (day) {
                 return isSameDay(_selectedDay, day);
