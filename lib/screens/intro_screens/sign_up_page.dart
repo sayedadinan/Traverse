@@ -294,12 +294,13 @@ class _SignupState extends State<Signup> {
     user.id = userId;
 
     // Navigate to the Home screen after successful registration
-    Navigator.of(context).push(
+    Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(
         builder: (context) => Homescreen(
           profileid: userId,
         ),
       ),
+      (Route<dynamic> route) => false,
     );
   }
 }

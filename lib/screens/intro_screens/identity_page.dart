@@ -41,7 +41,7 @@ class Identity extends StatelessWidget {
                   );
                 },
                 child: const Text(
-                  'Sign up free',
+                  'Sign up',
                   style: TextStyle(color: Colors.amber),
                 ),
               ),

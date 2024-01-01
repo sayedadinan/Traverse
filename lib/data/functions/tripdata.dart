@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:traverse_1/data/functions/properties_trip.dart';
-import 'package:traverse_1/data/models/trip/companion_model.dart';
 import 'package:traverse_1/data/models/trip/trip_model.dart';
 import 'package:intl/intl.dart';
 
@@ -21,7 +20,8 @@ Future<dynamic> initializationtrip() async {
 
 ////////////////////////////////////////////trip data adding ///////////////////////////////////////////////
 
-Future<int> tripadding(Tripmodel tripmodel) async {
+Future<int> tripadding(
+    Tripmodel tripmodel, List<Map<String, dynamic>> companionList) async {
   try {
     final tripValues = {
       'userid': tripmodel.userid,
@@ -35,33 +35,54 @@ Future<int> tripadding(Tripmodel tripmodel) async {
       'startingDate': tripmodel.startingDate,
       'endingDate': tripmodel.endingDate,
     };
+    int tripId = await tripdb!.insert('tripdata', tripValues);
 
-    var a = await tripdb!.insert('tripdata', tripValues);
+    if (tripId > 0) {
+      for (var companion in companionList) {
+        companion['tripID'] = tripId;
 
-    return a;
+        // Insert companion data into 'companions' table
+        await addCompanions(companion);
+      }
+      await getalltrip(tripmodel.userid!);
+    }
+    return tripId;
   } catch (e) {
     print('Error adding trip to db: $e');
     return -1;
   }
 }
 
+Future<void> updateCompanionData(
+    int tripId, int companionId, Map<String, dynamic> updatedData) async {
+  try {
+    // Update companion data in the database based on tripId and companionId
+    await tripdb!.update('companions', updatedData,
+        where: 'tripID = ? AND id = ?', whereArgs: [tripId, companionId]);
+
+    print('Companion data updated successfully');
+  } catch (e) {
+    print('Error updating companion data: $e');
+  }
+}
 ////////////////////////////////////getalldata from tripdata//////////////////////////////////
 
-Future<void> getalltrip(int userId) async {
+Future<List<Tripmodel>> getalltrip(int userId) async {
   final result =
       await tripdb!.query('tripdata', where: 'userid = ?', whereArgs: [userId]);
-  tripdatas.value = [];
+  final List<Tripmodel> tripList = [];
   for (var data in result) {
     final trip = Tripmodel.fromMap(data);
-    tripdatas.value.add(trip);
+    tripList.add(trip);
   }
+  tripdatas.value = tripList;
   tripdatas.notifyListeners();
+  return tripList;
 }
-
 ///////////////////////////////////////editing trip///////////////////////////////////////
 
 Future<int> editTrip(tripname, destination, budget, transport, triptype,
-    coverpic, startingDate, endingDate, id) async {
+    coverpic, startingDate, endingDate, id, userid) async {
   try {
     final tripValues = {
       'tripname': tripname,
@@ -74,22 +95,24 @@ Future<int> editTrip(tripname, destination, budget, transport, triptype,
       'endingDate': endingDate,
       'id': id
     };
-    // print(id);
-    // print('10');
-    // print(tripValues);
-    await printExistingRecords();
-    return await tripdb!.update(
+
+    int rowsAffected = await tripdb!.update(
       'tripdata',
       tripValues,
       where: 'id = ?',
       whereArgs: [id],
     );
+
+    print('Rows affected in the database: $rowsAffected');
+
+    return rowsAffected;
   } catch (e) {
     print('Error editing trip in db: $e');
     return -1;
   }
 }
 
+///////////////////////
 Future<void> printExistingRecords() async {
   final result = await tripdb!.query('tripdata');
   print('Existing Records:');
@@ -105,13 +128,37 @@ Future<void> deletetrip(id, userid) async {
     where: 'id = ?',
     whereArgs: [id],
   );
-  getalltrip(userid);
+
+  await getalltrip(userid);
 }
 
-//////////////////////////////////////////////////
+//////////////////////////////////////searchquery///////////////////////////////////
+
+Future<List<Tripmodel>> searchTripsByName(String searchTerm, int userId) async {
+  List<Tripmodel> searchResults = [];
+  print('Search used');
+  try {
+    final result = await tripdb!.query(
+      'tripdata',
+      where: 'userid = ? AND tripname LIKE ?',
+      whereArgs: [userId, '%$searchTerm%'],
+    );
+
+    for (var data in result) {
+      final trip = Tripmodel.fromMap(data);
+      searchResults.add(trip);
+    }
+
+    return searchResults;
+  } catch (e) {
+    print('Error searching trips in db: $e');
+    return []; // Return an empty list in case of an error
+  }
+}
+
+//////////////////////////////////////////////////ongoingtrip////////////////////////////////////////////
 Future<List<Tripmodel>> getOngoingTrips(int userId) async {
   List<Tripmodel> ongoingTrips = [];
-  print('used');
   DateTime currentDate = DateTime.now();
   String convertedDate =
       DateFormat('dd-MMM-yyyy').format(currentDate); // Change date format
@@ -119,7 +166,8 @@ Future<List<Tripmodel>> getOngoingTrips(int userId) async {
   var trips = await tripdb!.query('tripdata',
       where: 'userid=? AND startingDate <=? AND endingDate >=?',
       whereArgs: [userId, convertedDate, convertedDate]);
-  tripdatas.value = [];
+  print("trips ongoing $trips");
+  tripdatas.value.clear();
   for (var map in trips) {
     if (map['startingDate'] != null) {
       Tripmodel obj = Tripmodel.fromMap(map);
@@ -152,6 +200,7 @@ Future<List<Tripmodel>> getUpcomingTrip(int userid) async {
   List<Map<String, dynamic>> trips = await tripdb!.query('tripdata',
       where: 'userid=? AND startingDate > ?',
       whereArgs: [userid, formattedCurrentDate]);
+  print("trips upcoming$trips");
 
   // Iterate through fetched data and convert to Tripmodel objects
   for (var tripData in trips) {

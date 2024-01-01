@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:traverse_1/custom_widgets/elevatedbuttons.dart';
-import 'package:traverse_1/custom_widgets/trip_add/textfields.dart';
+import 'package:traverse_1/custom_widgets/trip_widgets/textfields.dart';
 import 'package:traverse_1/data/functions/properties_trip.dart';
 import 'package:traverse_1/data/models/trip/expenses_model.dart';
 import 'package:traverse_1/data/models/trip/trip_model.dart';
@@ -34,6 +34,7 @@ class Expenses extends StatelessWidget {
                 label: 'Sponsor',
                 hinttext: 'who is that?',
                 controller: sponsorController,
+                keyboardType: TextInputType.name,
               ),
             ),
             Padding(
@@ -42,6 +43,7 @@ class Expenses extends StatelessWidget {
                 label: 'Spending Purpose',
                 hinttext: 'what is the usage ?',
                 controller: reasonController,
+                keyboardType: TextInputType.text,
               ),
             ),
             Padding(
@@ -50,6 +52,7 @@ class Expenses extends StatelessWidget {
                 label: 'Money',
                 hinttext: 'How much ?',
                 controller: moneyController,
+                keyboardType: TextInputType.number,
               ),
             ),
             const SizedBox(
@@ -68,18 +71,7 @@ class Expenses extends StatelessWidget {
                     ),
                     (Route<dynamic> route) => false,
                   );
-                }
-                // Navigator.of(context).pushReplacement(
-                //   MaterialPageRoute(
-                //     builder: (context) => Tripdetails1(
-                //       trip: trip,
-                //     ),
-                //   ),
-                // );
-                // Navigator.of(context).push(MaterialPageRoute(
-                //     builder: (context) => Tripdetails1(
-                //           trip: trip,
-                )
+                })
           ],
         ),
       ),

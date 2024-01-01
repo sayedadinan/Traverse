@@ -1,14 +1,15 @@
 import 'dart:io';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:traverse_1/data/functions/properties_trip.dart';
 import 'package:traverse_1/data/models/trip/trip_model.dart';
 import 'package:traverse_1/screens/home_page.dart';
-import 'package:traverse_1/screens/trip_details/all_details.dart';
 import '../../custom_widgets/elevatedbuttons.dart';
-import '../../custom_widgets/trip_add/choichips.dart';
-import '../../custom_widgets/trip_add/companiens.dart';
-import '../../custom_widgets/trip_add/drop_down.dart';
-import '../../custom_widgets/trip_add/textfields.dart';
+import '../../custom_widgets/trip_widgets/choichips.dart';
+import '../../custom_widgets/trip_widgets/companiens.dart';
+import '../../custom_widgets/trip_widgets/drop_down.dart';
+import '../../custom_widgets/trip_widgets/textfields.dart';
 import '../../data/functions/tripdata.dart';
 
 class Editingtrip extends StatefulWidget {
@@ -92,7 +93,7 @@ class _EditingtripState extends State<Editingtrip> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 13),
+                  const SizedBox(height: 13),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 14),
                     child: Inputfield(
@@ -312,27 +313,36 @@ class _EditingtripState extends State<Editingtrip> {
         imagePath = pickedImage.path;
       });
     } catch (e) {
-      ('Error picking image: $e');
+      print('Error picking image: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Error picking image. Please try again.'),
+          backgroundColor: Colors.red,
+        ),
+      );
     }
   }
 
   Future<void> editTripClicked(BuildContext context) async {
     if (formKey.currentState != null && formKey.currentState!.validate()) {
       await editTrip(
-        tripNameController.text.toLowerCase(),
-        destinationController.text.toLowerCase(),
-        budgetController.text,
-        triptypeController,
-        transport,
-        imagePath,
-        startDateController.text.toLowerCase(),
-        endDateController.text.toLowerCase(),
-        widget.trip.id,
-      );
+          tripNameController.text,
+          destinationController.text,
+          budgetController.text,
+          triptypeController,
+          transport,
+          imagePath,
+          startDateController.text,
+          endDateController.text,
+          widget.trip.id,
+          widget.trip.userid);
+      if (companionList.isNotEmpty) {
+        await editCompanionList(companionList);
+        print('ssa');
+      }
+
       print('id number ${widget.trip.id}');
-      print(widget.trip.userid);
-      // Refresh the data after editing the trip details
-      // (Assuming refreshTripData is a function to refresh trip data)
+      print(widget.trip.userid as num);
       await getalltrip(widget.trip.userid!);
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(

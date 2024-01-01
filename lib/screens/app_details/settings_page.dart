@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:traverse_1/custom_widgets/bottomnav_bar.dart';
 import 'package:traverse_1/screens/app_details/app_info.dart';
+import 'package:traverse_1/screens/home_page.dart';
 import 'package:traverse_1/screens/intro_screens/identity_page.dart';
 import 'package:traverse_1/screens/app_details/privacy_policy.dart';
+import 'package:traverse_1/screens/trip_adding/trip_date.dart';
 import '../../data/functions/profile.dart';
 import '../intro_screens/app_board.dart';
 import '../user_details/profile_page.dart';
@@ -79,40 +81,70 @@ class _SettingsState extends State<Settings> {
         'text': 'Sign out',
         'action': () {
           // Call the signoutUser function
-          signoutUser();
-
-          // Show a dialog after signing out
           showDialog(
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
                 title: const Text('Sign Out'),
-                content: const Text('You want to sign out'),
+                content: const Text('Do you want to sign out?'),
                 actions: <Widget>[
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).pop();
+                      Navigator.of(context).pop(); // Close the dialog
                     },
-                    child: const Text('cancel'),
+                    child: const Text('Cancel'),
                   ),
                   ElevatedButton(
                     child: const Text('OK'),
                     onPressed: () {
+                      // Call the sign-out function only when the user clicks "OK"
+                      signoutUser();
                       // Close the dialog
                       Navigator.of(context).pop();
-                      // Navigate to the Identity screen
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Identity()),
-                        (Route<dynamic> route) => false,
-                      );
+                      // Navigate to the Identity screen if needed
+                      // Navigator.pushReplacement(
+                      //   context,
+                      //   MaterialPageRoute(builder: (context) => const Identity()),
+                      // );
                     },
                   ),
                 ],
               );
             },
           );
+          // Show a dialog after signing out
+          // showDialog(
+          //   context: context,
+          //   builder: (BuildContext context) {
+          //     return AlertDialog(
+          //       title: const Text('Sign Out'),
+          //       content: const Text('You want to sign out'),
+          //       actions: <Widget>[
+          //         ElevatedButton(
+          //           onPressed: () {
+          //             Navigator.of(context).pop();
+          //           },
+          //           child: const Text('cancel'),
+          //         ),
+          //         ElevatedButton(
+          //           child: const Text('OK'),
+          //           onPressed: () {
+          //             signoutUser();
+          //             // Close the dialog
+          //             // Navigator.of(context).pop();
+          //             // Navigate to the Identity screen
+          //             // Navigator.pushAndRemoveUntil(
+          //             //   context,
+          //             //   MaterialPageRoute(
+          //             //       builder: (context) => const Identity()),
+          //             //   (Route<dynamic> route) => false,
+          //             // );
+          //           },
+          //         ),
+          //       ],
+          //     );
+          //   },
+          // );
 
           // signoutUser();
           // Navigator.pushReplacement(
@@ -128,7 +160,7 @@ class _SettingsState extends State<Settings> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           title: const Text(
@@ -147,7 +179,7 @@ class _SettingsState extends State<Settings> {
               ),
               title: Text(
                 item['text'] as String,
-                style: TextStyle(color: Colors.amber),
+                style: const TextStyle(color: Colors.black),
               ),
               // trailing: Icon(item['trail'] as IconData),
               onTap: () {
@@ -159,7 +191,23 @@ class _SettingsState extends State<Settings> {
             );
           },
         ),
-        bottomNavigationBar: Bottomnavbar(profileid: widget.profileid),
+        bottomNavigationBar: Bottomnavbar(
+          profileid: widget.profileid,
+          navigateToAdd: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => AddDate(profileid: widget.profileid),
+              ),
+            );
+          },
+          navigateToHome: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => Homescreen(profileid: widget.profileid),
+              ),
+            );
+          },
+        ),
       ),
     );
   }

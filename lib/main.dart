@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:traverse_1/data/functions/properties_trip.dart';
 import 'package:traverse_1/data/functions/tripdata.dart';
-
 import 'data/functions/profile.dart';
-// import 'screens/identity.dart';
 import 'screens/intro_screens/splash_screen.dart';
 
 void main() async {
@@ -25,7 +23,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Color.fromARGB(255, 140, 195, 169),
+          seedColor: const Color.fromARGB(255, 140, 195, 169),
         ),
         useMaterial3: true,
       ),

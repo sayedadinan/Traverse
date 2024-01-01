@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:traverse_1/custom_widgets/bottomnav_bar.dart';
 import 'package:traverse_1/data/functions/tripdata.dart';
+import 'package:traverse_1/data/models/trip/trip_model.dart';
+import 'package:traverse_1/screens/app_details/settings_page.dart';
+import 'package:traverse_1/screens/trip_adding/trip_date.dart';
 import 'package:traverse_1/screens/trip_details/ongoing_trip.dart';
 import 'package:traverse_1/screens/trip_details/recent_trips.dart';
+import 'package:traverse_1/screens/trip_details/search_trip.dart';
 import 'package:traverse_1/screens/trip_details/upcoming_trips.dart';
-// import 'package:traverse_1/screens/app_details/settings_page.dart';
 import '../data/functions/profile.dart';
 // import 'trip_adding/trip_add1.dart';
 
@@ -27,12 +30,23 @@ class _HomescreenState extends State<Homescreen> {
     getalltrip(widget.profileid);
     return Scaffold(
       appBar: AppBar(
+        // backgroundColor: Color.fromARGB(255, 40, 57, 41),
         backgroundColor: Colors.teal[200],
         centerTitle: true,
         title: const Text(
           'TRAVERSE',
-          style: TextStyle(),
+          style: TextStyle(color: Colors.amber),
         ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => ScreenSearch(
+                          userId: widget.profileid,
+                        )));
+              },
+              icon: const Icon(Icons.search))
+        ],
       ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -170,7 +184,27 @@ class _HomescreenState extends State<Homescreen> {
           ),
         ),
       ),
-      bottomNavigationBar: Bottomnavbar(profileid: widget.profileid),
+      bottomNavigationBar: Bottomnavbar(
+        profileid: widget.profileid,
+        navigateToAdd: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => AddDate(
+                profileid: widget.profileid,
+              ),
+            ),
+          );
+        },
+        navigateToSettings: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => Settings(
+                profileid: widget.profileid,
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }

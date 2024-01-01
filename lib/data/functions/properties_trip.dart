@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:traverse_1/custom_widgets/trip_widgets/companiens.dart';
 import 'package:traverse_1/data/functions/tripdata.dart';
 import 'package:traverse_1/data/models/trip/expenses_model.dart';
 import 'package:traverse_1/data/models/trip/media_model.dart';
@@ -38,6 +39,34 @@ Future<void> initproperties() async {
 //////////////////////////////////////////////adding companien/////////////////////////
 addCompanions(Map<String, dynamic> companion) async {
   db!.insert('companions', companion);
+  print('companions added');
+  print(companion);
+}
+
+Future<List<Map<String, dynamic>>> getCompanions(int tripId) async {
+  return await db!
+      .query('companions', where: 'tripID = ?', whereArgs: [tripId]);
+}
+
+// Future<void> editcompanion(companionList) async {
+//   await db!.update('companions', companionList);
+// }
+
+Future<void> editCompanionList(List<Map<String, dynamic>> companionList) async {
+  for (var companionData in companionList) {
+    // Check if the 'id' field exists in the companionData map
+    if (companionData.containsKey('id')) {
+      String companionId = companionData['id'];
+      companionData.remove('id'); // Remove the ID from the data to update
+
+      // Perform the update for each companion using its ID and updated data
+      await db!.update('companions', companionData,
+          where: 'id = ?', whereArgs: [companionId]);
+    } else {
+      print("Error: 'id' field is missing in companion data.");
+      // Handle the missing 'id' field error accordingly (throw an exception, log the issue, etc.)
+    }
+  }
 }
 
 ////////////////////////...............................mediaadding.......................///////////////////////

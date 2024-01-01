@@ -1,11 +1,12 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:traverse_1/custom_widgets/trip_add/details_tab.dart';
-import 'package:traverse_1/custom_widgets/trip_add/expense_detail.dart';
-import 'package:traverse_1/custom_widgets/trip_add/media_widget.dart';
+import 'package:traverse_1/custom_widgets/trip_widgets/details_tab.dart';
+import 'package:traverse_1/custom_widgets/trip_widgets/expense_detail.dart';
+import 'package:traverse_1/custom_widgets/trip_widgets/media_widget.dart';
 import 'package:traverse_1/data/functions/properties_trip.dart';
 import 'package:traverse_1/data/models/trip/trip_model.dart';
+import 'package:traverse_1/screens/home_page.dart';
 import 'package:traverse_1/screens/trip_details/trip_editing.dart';
 import '../../data/functions/tripdata.dart';
 
@@ -36,12 +37,14 @@ class _Tripdetails1State extends State<Tripdetails1>
   Widget build(BuildContext context) {
     getExpenses(widget.trip.id!);
     return Scaffold(
+      // backgroundColor: Colors.teal[200],
+      // backgroundColor: Colors.black,
       backgroundColor: const Color.fromARGB(255, 30, 28, 28),
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.transparent,
         title: Text(
-          widget.trip.tripname,
+          widget.trip.tripname.toUpperCase(),
           style: const TextStyle(color: Colors.amber, fontSize: 30),
         ),
         actions: [
@@ -53,7 +56,10 @@ class _Tripdetails1State extends State<Tripdetails1>
                         trip: widget.trip,
                       )));
             },
-            icon: const Icon(Icons.edit),
+            icon: const Icon(
+              Icons.edit,
+              color: Colors.amber,
+            ),
           ),
           IconButton(
               onPressed: () {
@@ -62,7 +68,10 @@ class _Tripdetails1State extends State<Tripdetails1>
                   Navigator.of(context).pop();
                 });
               },
-              icon: const Icon(Icons.delete))
+              icon: const Icon(
+                Icons.delete,
+                color: Colors.amber,
+              ))
         ],
       ),
       body: SingleChildScrollView(
@@ -92,28 +101,31 @@ class _Tripdetails1State extends State<Tripdetails1>
                 ),
               ),
             ),
+            // Photoadd(
+            //   trip: widget.trip,
+            // ),
             Padding(
               padding: const EdgeInsets.only(bottom: 28),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text(
-                    widget.trip.destination,
-                    style: TextStyle(fontSize: 28, color: Colors.green[100]),
+                    'To :  ${widget.trip.destination.toUpperCase()}',
+                    style: const TextStyle(fontSize: 28, color: Colors.amber),
                   ),
                   Text(
                     widget.trip.startingDate,
-                    style: TextStyle(fontSize: 28, color: Colors.green[100]),
+                    style: const TextStyle(fontSize: 28, color: Colors.amber),
                   ),
                 ],
               ),
             ),
-            Container(
+            SizedBox(
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 23),
                 child: TabBar(
                   controller: tabController,
-                  labelColor: Colors.green,
+                  labelColor: Colors.amber,
                   labelStyle: const TextStyle(fontSize: 25),
                   unselectedLabelColor: Colors.grey,
                   tabs: const [

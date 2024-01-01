@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:traverse_1/data/functions/profile.dart';
-import 'package:traverse_1/data/functions/tripdata.dart';
 import 'package:traverse_1/screens/home_page.dart';
 import 'package:traverse_1/screens/intro_screens/sign_up_page.dart';
 

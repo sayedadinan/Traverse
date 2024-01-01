@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:traverse_1/custom_widgets/trip_widgets/cpompanien_details.dart';
 import 'package:traverse_1/data/functions/properties_trip.dart';
 import 'package:traverse_1/data/models/trip/trip_model.dart';
 
@@ -47,14 +48,15 @@ class Detailstab extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(bottom: 39),
           child: Container(
-            width: 180,
+            width: 190,
             height: 180,
             decoration: BoxDecoration(
+                // color: Color.fromARGB(255, 255, 214, 93),
                 border: Border.all(color: Colors.amber),
                 borderRadius: BorderRadius.circular(19)),
             child: Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 const Text(
@@ -70,7 +72,10 @@ class Detailstab extends StatelessWidget {
                 ),
                 Text(
                   '₹' + trip.budget.toString(),
-                  style: const TextStyle(fontSize: 22, color: Colors.amber),
+                  style: const TextStyle(
+                      fontSize: 22,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -90,7 +95,7 @@ class Detailstab extends StatelessWidget {
                           return Text(
                             'Total Expenses: $total',
                             style: const TextStyle(
-                                fontSize: 17, color: Colors.amber),
+                                fontSize: 22, color: Colors.amber),
                           );
                         }
                       },
@@ -104,9 +109,9 @@ class Detailstab extends StatelessWidget {
                       return Text(
                         'Balance : ₹ $balance',
                         style: const TextStyle(
-                            color: Colors.amber,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500),
+                          color: Colors.amber,
+                          fontSize: 22,
+                        ),
                       );
                     }),
               ],
@@ -138,7 +143,10 @@ class Detailstab extends StatelessWidget {
           thickness: 3,
           indent: 25,
           endIndent: 25,
-        )
+        ),
+        Companiendetails(
+          trip: trip,
+        ),
       ],
     );
   }

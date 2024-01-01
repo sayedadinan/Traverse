@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="traverse_1"
+        android:label="Traverse"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

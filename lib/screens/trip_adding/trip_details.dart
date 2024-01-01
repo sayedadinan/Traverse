@@ -1,16 +1,14 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:traverse_1/custom_widgets/trip_add/companiens.dart';
+import 'package:traverse_1/custom_widgets/trip_widgets/companiens.dart';
 import 'package:traverse_1/screens/home_page.dart';
-// import 'package:carousel_slider/carousel_slider.dart';
 import '../../data/functions/tripdata.dart';
 import '../../data/models/trip/trip_model.dart';
 import '../../custom_widgets/elevatedbuttons.dart';
-import '../../custom_widgets/trip_add/choichips.dart';
-import '../../custom_widgets/trip_add/drop_down.dart';
-import '../../custom_widgets/trip_add/textfields.dart';
+import '../../custom_widgets/trip_widgets/choichips.dart';
+import '../../custom_widgets/trip_widgets/drop_down.dart';
+import '../../custom_widgets/trip_widgets/textfields.dart';
 
 class Addtripdetail extends StatefulWidget {
   final int profileid;
@@ -37,10 +35,6 @@ class _AddtripdetailState extends State<Addtripdetail> {
   final formKey = GlobalKey<FormState>();
   String? imagePath;
   File? profileimage;
-  final List<String> imageList = [
-    'assets/car traverse.png',
-    'assets/applounch.png',
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +49,7 @@ class _AddtripdetailState extends State<Addtripdetail> {
               key: formKey,
               child: Column(
                 children: [
+                  // Photoadd(),
                   Center(
                     child: GestureDetector(
                       onTap: () {
@@ -75,35 +70,12 @@ class _AddtripdetailState extends State<Addtripdetail> {
                                     'assets/placeholder for traverse.jpg',
                                   ),
                             fit: BoxFit.cover,
-                            // image: imagePath != null && File(imagePath).existsSync()
-                            //     ? FileImage(File(imagePath))
-                            //         as ImageProvider<Object>?
-                            //     : const AssetImage(
-                            //         'assets/user.png',
-                            //       ),
                           ),
-
-                          // child: ClipRRect(
-                          //   borderRadius: BorderRadius.circular(20),
-                          //   child: CarouselSlider(
-                          //     options: CarouselOptions(
-                          //       aspectRatio: 1.0,
-                          //       enlargeCenterPage: true,
-                          //       autoPlay: true,
-                          //     ),
-                          //     items: imageList.map((imagePath) {
-                          //       return Image.asset(
-                          //         imagePath,
-                          //         fit: BoxFit.cover,
-                          //       );
-                          //     }).toList(),
-                          //   ),
-                          // ),
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(height: 13),
+                  const SizedBox(height: 13),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 14),
                     child: Inputfield(
@@ -313,7 +285,7 @@ class _AddtripdetailState extends State<Addtripdetail> {
           coverpic: imagePath,
           userid: widget.profileid);
 
-      int tripId = await tripadding(trip);
+      int tripId = await tripadding(trip, companionList);
       if (tripId != -1) {
         trip.id = tripId;
         print('Trip added successfully with ID: $tripId');

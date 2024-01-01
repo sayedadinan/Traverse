@@ -3,7 +3,7 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:traverse_1/screens/trip_adding/trip_details.dart';
 import 'package:intl/intl.dart';
 import '../../custom_widgets/elevatedbuttons.dart';
-import '../../custom_widgets/trip_add/textfields.dart';
+import '../../custom_widgets/trip_widgets/textfields.dart';
 
 class AddDate extends StatefulWidget {
   final int profileid;

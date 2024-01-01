@@ -38,9 +38,8 @@ dependencies:
   flutter_date_range_picker: ^0.0.14
   sqflite: ^2.3.0
   table_calendar: ^3.0.9
-  image_picker: ^1.0.4
+  image_picker: ^1.0.5
   carousel_slider: ^4.2.1
-  cr_calendar: ^1.2.1
   fluttercontactpicker: ^4.7.0
   
   
@@ -80,6 +79,10 @@ flutter:
     - assets/traverse image 2.jpg
     - assets/traverse 7.jpg
     - assets/traverse 8.jpg
+    - assets/The most romantic city.jpeg
+    - assets/pexels-maria-orlova-4947416.jpg
+    - assets/pexels-dmitriy-ganin-7772716.jpg
+    - assets/pexels-jarod-lovekamp-2404444.jpg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

@@ -177,14 +177,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.1"
-  cr_calendar:
-    dependency: "direct main"
-    description:
-      name: cr_calendar
-      sha256: "165319b8852d7eaf40a01dc1a2fbf75c809c8877fa6a9f0ccc1fa2a7972f0b1b"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.2.1"
   cross_file:
     dependency: transitive
     description:
@@ -372,10 +364,10 @@ packages:
     dependency: "direct main"
     description:
       name: image_picker
-      sha256: "7d7f2768df2a8b0a3cefa5ef4f84636121987d403130e70b17ef7e2cf650ba84"
+      sha256: fc712337719239b0b6e41316aa133350b078fa39b6cbd706b61f3fd421b03c77
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.4"
+    version: "1.0.5"
   image_picker_android:
     dependency: transitive
     description:
@@ -448,14 +440,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
-  jiffy:
-    dependency: transitive
-    description:
-      name: jiffy
-      sha256: cc1d4b75016a9156c29b5d61f0c9176c3e0fb0580cc5a0e0422b5d2cab3fbfff
-      url: "https://pub.dev"
-    source: hosted
-    version: "6.2.1"
   js:
     dependency: transitive
     description:
@@ -568,14 +552,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.3"
-  scrollable_positioned_list:
-    dependency: transitive
-    description:
-      name: scrollable_positioned_list
-      sha256: "1b54d5f1329a1e263269abc9e2543d90806131aa14fe7c6062a8054d57249287"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.3.8"
   shelf:
     dependency: transitive
     description:
