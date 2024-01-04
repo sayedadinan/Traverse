@@ -18,6 +18,7 @@ class Inputfield extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       controller: controller,
       decoration: InputDecoration(
         fillColor: const Color.fromARGB(255, 244, 241, 241),

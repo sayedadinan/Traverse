@@ -28,8 +28,8 @@ class MyCompanion extends StatelessWidget {
         height: screenSize.height * 0.06,
         width: screenSize.width * 0.43,
         decoration: BoxDecoration(
-            border:
-                Border.all(width: 1, color: Color.fromARGB(255, 40, 57, 41)),
+            border: Border.all(
+                width: 1, color: const Color.fromARGB(255, 40, 57, 41)),
             borderRadius: BorderRadius.circular(6)),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -81,11 +81,11 @@ class MyCompanion extends StatelessWidget {
 
   Future<dynamic> showCompanions() async {
     showModalBottomSheet(
-      backgroundColor: Color.fromARGB(255, 207, 207, 207),
+      backgroundColor: const Color.fromARGB(255, 207, 207, 207),
       context: context,
       builder: (context) {
         return Container(
-          margin: EdgeInsets.all(10),
+          margin: const EdgeInsets.all(10),
           child: StatefulBuilder(
             builder: (context, setState) {
               return ListView.separated(
@@ -118,7 +118,7 @@ class MyCompanion extends StatelessWidget {
                       ),
                     );
                   } else {
-                    return Container(); // Return an empty container if the companion data is null or incomplete
+                    return Container();
                   }
                 },
                 separatorBuilder: (context, index) {

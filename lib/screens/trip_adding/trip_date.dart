@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:traverse_1/screens/trip_adding/trip_details.dart';
+import 'package:traverse_1/screens/trip_adding/trip_details_adding.dart';
 import 'package:intl/intl.dart';
 import '../../custom_widgets/elevatedbuttons.dart';
 import '../../custom_widgets/trip_widgets/textfields.dart';

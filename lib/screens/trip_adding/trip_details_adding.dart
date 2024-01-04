@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:traverse_1/custom_widgets/trip_widgets/companiens.dart';
+import 'package:traverse_1/custom_widgets/trip_widgets/companiens_add.dart';
 import 'package:traverse_1/screens/home_page.dart';
 import '../../data/functions/tripdata.dart';
 import '../../data/models/trip/trip_model.dart';
@@ -35,7 +35,7 @@ class _AddtripdetailState extends State<Addtripdetail> {
   final formKey = GlobalKey<FormState>();
   String? imagePath;
   File? profileimage;
-
+  List<File> selectedImages = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,6 +49,13 @@ class _AddtripdetailState extends State<Addtripdetail> {
               key: formKey,
               child: Column(
                 children: [
+                  // MultipleImageSelector(
+                  //   onImagesSelected: (images) {
+                  //     setState(() {
+                  //       selectedImages = images;
+                  //     });
+                  //   },
+                  // ),
                   // Photoadd(),
                   Center(
                     child: GestureDetector(
@@ -199,17 +206,7 @@ class _AddtripdetailState extends State<Addtripdetail> {
                       },
                     ),
                   ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      fillColor: const Color.fromARGB(255, 244, 241, 241),
-                      filled: true,
-                      labelText: 'Add companions',
-                      hintText: 'Enter companion name',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                  ),
+
                   const SizedBox(
                     height: 18,
                   ),
@@ -231,7 +228,7 @@ class _AddtripdetailState extends State<Addtripdetail> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 25,
                   ),
                   Elebuttons(
@@ -252,7 +249,7 @@ class _AddtripdetailState extends State<Addtripdetail> {
                     butcolor: const Color.fromARGB(255, 119, 200, 192),
                     textcolor: Colors.orange,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 25,
                   ),
                 ],
@@ -288,7 +285,7 @@ class _AddtripdetailState extends State<Addtripdetail> {
       int tripId = await tripadding(trip, companionList);
       if (tripId != -1) {
         trip.id = tripId;
-        print('Trip added successfully with ID: $tripId');
+        // print('Trip added successfully with ID: $tripId');
       } else {
         print('Failed to add trip');
       }

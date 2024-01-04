@@ -81,8 +81,19 @@ Future<List<Tripmodel>> getalltrip(int userId) async {
 }
 ///////////////////////////////////////editing trip///////////////////////////////////////
 
-Future<int> editTrip(tripname, destination, budget, transport, triptype,
-    coverpic, startingDate, endingDate, id, userid) async {
+Future<int> editTrip(
+  tripname,
+  destination,
+  budget,
+  transport,
+  triptype,
+  coverpic,
+  startingDate,
+  endingDate,
+  id,
+  userid,
+  List<Map<String, dynamic>> companionList,
+) async {
   try {
     final tripValues = {
       'tripname': tripname,
@@ -103,8 +114,24 @@ Future<int> editTrip(tripname, destination, budget, transport, triptype,
       whereArgs: [id],
     );
 
-    print('Rows affected in the database: $rowsAffected');
+    if (rowsAffected > 0) {
+      // Update companions associated with the trip
+      for (var companion in companionList) {
+        // Check if the companion has an 'id'
+        if (companion.containsKey('id')) {
+          // Set the tripID for the companion being updated
+          companion['tripID'] = id;
 
+          // Update the companion in the 'companions' table
+          await updateCompanionDetailsForTrip(id, companion);
+        }
+      }
+      print('Companions updated successfully');
+    } else {
+      print('No trip found with ID: $id');
+    }
+
+    print('Rows affected in the database: $rowsAffected');
     return rowsAffected;
   } catch (e) {
     print('Error editing trip in db: $e');

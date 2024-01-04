@@ -7,7 +7,7 @@ import 'package:traverse_1/data/models/trip/trip_model.dart';
 
 class Mymedia extends StatefulWidget {
   final Tripmodel trip;
-  Mymedia({Key? key, required this.trip}) : super(key: key);
+  const Mymedia({Key? key, required this.trip}) : super(key: key);
 
   @override
   State<Mymedia> createState() => _MymediaState();
@@ -28,8 +28,8 @@ class _MymediaState extends State<Mymedia> {
       setState(() {
         for (var media in mediaList) {
           selectedImages.add(File(media['mediaPic']));
-          print(selectedImages);
-          print(mediaList);
+          // print(selectedImages);
+          // print(mediaList);
         }
       });
     }
@@ -37,6 +37,7 @@ class _MymediaState extends State<Mymedia> {
 
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 30, 28, 28),
       body: Container(
@@ -49,10 +50,10 @@ class _MymediaState extends State<Mymedia> {
                 pickImageFromGallery();
               },
               style: ButtonStyle(
-                  minimumSize: MaterialStateProperty.all(Size(0, 40))),
+                  minimumSize: MaterialStateProperty.all(const Size(0, 40))),
               child: const Text('Add Image'),
             ),
-            const SizedBox(height: 20.0),
+            SizedBox(height: screenSize.height * 0.01),
             selectedImages.isEmpty // Check if selectedImages list is empty
                 ? const Expanded(
                     child: Center(
@@ -87,7 +88,7 @@ class _MymediaState extends State<Mymedia> {
                               top: 0,
                               right: 0,
                               child: IconButton(
-                                icon: Icon(Icons.close),
+                                icon: const Icon(Icons.close),
                                 onPressed: () {
                                   setState(() {
                                     selectedImages.removeAt(index);

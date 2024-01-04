@@ -34,12 +34,6 @@ class _OngoingtripsState extends State<Ongoingtrips> {
         _listener); // Remove the listener when disposing of the widget
     super.dispose();
   }
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   getalltrip(widget.userId);
-  //   _futureTrips = getOngoingTrips(widget.userId);
-  // }
 
   @override
   Widget build(BuildContext context) {

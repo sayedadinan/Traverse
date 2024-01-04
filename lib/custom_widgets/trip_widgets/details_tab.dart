@@ -8,21 +8,22 @@ class Detailstab extends StatelessWidget {
   final Tripmodel trip;
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
     return Column(
       children: [
-        const Row(
+        Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Text(
+            const Text(
               'Starting date',
-              style: TextStyle(fontSize: 28, color: Colors.amber),
+              style: TextStyle(fontSize: 26, color: Colors.amber),
             ),
             SizedBox(
-              width: 39,
+              width: screenSize.width * 0.15,
             ),
-            Text(
+            const Text(
               'Ending date',
-              style: TextStyle(fontSize: 28, color: Colors.amber),
+              style: TextStyle(fontSize: 26, color: Colors.amber),
             ),
           ],
         ),
@@ -33,14 +34,14 @@ class Detailstab extends StatelessWidget {
             children: [
               Text(
                 trip.startingDate,
-                style: const TextStyle(fontSize: 24, color: Colors.amber),
+                style: const TextStyle(fontSize: 22, color: Colors.amber),
               ),
-              const SizedBox(
-                width: 39,
+              SizedBox(
+                width: screenSize.width * 0.15,
               ),
               Text(
                 trip.endingDate,
-                style: const TextStyle(fontSize: 24, color: Colors.amber),
+                style: const TextStyle(fontSize: 22, color: Colors.amber),
               ),
             ],
           ),
@@ -48,27 +49,29 @@ class Detailstab extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(bottom: 39),
           child: Container(
-            width: 190,
-            height: 180,
+            // color: const Color.fromARGB(255, 59, 58, 54),
+            width: screenSize.width * 0.8,
+            height: screenSize.height * 0.3,
             decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 59, 58, 54),
                 // color: Color.fromARGB(255, 255, 214, 93),
                 border: Border.all(color: Colors.amber),
                 borderRadius: BorderRadius.circular(19)),
             child: Column(
               children: [
-                const SizedBox(
-                  height: 10,
+                SizedBox(
+                  height: screenSize.height * 0.03,
                 ),
                 const Text(
                   'Trip ',
-                  style: TextStyle(color: Colors.amber, fontSize: 24),
+                  style: TextStyle(color: Colors.amber, fontSize: 22),
                 ),
                 const Text(
                   'Budget',
-                  style: TextStyle(color: Colors.amber, fontSize: 24),
+                  style: TextStyle(color: Colors.amber, fontSize: 23),
                 ),
-                const SizedBox(
-                  height: 1,
+                SizedBox(
+                  height: screenSize.height * 0.01,
                 ),
                 Text(
                   '₹' + trip.budget.toString(),
@@ -93,9 +96,9 @@ class Detailstab extends StatelessWidget {
                         } else {
                           final total = snapshot.data;
                           return Text(
-                            'Total Expenses: $total',
+                            'Total Expenses: ₹ $total',
                             style: const TextStyle(
-                                fontSize: 22, color: Colors.amber),
+                                fontSize: 20, color: Colors.amber),
                           );
                         }
                       },
@@ -110,7 +113,7 @@ class Detailstab extends StatelessWidget {
                         'Balance : ₹ $balance',
                         style: const TextStyle(
                           color: Colors.amber,
-                          fontSize: 22,
+                          fontSize: 20,
                         ),
                       );
                     }),
@@ -120,23 +123,41 @@ class Detailstab extends StatelessWidget {
         ),
         Row(
           children: [
-            const SizedBox(
-              width: 20,
+            SizedBox(
+              width: screenSize.width * 0.02,
             ),
             const Text(
               'Travel Type',
-              style: TextStyle(color: Colors.amber, fontSize: 29),
+              style: TextStyle(color: Colors.amber, fontSize: 22),
             ),
             ElevatedButton(
                 style: const ButtonStyle(
                     minimumSize: MaterialStatePropertyAll(Size(0, 18))),
                 onPressed: () {},
-                child: Text(trip.triptype))
-            // Text(
-            //   widget.trip.triptype,
-            //   style:
-            //       TextStyle(color: Colors.amber, fontSize: 25),
-            // )
+                child: Text(trip.triptype)),
+            SizedBox(
+              width: screenSize.width * 0.02,
+            ),
+            RichText(
+              text: TextSpan(
+                children: [
+                  const TextSpan(
+                    text: 'Transport: ',
+                    style: TextStyle(color: Colors.amber, fontSize: 22
+                        // Add other style properties as needed
+                        ),
+                  ),
+                  TextSpan(
+                    text: '${trip.transport}',
+                    style: const TextStyle(
+                      fontSize: 19,
+                      color: Colors.white, // Color for the database value
+                      // Add other style properties as needed
+                    ),
+                  ),
+                ],
+              ),
+            )
           ],
         ),
         const Divider(

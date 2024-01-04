@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:traverse_1/custom_widgets/bottomnav_bar.dart';
 import 'package:traverse_1/data/functions/tripdata.dart';
-import 'package:traverse_1/data/models/trip/trip_model.dart';
 import 'package:traverse_1/screens/app_details/settings_page.dart';
 import 'package:traverse_1/screens/trip_adding/trip_date.dart';
 import 'package:traverse_1/screens/trip_details/ongoing_trip.dart';

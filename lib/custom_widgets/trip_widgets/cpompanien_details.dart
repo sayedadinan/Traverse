@@ -7,15 +7,16 @@ class Companiendetails extends StatelessWidget {
   final Tripmodel trip;
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
     return Column(
       children: [
-        const Row(
+        Row(
           children: [
             SizedBox(
-              height: 20,
+              height: screenSize.height * 0.02,
             ),
             SizedBox(
-              width: 30,
+              width: screenSize.width * 0.04,
             ),
             Text(
               'Companions',
@@ -36,10 +37,10 @@ class Companiendetails extends StatelessWidget {
                     'Error: ${snapshot.error}'); // Display an error if fetching data fails
               } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                 return const Padding(
-                  padding: EdgeInsets.only(left: 120, top: 20),
+                  padding: EdgeInsets.only(left: 110, top: 20),
                   child: Text(
-                    'Your going alone .',
-                    style: TextStyle(color: Colors.amber, fontSize: 30),
+                    'enjoy the trip',
+                    style: TextStyle(color: Colors.amber, fontSize: 26),
                   ),
                 ); // Display a message if no data is available
               } else {
@@ -62,7 +63,7 @@ class Companiendetails extends StatelessWidget {
                                 style: const TextStyle(fontSize: 20),
                               ),
                             ),
-                            const SizedBox(height: 20),
+                            SizedBox(height: screenSize.height * 0.01),
                             Text(
                               companion['name'],
                               style: const TextStyle(

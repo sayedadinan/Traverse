@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:traverse_1/data/functions/properties_trip.dart';
@@ -7,7 +6,7 @@ import 'package:traverse_1/data/models/trip/trip_model.dart';
 import 'package:traverse_1/screens/home_page.dart';
 import '../../custom_widgets/elevatedbuttons.dart';
 import '../../custom_widgets/trip_widgets/choichips.dart';
-import '../../custom_widgets/trip_widgets/companiens.dart';
+import '../../custom_widgets/trip_widgets/companiens_add.dart';
 import '../../custom_widgets/trip_widgets/drop_down.dart';
 import '../../custom_widgets/trip_widgets/textfields.dart';
 import '../../data/functions/tripdata.dart';
@@ -47,13 +46,29 @@ class _EditingtripState extends State<Editingtrip> {
     imagePath = widget.trip.coverpic;
     startDateController.text = widget.trip.startingDate;
     endDateController.text = widget.trip.endingDate;
+    getExistingCompanions();
+  }
+
+  Future<void> getExistingCompanions() async {
+    try {
+      final List<Map<String, dynamic>> existingCompanions = await getCompanions(
+          widget.trip.id!); // Fetch existing companions from the database
+      setState(() {
+        companionList
+            .clear(); // Clear the existing list before adding fetched companions
+        companionList
+            .addAll(existingCompanions); // Add fetched companions to the list
+      });
+    } catch (e) {
+      print('Error getting existing companions: $e');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Add Tour'),
+          title: const Text('Update Trip'),
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -221,7 +236,7 @@ class _EditingtripState extends State<Editingtrip> {
                   Row(
                     children: [
                       Expanded(
-                        child: Container(
+                        child: SizedBox(
                           width: 160,
                           child: TextFormField(
                             controller: startDateController,
@@ -242,7 +257,7 @@ class _EditingtripState extends State<Editingtrip> {
                         width: 10,
                       ),
                       Expanded(
-                        child: Container(
+                        child: SizedBox(
                           width: 160,
                           child: TextFormField(
                             controller: endDateController,
@@ -313,7 +328,7 @@ class _EditingtripState extends State<Editingtrip> {
         imagePath = pickedImage.path;
       });
     } catch (e) {
-      print('Error picking image: $e');
+      // print('Error picking image: $e');
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Error picking image. Please try again.'),
@@ -325,21 +340,35 @@ class _EditingtripState extends State<Editingtrip> {
 
   Future<void> editTripClicked(BuildContext context) async {
     if (formKey.currentState != null && formKey.currentState!.validate()) {
+      if (triptypeController.isEmpty || transport.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Please select transport and trip type.'),
+            backgroundColor: Colors.red,
+          ),
+        );
+        return; // Prevent form submission if values are not selected
+      }
+
+      if (companionList.isNotEmpty) {
+        for (var companion in companionList) {
+          await updateCompanionDetailsForTrip(widget.trip.id!, companion);
+        }
+        print('ssa');
+      }
+
       await editTrip(
           tripNameController.text,
           destinationController.text,
           budgetController.text,
-          triptypeController,
           transport,
+          triptypeController,
           imagePath,
           startDateController.text,
           endDateController.text,
           widget.trip.id,
-          widget.trip.userid);
-      if (companionList.isNotEmpty) {
-        await editCompanionList(companionList);
-        print('ssa');
-      }
+          widget.trip.userid,
+          companionList);
 
       print('id number ${widget.trip.id}');
       print(widget.trip.userid as num);
@@ -353,7 +382,6 @@ class _EditingtripState extends State<Editingtrip> {
         (route) =>
             false, // Replace 'false' with the condition to stop removing routes
       );
-      // Navigator.of(context).pop();
     } else {
       // Show an error message if there are validation errors
       ScaffoldMessenger.of(context).showSnackBar(

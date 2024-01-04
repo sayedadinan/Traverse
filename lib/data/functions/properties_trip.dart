@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:traverse_1/custom_widgets/trip_widgets/companiens.dart';
 import 'package:traverse_1/data/functions/tripdata.dart';
 import 'package:traverse_1/data/models/trip/expenses_model.dart';
 import 'package:traverse_1/data/models/trip/media_model.dart';
@@ -39,8 +38,6 @@ Future<void> initproperties() async {
 //////////////////////////////////////////////adding companien/////////////////////////
 addCompanions(Map<String, dynamic> companion) async {
   db!.insert('companions', companion);
-  print('companions added');
-  print(companion);
 }
 
 Future<List<Map<String, dynamic>>> getCompanions(int tripId) async {
@@ -48,24 +45,61 @@ Future<List<Map<String, dynamic>>> getCompanions(int tripId) async {
       .query('companions', where: 'tripID = ?', whereArgs: [tripId]);
 }
 
-// Future<void> editcompanion(companionList) async {
-//   await db!.update('companions', companionList);
-// }
-
 Future<void> editCompanionList(List<Map<String, dynamic>> companionList) async {
-  for (var companionData in companionList) {
-    // Check if the 'id' field exists in the companionData map
-    if (companionData.containsKey('id')) {
-      String companionId = companionData['id'];
-      companionData.remove('id'); // Remove the ID from the data to update
+  try {
+    for (var companionData in companionList) {
+      // Check if the 'id' field exists in the companionData map
+      if (companionData.containsKey('id')) {
+        String companionId = companionData['id'];
+        companionData.remove('id'); // Remove the ID from the data to update
 
-      // Perform the update for each companion using its ID and updated data
-      await db!.update('companions', companionData,
-          where: 'id = ?', whereArgs: [companionId]);
-    } else {
-      print("Error: 'id' field is missing in companion data.");
-      // Handle the missing 'id' field error accordingly (throw an exception, log the issue, etc.)
+        // Perform the update for each companion using its ID and updated data
+        await db!.update('companions', companionData,
+            where: 'id = ?', whereArgs: [companionId]);
+      } else {
+        throw Exception("Error: 'id' field is missing in companion data.");
+        // You might want to throw an exception or handle the missing 'id' field accordingly
+      }
     }
+    print('Companion data updated successfully');
+  } catch (e) {
+    print('Error editing companions: $e');
+  }
+}
+
+// Future<void> updateCompanionDetailsForTrip(
+//     int tripId, Map<String, dynamic> companion) async {
+//   try {
+//     companion['tripID'] = tripId;
+//     // Your implementation to update companion details in the 'companions' table
+//     // Update the companion's details and associate it with the provided trip ID
+//     // For example:
+//     await db!.update('companions', companion,
+//         where: 'id = ? AND tripID = ?', whereArgs: [companion['id'], tripId]);
+//   } catch (e) {
+//     print('Error updating companion details for trip: $e');
+//     rethrow; // You might want to handle this error appropriately
+//   }
+// }
+Future<void> updateCompanionDetailsForTrip(
+    int tripId, Map<String, dynamic> companion) async {
+  try {
+    // Create a new modifiable map based on the contents of the original companion map
+    Map<String, dynamic> updatedCompanion = Map.from(companion);
+
+    // Modify the updatedCompanion map as needed
+    updatedCompanion['tripID'] = tripId;
+
+    // Perform the update using the updatedCompanion map
+    await db!.update(
+      'companions',
+      updatedCompanion,
+      where: 'id = ? AND tripID = ?',
+      whereArgs: [updatedCompanion['id'], tripId],
+    );
+  } catch (e) {
+    print('Error updating companion details for trip: $e');
+    rethrow; // You might want to handle this error appropriately
   }
 }
 
@@ -74,7 +108,7 @@ Future<int?> addMediapics(MediaModel value) async {
   final id = await db?.rawInsert(
       'INSERT INTO media (userID,tripID,mediaPic) VALUES(?,?,?)',
       [value.userId, value.tripId, value.mediaImage]);
-  print('pic aded');
+  // print('pic aded');
   return id;
 }
 
@@ -88,8 +122,8 @@ Future<List<Map<String, dynamic>>?> getmediapics(int tripId) async {
     );
 
     if (mediapic.isNotEmpty) {
-      print('Pictures found');
-      print(mediapic);
+      // print('Pictures found');
+      // print(mediapic);
       return mediapic;
     } else {
       print('No pictures found');
@@ -115,14 +149,14 @@ Future<int> addExpense(ExpenseModel value) async {
       [
         value.userId,
         value.tripID,
+        value.reason,
         value.sponsor,
         value.amount,
-        value.reason,
       ],
     );
-    print('Added to db');
-    print('Expense to add: $value');
-    print('Added expense with ID: $id');
+    // print('Added to db');
+    // print('Expense to add: $value');
+    // print('Added expense with ID: $id');
     return id ?? 0; // Return 0 or a default value if id is null
   } catch (e) {
     print('Error adding expense: $e');
@@ -130,6 +164,30 @@ Future<int> addExpense(ExpenseModel value) async {
   }
 }
 
+////////////////////////////////////////////////////editingfuntion/////////////////////////
+
+Future<void> editingExpense({
+  required String reason,
+  required String sponsor,
+  required int amount,
+  required int expenseId, // Pass the unique expense ID
+}) async {
+  try {
+    await db?.rawUpdate(
+      'UPDATE expense SET reason = ?, sponsor = ?, amount = ? WHERE id = ?',
+      [reason, sponsor, amount, expenseId], // Use the unique expense ID here
+    );
+    print('Expense edited');
+  } catch (e) {
+    print('Error editing expense: $e');
+  }
+}
+
+Future<void> deletingexpense(int expenseId) async {
+  await db!.delete('expense', where: 'id = ?', whereArgs: [expenseId]);
+}
+
+//////////////////////////////////////////////geting//////////////////////////////////////
 Future<List<Map<String, dynamic>>?> getExpenses(int tripid) async {
   List<Map<String, dynamic>> expenses =
       await db!.query('expense', where: 'tripID=?', whereArgs: [tripid]);
@@ -139,12 +197,13 @@ Future<List<Map<String, dynamic>>?> getExpenses(int tripid) async {
   return null;
 }
 
+/////////////////////////////////////////
 Future<int> getTotalExpense(int tripId) async {
   List<Map<String, dynamic>> expenses =
       await db!.query('expense', where: 'tripID = ?', whereArgs: [tripId]);
   num total = 0;
   for (int i = 0; i < expenses.length; i++) {
-    total += int.parse(expenses[i]['sponsor']);
+    total += expenses[i]['amount'];
   }
   return total.toInt();
 }

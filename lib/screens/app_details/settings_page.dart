@@ -102,55 +102,18 @@ class _SettingsState extends State<Settings> {
                       // Close the dialog
                       Navigator.of(context).pop();
                       // Navigate to the Identity screen if needed
-                      // Navigator.pushReplacement(
-                      //   context,
-                      //   MaterialPageRoute(builder: (context) => const Identity()),
-                      // );
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Identity()),
+                        (route) => route.isFirst,
+                      );
                     },
                   ),
                 ],
               );
             },
           );
-          // Show a dialog after signing out
-          // showDialog(
-          //   context: context,
-          //   builder: (BuildContext context) {
-          //     return AlertDialog(
-          //       title: const Text('Sign Out'),
-          //       content: const Text('You want to sign out'),
-          //       actions: <Widget>[
-          //         ElevatedButton(
-          //           onPressed: () {
-          //             Navigator.of(context).pop();
-          //           },
-          //           child: const Text('cancel'),
-          //         ),
-          //         ElevatedButton(
-          //           child: const Text('OK'),
-          //           onPressed: () {
-          //             signoutUser();
-          //             // Close the dialog
-          //             // Navigator.of(context).pop();
-          //             // Navigate to the Identity screen
-          //             // Navigator.pushAndRemoveUntil(
-          //             //   context,
-          //             //   MaterialPageRoute(
-          //             //       builder: (context) => const Identity()),
-          //             //   (Route<dynamic> route) => false,
-          //             // );
-          //           },
-          //         ),
-          //       ],
-          //     );
-          //   },
-          // );
-
-          // signoutUser();
-          // Navigator.pushReplacement(
-          //   context,
-          //   MaterialPageRoute(builder: (context) => const Identity()),
-          // );
         },
       },
     ];

@@ -6,7 +6,6 @@ import 'package:traverse_1/custom_widgets/trip_widgets/expense_detail.dart';
 import 'package:traverse_1/custom_widgets/trip_widgets/media_widget.dart';
 import 'package:traverse_1/data/functions/properties_trip.dart';
 import 'package:traverse_1/data/models/trip/trip_model.dart';
-import 'package:traverse_1/screens/home_page.dart';
 import 'package:traverse_1/screens/trip_details/trip_editing.dart';
 import '../../data/functions/tripdata.dart';
 
@@ -35,6 +34,7 @@ class _Tripdetails1State extends State<Tripdetails1>
 
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
     getExpenses(widget.trip.id!);
     return Scaffold(
       // backgroundColor: Colors.teal[200],
@@ -45,7 +45,7 @@ class _Tripdetails1State extends State<Tripdetails1>
         backgroundColor: Colors.transparent,
         title: Text(
           widget.trip.tripname.toUpperCase(),
-          style: const TextStyle(color: Colors.amber, fontSize: 30),
+          style: const TextStyle(color: Colors.amber, fontSize: 25),
         ),
         actions: [
           IconButton(
@@ -77,13 +77,13 @@ class _Tripdetails1State extends State<Tripdetails1>
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(height: 20),
+            SizedBox(height: screenSize.height * 0.02),
             Center(
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 20),
                 child: Container(
-                  width: 370,
-                  height: 170,
+                  width: screenSize.width * 0.9,
+                  height: screenSize.height * 0.2,
                   decoration: BoxDecoration(
                     color: Colors.blue,
                     borderRadius: BorderRadius.circular(20),
@@ -111,11 +111,11 @@ class _Tripdetails1State extends State<Tripdetails1>
                 children: [
                   Text(
                     'To :  ${widget.trip.destination.toUpperCase()}',
-                    style: const TextStyle(fontSize: 28, color: Colors.amber),
+                    style: const TextStyle(fontSize: 23, color: Colors.amber),
                   ),
                   Text(
                     widget.trip.startingDate,
-                    style: const TextStyle(fontSize: 28, color: Colors.amber),
+                    style: const TextStyle(fontSize: 23, color: Colors.amber),
                   ),
                 ],
               ),
@@ -126,30 +126,30 @@ class _Tripdetails1State extends State<Tripdetails1>
                 child: TabBar(
                   controller: tabController,
                   labelColor: Colors.amber,
-                  labelStyle: const TextStyle(fontSize: 25),
+                  labelStyle: const TextStyle(fontSize: 22),
                   unselectedLabelColor: Colors.grey,
                   tabs: const [
-                    Tab(text: 'Media'),
                     Tab(text: 'Details'),
                     Tab(text: 'Expenses'),
+                    Tab(text: 'Media'),
                   ],
                 ),
               ),
             ),
-            Container(
+            SizedBox(
               height: 700, // Adjust height as needed
               child: TabBarView(
                 controller: tabController,
                 children: [
-                  Mymedia(
-                    trip: widget.trip,
-                  ),
                   Detailstab(
                     trip: widget.trip,
                   ),
                   Expensedetails(
                     trip: widget.trip,
-                  )
+                  ),
+                  Mymedia(
+                    trip: widget.trip,
+                  ),
                 ],
               ),
             ),

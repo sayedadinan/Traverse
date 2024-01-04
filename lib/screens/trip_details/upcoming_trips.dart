@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:traverse_1/data/functions/tripdata.dart';
 import 'package:traverse_1/data/models/trip/trip_model.dart';
-import 'package:traverse_1/screens/trip_details/trip_details_page.dart';
 import 'package:traverse_1/screens/trip_details/upcoming_trip_details.dart';
 
 class Upcomingtrips extends StatefulWidget {
