@@ -18,17 +18,6 @@ class Upcomingtrips extends StatefulWidget {
 class _UpcomingtripsState extends State<Upcomingtrips> {
   late Future<List<Tripmodel>> _futureTrips;
   late VoidCallback _listener;
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   getalltrip(widget.userId);
-  //   _futureTrips = getUpcomingTrip(widget.userId);
-  //   tripdatas.addListener(() {
-  //     setState(() {
-  //       _futureTrips = getUpcomingTrip(widget.userId);
-  //     });
-  //   });
-  // }
 
   @override
   void initState() {

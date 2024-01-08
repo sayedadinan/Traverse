@@ -1,7 +1,9 @@
 import 'dart:io';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:traverse_1/custom_widgets/trip_widgets/companiens_add.dart';
+import 'package:traverse_1/custom_widgets/trip_widgets/multiple_image_add.dart';
 import 'package:traverse_1/screens/home_page.dart';
 import '../../data/functions/tripdata.dart';
 import '../../data/models/trip/trip_model.dart';
@@ -49,38 +51,12 @@ class _AddtripdetailState extends State<Addtripdetail> {
               key: formKey,
               child: Column(
                 children: [
-                  // MultipleImageSelector(
-                  //   onImagesSelected: (images) {
-                  //     setState(() {
-                  //       selectedImages = images;
-                  //     });
-                  //   },
-                  // ),
-                  // Photoadd(),
-                  Center(
-                    child: GestureDetector(
-                      onTap: () {
-                        pickImageFromGallery();
-                      },
-                      child: Container(
-                        width: 370,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          color: Colors.blue,
-                          borderRadius: BorderRadius.circular(20),
-                          image: DecorationImage(
-                            image: imagePath != null &&
-                                    File(imagePath!).existsSync()
-                                ? FileImage(File(imagePath!))
-                                    as ImageProvider<Object>
-                                : const AssetImage(
-                                    'assets/placeholder for traverse.jpg',
-                                  ),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    ),
+                  MultipleImageSelector(
+                    onImagesSelected: (images) {
+                      setState(() {
+                        selectedImages = images;
+                      });
+                    },
                   ),
                   const SizedBox(height: 13),
                   Padding(
@@ -206,12 +182,10 @@ class _AddtripdetailState extends State<Addtripdetail> {
                       },
                     ),
                   ),
-
                   const SizedBox(
                     height: 18,
                   ),
                   Row(
-                    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
                         child: MyCompanion(
@@ -236,6 +210,7 @@ class _AddtripdetailState extends State<Addtripdetail> {
                       if (formKey.currentState!.validate()) {
                         await addtrip();
 
+                        // ignore: use_build_context_synchronously
                         Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
                             builder: (context) =>
@@ -282,15 +257,17 @@ class _AddtripdetailState extends State<Addtripdetail> {
           coverpic: imagePath,
           userid: widget.profileid);
 
-      int tripId = await tripadding(trip, companionList);
+      int tripId = await tripAdding(
+        trip,
+        companionList,
+        selectedImages,
+      );
+      // print(companionList);
       if (tripId != -1) {
         trip.id = tripId;
-        // print('Trip added successfully with ID: $tripId');
-      } else {
-        print('Failed to add trip');
-      }
+      } else {}
     } catch (e) {
-      print('Error adding trip: $e');
+      log(-1);
     }
   }
 }

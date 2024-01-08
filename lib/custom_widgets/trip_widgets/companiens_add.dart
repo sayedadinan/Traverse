@@ -1,4 +1,6 @@
 // ignore_for_file: unnecessary_null_comparison
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:fluttercontactpicker/fluttercontactpicker.dart';
 
@@ -56,26 +58,19 @@ class MyCompanion extends StatelessWidget {
       final contact = await FlutterContactPicker.pickPhoneContact();
 
       if (contact == null) {
-        // User canceled contact picking
-        print('User canceled picking a contact');
         return;
       }
 
-      String CompanionName = contact.fullName ?? '';
-      String CompanionNumber = contact.phoneNumber?.number ?? '';
-      if (CompanionName.isNotEmpty && CompanionNumber.isNotEmpty) {
+      String companionName = contact.fullName ?? '';
+      String companionNumber = contact.phoneNumber?.number ?? '';
+      if (companionName.isNotEmpty && companionNumber.isNotEmpty) {
         companionList.add({
-          "name": CompanionName,
-          "number": CompanionNumber,
+          "name": companionName,
+          "number": companionNumber,
         });
-
-        print('$CompanionName==$CompanionNumber');
-        print('added ${companionList.length}');
-      } else {
-        print('List is Empty');
-      }
+      } else {}
     } catch (e) {
-      print('Error picking contact: $e');
+      log(-1);
     }
   }
 
@@ -100,7 +95,7 @@ class MyCompanion extends StatelessWidget {
                     return Container(
                       height: 80,
                       decoration: BoxDecoration(
-                          color: Color.fromARGB(239, 255, 255, 255),
+                          color: const Color.fromARGB(239, 255, 255, 255),
                           borderRadius: BorderRadius.circular(10)),
                       child: ListTile(
                         trailing: IconButton(

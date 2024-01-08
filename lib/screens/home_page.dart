@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:traverse_1/custom_widgets/bottomnav_bar.dart';
 import 'package:traverse_1/data/functions/tripdata.dart';
 import 'package:traverse_1/screens/app_details/settings_page.dart';
-import 'package:traverse_1/screens/trip_adding/trip_date.dart';
+import 'package:traverse_1/screens/trip_adding/trip_date_adding.dart';
 import 'package:traverse_1/screens/trip_details/ongoing_trip.dart';
 import 'package:traverse_1/screens/trip_details/recent_trips.dart';
 import 'package:traverse_1/screens/trip_details/search_trip.dart';

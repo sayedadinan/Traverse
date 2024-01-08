@@ -10,20 +10,16 @@ class MultipleImageSelector extends StatefulWidget {
       : super(key: key);
 
   @override
-  _MultipleImageSelectorState createState() => _MultipleImageSelectorState();
+  MultipleImageSelectorState createState() => MultipleImageSelectorState();
 }
 
-class _MultipleImageSelectorState extends State<MultipleImageSelector> {
+class MultipleImageSelectorState extends State<MultipleImageSelector> {
   List<XFile> selectedImages = [];
 
   Future<void> pickMultipleImagesFromGallery() async {
-    final pickedImages = await ImagePicker().pickMultiImage(
-        // Adjust parameters according to your requirements
-        // maxWidth: 1000,
-        // maxHeight: 1000,
-        );
+    final pickedImages = await ImagePicker().pickMultiImage();
 
-    if (pickedImages.isNotEmpty && pickedImages.isNotEmpty) {
+    if (pickedImages.isNotEmpty) {
       setState(() {
         selectedImages.clear(); // Clear existing images
         selectedImages.addAll(pickedImages);
@@ -35,56 +31,53 @@ class _MultipleImageSelectorState extends State<MultipleImageSelector> {
 
   @override
   Widget build(BuildContext context) {
-    // final Size screenSize = MediaQuery.of(context).size;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        GestureDetector(
-          onTap: () {
-            pickMultipleImagesFromGallery();
-          },
-          child: Visibility(
-            visible: selectedImages.isEmpty,
-            child: Container(
-              width: 370,
-              height: 150,
-              decoration: BoxDecoration(
-                color: Colors.blue,
-                borderRadius: BorderRadius.circular(20),
-                // Display placeholder image or first selected image
-                image: DecorationImage(
-                  image: selectedImages.isNotEmpty
-                      ? FileImage(File(selectedImages.first.path))
-                          as ImageProvider<Object>
-                      : const AssetImage(
-                          'assets/placeholder for traverse.jpg',
+    return GestureDetector(
+      onTap: () {
+        pickMultipleImagesFromGallery();
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const SizedBox(height: 13),
+          selectedImages.isNotEmpty
+              ? CarouselSlider.builder(
+                  itemCount: selectedImages.length,
+                  options: CarouselOptions(
+                    aspectRatio: 16 / 9,
+                    enlargeCenterPage: true,
+                    enableInfiniteScroll: false,
+                  ),
+                  itemBuilder:
+                      (BuildContext context, int index, int realIndex) {
+                    return Container(
+                      width: 370,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        image: DecorationImage(
+                          image: FileImage(File(selectedImages[index].path)),
+                          fit: BoxFit.cover,
                         ),
-                  fit: BoxFit
-                      .fitWidth, // Set fitWidth to contain image within the container width
+                      ),
+                    );
+                  },
+                )
+              : Container(
+                  // Display a placeholder container
+                  width: 370,
+                  height: 150,
+                  decoration: BoxDecoration(
+                    color: Colors.grey, // Placeholder color
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: const Icon(
+                    Icons.add_photo_alternate,
+                    size: 40,
+                    color: Colors.white,
+                  ),
                 ),
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(height: 13),
-        selectedImages.isNotEmpty
-            ? CarouselSlider.builder(
-                itemCount: selectedImages.length,
-                options: CarouselOptions(
-                  aspectRatio: 16 / 9,
-                  enlargeCenterPage: true,
-                  enableInfiniteScroll: false,
-                  // viewportFraction: 0.8,
-                ),
-                itemBuilder: (BuildContext context, int index, int realIndex) {
-                  return Image.file(
-                    File(selectedImages[index].path),
-                    fit: BoxFit.cover,
-                  );
-                },
-              )
-            : const SizedBox(),
-      ],
+        ],
+      ),
     );
   }
 }

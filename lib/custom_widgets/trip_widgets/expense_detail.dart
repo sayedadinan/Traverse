@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:traverse_1/custom_widgets/trip_widgets/details_tab.dart';
 import 'package:traverse_1/data/functions/properties_trip.dart';
 import 'package:traverse_1/data/models/trip/trip_model.dart';
 import 'package:traverse_1/screens/trip_details/add_expenses.dart';
@@ -37,7 +36,7 @@ class _ExpensedetailsState extends State<Expensedetails> {
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
-            final data = snapshot.data as List<dynamic>?; // Use nullable type
+            final data = snapshot.data; // Use nullable type
             if (data == null || data.isEmpty) {
               return const Center(
                 child: Text(
@@ -94,8 +93,7 @@ class _ExpensedetailsState extends State<Expensedetails> {
                                       Navigator.pushReplacement(
                                           context,
                                           (MaterialPageRoute(
-                                              builder: (context) =>
-                                                  Tripdetails1(
+                                              builder: (context) => Tripdetails(
                                                     trip: widget.trip,
                                                   ))));
                                     },
@@ -135,7 +133,7 @@ class _ExpensedetailsState extends State<Expensedetails> {
                                               context,
                                               (MaterialPageRoute(
                                                   builder: (context) =>
-                                                      Tripdetails1(
+                                                      Tripdetails(
                                                         trip: widget.trip,
                                                       ))));
                                           // Navigator.pop(context);

@@ -1,6 +1,8 @@
 import 'dart:io';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:traverse_1/custom_widgets/trip_widgets/edit_coverimage.dart';
 import 'package:traverse_1/data/functions/properties_trip.dart';
 import 'package:traverse_1/data/models/trip/trip_model.dart';
 import 'package:traverse_1/screens/home_page.dart';
@@ -35,6 +37,7 @@ class _EditingtripState extends State<Editingtrip> {
   final formKey = GlobalKey<FormState>();
   String? imagePath;
   File? profileimage;
+  List<XFile> newlySelectedImages = [];
   @override
   void initState() {
     super.initState();
@@ -60,7 +63,7 @@ class _EditingtripState extends State<Editingtrip> {
             .addAll(existingCompanions); // Add fetched companions to the list
       });
     } catch (e) {
-      print('Error getting existing companions: $e');
+      log(-1);
     }
   }
 
@@ -77,36 +80,13 @@ class _EditingtripState extends State<Editingtrip> {
               key: formKey,
               child: Column(
                 children: [
-                  Center(
-                    child: GestureDetector(
-                      onTap: () {
-                        pickImageFromGallery();
-                      },
-                      child: Container(
-                        width: 370,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          color: Colors.blue,
-                          borderRadius: BorderRadius.circular(20),
-                          image: DecorationImage(
-                            image: imagePath != null &&
-                                    File(imagePath!).existsSync()
-                                ? FileImage(File(imagePath!))
-                                    as ImageProvider<Object>
-                                : const AssetImage(
-                                    'assets/placeholder for traverse.jpg',
-                                  ),
-                            fit: BoxFit.cover,
-                            // image: imagePath != null && File(imagePath).existsSync()
-                            //     ? FileImage(File(imagePath))
-                            //         as ImageProvider<Object>?
-                            //     : const AssetImage(
-                            //         'assets/user.png',
-                            //       ),
-                          ),
-                        ),
-                      ),
-                    ),
+                  EditCoverimage(
+                    onImagesSelected: (images) {
+                      setState(() {
+                        newlySelectedImages = images;
+                      });
+                    },
+                    trip: widget.trip,
                   ),
                   const SizedBox(height: 13),
                   Padding(
@@ -328,7 +308,7 @@ class _EditingtripState extends State<Editingtrip> {
         imagePath = pickedImage.path;
       });
     } catch (e) {
-      // print('Error picking image: $e');
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Error picking image. Please try again.'),
@@ -350,13 +330,6 @@ class _EditingtripState extends State<Editingtrip> {
         return; // Prevent form submission if values are not selected
       }
 
-      if (companionList.isNotEmpty) {
-        for (var companion in companionList) {
-          await updateCompanionDetailsForTrip(widget.trip.id!, companion);
-        }
-        print('ssa');
-      }
-
       await editTrip(
           tripNameController.text,
           destinationController.text,
@@ -368,11 +341,11 @@ class _EditingtripState extends State<Editingtrip> {
           endDateController.text,
           widget.trip.id,
           widget.trip.userid,
+          newlySelectedImages,
           companionList);
 
-      print('id number ${widget.trip.id}');
-      print(widget.trip.userid as num);
       await getalltrip(widget.trip.userid!);
+      // ignore: use_build_context_synchronously
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
           builder: (context) => Homescreen(

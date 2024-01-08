@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:traverse_1/custom_widgets/elevatedbuttons.dart';
 import 'package:traverse_1/custom_widgets/trip_widgets/textfields.dart';
@@ -11,10 +13,10 @@ class Expenses extends StatefulWidget {
   const Expenses({Key? key, required this.trip}) : super(key: key);
 
   @override
-  _ExpensesState createState() => _ExpensesState();
+  ExpensesState createState() => ExpensesState();
 }
 
-class _ExpensesState extends State<Expenses> {
+class ExpensesState extends State<Expenses> {
   final sponsorController = TextEditingController();
   final reasonController = TextEditingController();
   final moneyController = TextEditingController();
@@ -104,9 +106,10 @@ class _ExpensesState extends State<Expenses> {
                   if (_formKey.currentState!.validate()) {
                     await addingExpense();
                     await getExpenses(widget.trip.id!);
+                    // ignore: use_build_context_synchronously
                     Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(
-                        builder: (context) => Tripdetails1(trip: widget.trip),
+                        builder: (context) => Tripdetails(trip: widget.trip),
                       ),
                       (Route<dynamic> route) => false,
                     );
@@ -132,10 +135,8 @@ class _ExpensesState extends State<Expenses> {
       final expenseId = await addExpense(expense);
       expense.id = expenseId;
       getExpenses(widget.trip.id!);
-      print('Added expense with ID: ${expense.id}');
-      print('Added from local');
     } catch (e) {
-      print('Not added because of error: $e');
+      log(-1);
     }
   }
 }

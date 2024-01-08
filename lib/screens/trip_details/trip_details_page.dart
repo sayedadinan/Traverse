@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:traverse_1/custom_widgets/trip_widgets/details_tab.dart';
@@ -9,8 +10,8 @@ import 'package:traverse_1/data/models/trip/trip_model.dart';
 import 'package:traverse_1/screens/trip_details/trip_editing.dart';
 import '../../data/functions/tripdata.dart';
 
-class Tripdetails1 extends StatefulWidget {
-  const Tripdetails1({
+class Tripdetails extends StatefulWidget {
+  const Tripdetails({
     Key? key,
     required this.trip,
   }) : super(key: key);
@@ -18,10 +19,10 @@ class Tripdetails1 extends StatefulWidget {
   final Tripmodel trip;
 
   @override
-  State<Tripdetails1> createState() => _Tripdetails1State();
+  State<Tripdetails> createState() => _TripdetailsState();
 }
 
-class _Tripdetails1State extends State<Tripdetails1>
+class _TripdetailsState extends State<Tripdetails>
     with SingleTickerProviderStateMixin {
   late TabController tabController;
   String? imagePath;
@@ -37,8 +38,6 @@ class _Tripdetails1State extends State<Tripdetails1>
     final Size screenSize = MediaQuery.of(context).size;
     getExpenses(widget.trip.id!);
     return Scaffold(
-      // backgroundColor: Colors.teal[200],
-      // backgroundColor: Colors.black,
       backgroundColor: const Color.fromARGB(255, 30, 28, 28),
       appBar: AppBar(
         centerTitle: true,
@@ -78,32 +77,59 @@ class _Tripdetails1State extends State<Tripdetails1>
         child: Column(
           children: [
             SizedBox(height: screenSize.height * 0.02),
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 20),
-                child: Container(
-                  width: screenSize.width * 0.9,
-                  height: screenSize.height * 0.2,
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(20),
-                    image: DecorationImage(
-                      image: widget.trip.coverpic != null &&
-                              File(widget.trip.coverpic!).existsSync()
-                          ? FileImage(File(widget.trip.coverpic!))
-                              as ImageProvider<Object>
-                          : const AssetImage(
-                              'assets/placeholder for traverse.jpg',
-                            ),
-                      fit: BoxFit.cover,
+            FutureBuilder<List<String>>(
+              future: getCoverImages(widget.trip.id!),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  return Center(
+                    child: Text(
+                      'Error loading images: ${snapshot.error}',
+                      style: const TextStyle(color: Colors.amber),
                     ),
-                  ),
-                ),
-              ),
+                  );
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return Container(
+                    width: screenSize.width * 0.4,
+                    height: 150,
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage(
+                                'assets/placeholder for traverse.jpg'))),
+                  );
+                } else {
+                  return CarouselSlider(
+                    options: CarouselOptions(
+                      height: screenSize.height *
+                          0.2, // Adjust the height as needed
+                      enlargeCenterPage: true,
+                      enableInfiniteScroll: true,
+                      autoPlay: true,
+                    ),
+                    items: snapshot.data!.map((imagePath) {
+                      File imageFile = File(imagePath);
+                      if (!imageFile.existsSync()) {
+                        throw Exception("File does not exist");
+                      }
+                      return Container(
+                        width: screenSize.width * 0.9,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          image: DecorationImage(
+                            image: FileImage(imageFile),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                  );
+                }
+              },
             ),
-            // Photoadd(
-            //   trip: widget.trip,
-            // ),
+            SizedBox(
+              height: screenSize.height * 0.04,
+            ),
             Padding(
               padding: const EdgeInsets.only(bottom: 28),
               child: Row(

@@ -49,12 +49,10 @@ class Detailstab extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(bottom: 39),
           child: Container(
-            // color: const Color.fromARGB(255, 59, 58, 54),
             width: screenSize.width * 0.8,
             height: screenSize.height * 0.3,
             decoration: BoxDecoration(
                 color: const Color.fromARGB(255, 59, 58, 54),
-                // color: Color.fromARGB(255, 255, 214, 93),
                 border: Border.all(color: Colors.amber),
                 borderRadius: BorderRadius.circular(19)),
             child: Column(
@@ -74,7 +72,7 @@ class Detailstab extends StatelessWidget {
                   height: screenSize.height * 0.01,
                 ),
                 Text(
-                  '₹' + trip.budget.toString(),
+                  '₹  ${trip.budget.toString()}',
                   style: const TextStyle(
                       fontSize: 22,
                       color: Colors.white,
@@ -148,7 +146,7 @@ class Detailstab extends StatelessWidget {
                         ),
                   ),
                   TextSpan(
-                    text: '${trip.transport}',
+                    text: trip.transport,
                     style: const TextStyle(
                       fontSize: 19,
                       color: Colors.white, // Color for the database value

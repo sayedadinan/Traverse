@@ -30,8 +30,7 @@ class _OngoingtripsState extends State<Ongoingtrips> {
 
   @override
   void dispose() {
-    tripdatas.removeListener(
-        _listener); // Remove the listener when disposing of the widget
+    tripdatas.removeListener(_listener);
     super.dispose();
   }
 
@@ -66,12 +65,10 @@ class _OngoingtripsState extends State<Ongoingtrips> {
                   ),
                 );
               } else {
-                // Display the ListView builder with retrieved trips
                 return ListView.builder(
                   itemCount: snapshot.data!.length,
                   itemBuilder: (context, index) {
                     final trip = snapshot.data![index];
-                    // Build UI for each trip here (unchanged from previous code)
                     return Card(
                       color: Colors.green[200],
                       elevation: 4,
@@ -85,7 +82,7 @@ class _OngoingtripsState extends State<Ongoingtrips> {
                       child: GestureDetector(
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => Tripdetails1(trip: trip),
+                            builder: (context) => Tripdetails(trip: trip),
                           ));
                         },
                         child: Column(

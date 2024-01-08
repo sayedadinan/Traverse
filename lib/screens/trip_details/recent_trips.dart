@@ -30,16 +30,9 @@ class _UpcomingtripsState extends State<Recenttrips> {
 
   @override
   void dispose() {
-    tripdatas.removeListener(
-        _listener); // Remove the listener when disposing of the widget
+    tripdatas.removeListener(_listener);
     super.dispose();
   }
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _futureTrips = getRecentTrip(widget.userId);
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +40,7 @@ class _UpcomingtripsState extends State<Recenttrips> {
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(
-                'assets/pexels-dmitriy-ganin-7772716.jpg'), // Replace with your image path
+            image: AssetImage('assets/pexels-dmitriy-ganin-7772716.jpg'),
             fit: BoxFit.cover,
           ),
         ),
@@ -57,7 +49,7 @@ class _UpcomingtripsState extends State<Recenttrips> {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
-                child: CircularProgressIndicator(), // Loading indicator
+                child: CircularProgressIndicator(),
               );
             } else if (snapshot.hasError) {
               return Center(
@@ -86,7 +78,7 @@ class _UpcomingtripsState extends State<Recenttrips> {
                     child: GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => Tripdetails1(trip: trip),
+                          builder: (context) => Tripdetails(trip: trip),
                         ));
                       },
                       child: Column(

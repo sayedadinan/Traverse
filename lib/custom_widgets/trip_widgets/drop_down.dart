@@ -24,7 +24,6 @@ class _DropdownmenuState extends State<Dropdownmenu> {
     super.initState();
     dropdownValue = widget.initialValue;
 
-    // Check for duplicate values in the items list
     final uniqueValues = widget.items.toSet();
     if (uniqueValues.length != widget.items.length) {
       throw AssertionError(

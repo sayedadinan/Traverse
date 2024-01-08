@@ -103,7 +103,7 @@ class _LoginState extends State<Login> {
                     const Size(350, 55),
                   ),
                   backgroundColor: MaterialStateProperty.all(
-                    Color.fromARGB(255, 40, 57, 41),
+                    const Color.fromARGB(255, 40, 57, 41),
                   ),
                 ),
                 onPressed: () {
@@ -144,6 +144,7 @@ class _LoginState extends State<Login> {
 
       final user = await validateprofile(username, password);
       if (user != null) {
+        // ignore: use_build_context_synchronously
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
               builder: (context) => Homescreen(
@@ -152,6 +153,7 @@ class _LoginState extends State<Login> {
           (route) => false,
         );
       } else {
+        // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content:

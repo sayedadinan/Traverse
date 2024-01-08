@@ -12,6 +12,7 @@ class Tripmodel {
   final String endingDate;
   final dynamic coverpic;
   List<CompanionModel> companions;
+  final List<String> imagePaths;
   Tripmodel({
     required this.tripname,
     required this.destination,
@@ -23,6 +24,7 @@ class Tripmodel {
     this.coverpic,
     this.id,
     this.companions = const [],
+    this.imagePaths = const [],
     this.userid,
   });
 

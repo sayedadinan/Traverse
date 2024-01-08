@@ -1,4 +1,7 @@
+import 'dart:io';
+import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:traverse_1/data/functions/properties_trip.dart';
 import 'package:traverse_1/data/models/trip/trip_model.dart';
@@ -14,57 +17,108 @@ Future<dynamic> initializationtrip() async {
     onCreate: (db, version) async {
       await db.execute(
           'CREATE TABLE tripdata (id INTEGER PRIMARY KEY, tripname TEXT, destination TEXT, budget REAL, transport TEXT, triptype TEXT, coverpic TEXT, startingDate TEXT, endingDate TEXT, userid INTEGER)');
+      db.execute(
+          'CREATE TABLE coverimage (id INTEGER PRIMARY KEY, tripID INTEGER, imagePath TEXT)');
     },
   );
 }
 
 ////////////////////////////////////////////trip data adding ///////////////////////////////////////////////
-
-Future<int> tripadding(
-    Tripmodel tripmodel, List<Map<String, dynamic>> companionList) async {
+Future<int> tripAdding(
+  Tripmodel tripModel,
+  List<Map<String, dynamic>> companionList,
+  List<File> selectedImages,
+) async {
   try {
     final tripValues = {
-      'userid': tripmodel.userid,
-      'id': tripmodel.id,
-      'tripname': tripmodel.tripname,
-      'destination': tripmodel.destination,
-      'budget': tripmodel.budget,
-      'transport': tripmodel.transport,
-      'triptype': tripmodel.triptype,
-      'coverpic': tripmodel.coverpic,
-      'startingDate': tripmodel.startingDate,
-      'endingDate': tripmodel.endingDate,
+      'userid': tripModel.userid,
+      'id': tripModel.id,
+      'tripname': tripModel.tripname,
+      'destination': tripModel.destination,
+      'budget': tripModel.budget,
+      'transport': tripModel.transport,
+      'triptype': tripModel.triptype,
+      'startingDate': tripModel.startingDate,
+      'endingDate': tripModel.endingDate,
     };
+
     int tripId = await tripdb!.insert('tripdata', tripValues);
 
     if (tripId > 0) {
-      for (var companion in companionList) {
+      final companionFuture = Future.wait(companionList.map((companion) async {
         companion['tripID'] = tripId;
+        return addCompanions(companion);
+      }));
 
-        // Insert companion data into 'companions' table
-        await addCompanions(companion);
-      }
-      await getalltrip(tripmodel.userid!);
+      final imagesFuture = Future.wait(selectedImages.map((imagePath) async {
+        await addCoverImage(tripId, imagePath);
+      }));
+
+      // Wait for both companions and images insertion to complete
+      await Future.wait([companionFuture, imagesFuture]);
+
+      await getalltrip(tripModel.userid!);
     }
     return tripId;
   } catch (e) {
-    print('Error adding trip to db: $e');
     return -1;
   }
 }
 
-Future<void> updateCompanionData(
-    int tripId, int companionId, Map<String, dynamic> updatedData) async {
+Future<void> addCoverImage(int tripId, File imagePathFile) async {
   try {
-    // Update companion data in the database based on tripId and companionId
-    await tripdb!.update('companions', updatedData,
-        where: 'tripID = ? AND id = ?', whereArgs: [tripId, companionId]);
+    String imagePathValue = imagePathFile.path.toString();
 
-    print('Companion data updated successfully');
+    final imageValue = {
+      'tripID': tripId,
+      'imagePath': imagePathValue,
+    };
+    await tripdb!.insert('coverimage', imageValue);
   } catch (e) {
-    print('Error updating companion data: $e');
+    log(-1);
   }
 }
+
+Future<List<String>> getCoverImages(int tripId) async {
+  try {
+    final result = await tripdb!
+        .query('coverimage', where: 'tripID = ?', whereArgs: [tripId]);
+    final List<String> coverImagePaths = [];
+
+    for (var data in result) {
+      coverImagePaths.add(data['imagePath'].toString());
+    }
+
+    return coverImagePaths;
+  } catch (e) {
+    return [];
+  }
+}
+
+Future<void> updateImagesInDatabase(
+    int tripId, List<File> newlySelectedImages) async {
+  try {
+    await deleteExistingImagesFromDatabase(tripId);
+
+    // Loop through newlySelectedImages and add images one by one
+    for (var image in newlySelectedImages) {
+      await addCoverImage(tripId, image);
+    }
+  } catch (e) {
+    log(e as num);
+  }
+}
+
+Future<void> deleteExistingImagesFromDatabase(int tripId) async {
+  try {
+    // Delete existing images associated with the trip
+    await tripdb!
+        .delete('coverimage', where: 'tripID = ?', whereArgs: [tripId]);
+  } catch (e) {
+    // Handle error as needed
+  }
+}
+
 ////////////////////////////////////getalldata from tripdata//////////////////////////////////
 
 Future<List<Tripmodel>> getalltrip(int userId) async {
@@ -79,6 +133,7 @@ Future<List<Tripmodel>> getalltrip(int userId) async {
   tripdatas.notifyListeners();
   return tripList;
 }
+
 ///////////////////////////////////////editing trip///////////////////////////////////////
 
 Future<int> editTrip(
@@ -92,6 +147,7 @@ Future<int> editTrip(
   endingDate,
   id,
   userid,
+  List<XFile> newlySelectedImages,
   List<Map<String, dynamic>> companionList,
 ) async {
   try {
@@ -114,38 +170,25 @@ Future<int> editTrip(
       whereArgs: [id],
     );
 
-    if (rowsAffected > 0) {
-      // Update companions associated with the trip
-      for (var companion in companionList) {
-        // Check if the companion has an 'id'
-        if (companion.containsKey('id')) {
-          // Set the tripID for the companion being updated
-          companion['tripID'] = id;
+    await updateImagesInDatabase(id, convertXFilesToFiles(newlySelectedImages));
 
-          // Update the companion in the 'companions' table
-          await updateCompanionDetailsForTrip(id, companion);
-        }
-      }
-      print('Companions updated successfully');
-    } else {
-      print('No trip found with ID: $id');
-    }
-
-    print('Rows affected in the database: $rowsAffected');
     return rowsAffected;
   } catch (e) {
-    print('Error editing trip in db: $e');
     return -1;
   }
 }
 
+List<File> convertXFilesToFiles(List<XFile> xFiles) {
+  List<File> files = [];
+  for (var xFile in xFiles) {
+    files.add(File(xFile.path));
+  }
+  return files;
+}
+
 ///////////////////////
 Future<void> printExistingRecords() async {
-  final result = await tripdb!.query('tripdata');
-  print('Existing Records:');
-  for (var record in result) {
-    print(record); // Print each record in the table
-  }
+  await tripdb!.query('tripdata');
 }
 
 ////////////////////////////////////////delete trip ///////////////////////////////////////////////////...........................
@@ -163,7 +206,6 @@ Future<void> deletetrip(id, userid) async {
 
 Future<List<Tripmodel>> searchTripsByName(String searchTerm, int userId) async {
   List<Tripmodel> searchResults = [];
-  print('Search used');
   try {
     final result = await tripdb!.query(
       'tripdata',
@@ -178,8 +220,7 @@ Future<List<Tripmodel>> searchTripsByName(String searchTerm, int userId) async {
 
     return searchResults;
   } catch (e) {
-    print('Error searching trips in db: $e');
-    return []; // Return an empty list in case of an error
+    return [];
   }
 }
 
@@ -187,56 +228,34 @@ Future<List<Tripmodel>> searchTripsByName(String searchTerm, int userId) async {
 Future<List<Tripmodel>> getOngoingTrips(int userId) async {
   List<Tripmodel> ongoingTrips = [];
   DateTime currentDate = DateTime.now();
-  String convertedDate =
-      DateFormat('dd-MMM-yyyy').format(currentDate); // Change date format
-
+  String convertedDate = DateFormat('dd-MMM-yyyy').format(currentDate);
   var trips = await tripdb!.query('tripdata',
       where: 'userid=? AND startingDate <=? AND endingDate >=?',
       whereArgs: [userId, convertedDate, convertedDate]);
-  print("trips ongoing $trips");
   tripdatas.value.clear();
   for (var map in trips) {
     if (map['startingDate'] != null) {
       Tripmodel obj = Tripmodel.fromMap(map);
-
-      // Fetch companions for this trip and add them to obj
-      // var companions =
-      //     await db!.query('companions', where: 'id = ?', whereArgs: [obj.id]);
-
-      // obj.companions = companions
-      //     .map((companionMap) => CompanionModel.fromJson(companionMap))
-      //     .toList();
-
-      ongoingTrips.add(obj); // Add the ongoing trip to the list
+      ongoingTrips.add(obj);
     }
   }
-
-  // Sort ongoing trips by startingDate
   ongoingTrips.sort((a, b) => a.startingDate.compareTo(b.startingDate));
-
   return ongoingTrips;
 }
 
 Future<List<Tripmodel>> getUpcomingTrip(int userid) async {
   List<Tripmodel> tripsList = [];
-
   DateTime currentDate = DateTime.now();
   String formattedCurrentDate = DateFormat('dd-MMM-yyyy').format(currentDate);
-
-  // Adjust the SQL query to fetch trips with a starting date strictly after the current date
   List<Map<String, dynamic>> trips = await tripdb!.query('tripdata',
       where: 'userid=? AND startingDate > ?',
       whereArgs: [userid, formattedCurrentDate]);
-  print("trips upcoming$trips");
-
-  // Iterate through fetched data and convert to Tripmodel objects
   for (var tripData in trips) {
     Tripmodel trip = Tripmodel.fromMap(tripData);
 
     tripsList.add(trip);
   }
-
-  return tripsList; // Return the list of Tripmodels
+  return tripsList;
 }
 
 //////////////////////////////////////////////////getrecent///////////////////////////////////
@@ -254,8 +273,6 @@ Future<List<Tripmodel>> getRecentTrip(int userid) async {
   for (var map in trips) {
     if (map['endingDate'] != null) {
       Tripmodel trip = Tripmodel.fromMap(map);
-
-      // Fetch companions for this trip and add them to obj
       tripsList.add(trip);
     }
   }

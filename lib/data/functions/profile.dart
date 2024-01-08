@@ -48,7 +48,7 @@ Future<int> addProfile(Profile value) async {
     );
 
     log('settaanu$a');
-    return a; // Return the ID of the inserted row
+    return a;
   } catch (e) {
     log('Error inserting dataaaa: $e');
     return -1;
@@ -68,7 +68,7 @@ Future<void> editProfiledata(id, imagex, username, email, password) async {
     var a = await profileDB
         .update('profile', dataflow, where: 'id=?', whereArgs: [id]);
     refreshdata();
-    print(a);
+    log(a as String);
   } catch (e) {
     log('Error editing data: $e');
   }

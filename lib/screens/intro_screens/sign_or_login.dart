@@ -30,7 +30,7 @@ class Identity extends StatelessWidget {
                     const Size(220, 25),
                   ),
                   backgroundColor: MaterialStateProperty.all(
-                    Color.fromARGB(255, 40, 57, 41),
+                    const Color.fromARGB(255, 40, 57, 41),
                   ),
                 ),
                 onPressed: () {
@@ -51,7 +51,7 @@ class Identity extends StatelessWidget {
                     const Size(220, 25),
                   ),
                   backgroundColor: MaterialStateProperty.all(
-                    Color.fromARGB(255, 40, 57, 41),
+                    const Color.fromARGB(255, 40, 57, 41),
                   ),
                 ),
                 onPressed: () {

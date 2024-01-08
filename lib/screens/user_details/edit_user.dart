@@ -67,23 +67,6 @@ class _EditmailState extends State<Edituser> {
                                   'assets/user.png',
                                 ),
                         ),
-                        // child: CircleAvatar(
-                        //   backgroundColor: Colors.transparent,
-                        //   backgroundImage: imagePath != null &&
-                        //           imagePath!.isNotEmpty
-                        //       ? FileImage(File(
-                        //           imagePath!)) // Display file image if imagePath points to a file
-                        //       : AssetImage(
-                        //           'assets/user.png'), // Default asset image if imagePath is empty
-                        //   radius: 90,
-                        // ),
-                        // child: CircleAvatar(
-                        //   backgroundImage: imagePath == null
-                        //       ? FileImage(File(imagePath!))
-                        //       : AssetImage('assets/user.png'),
-                        //   // backgroundImage: FileImage(File(imagePath!)),
-                        //   radius: 90,
-                        // ),
                       )
                     ],
                   ),
@@ -134,14 +117,10 @@ class _EditmailState extends State<Edituser> {
                         filled: true,
                         labelText: 'Email',
                         hintText: 'Enter your new email',
-                        // errorText: validateuser ? 'value cant be Empty' : null,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-
-                      // textcontent: 'Full Name',
-                      // keyType: TextInputType.name,
                       controller: emailController,
                     ),
                   ),
@@ -183,16 +162,17 @@ class _EditmailState extends State<Edituser> {
                             const Size(350, 55),
                           ),
                           backgroundColor: MaterialStateProperty.all(
-                            const Color.fromARGB(255, 37, 62, 207),
+                            Colors.teal[200],
                           ),
                         ),
                         onPressed: () {
                           editProfileClicked(context);
                           // Navigator.of(context).pop();
                         },
-                        child: const Text(
+                        child: Text(
                           'UPDATE',
-                          style: TextStyle(color: Colors.amber, fontSize: 25),
+                          style:
+                              TextStyle(color: Colors.green[800], fontSize: 25),
                         ),
                       ),
                     ],
@@ -236,13 +216,11 @@ class _EditmailState extends State<Edituser> {
           nameController.text.toLowerCase(),
           emailController.text.toLowerCase(),
           newPassword,
-
-          // Pass the new password
         );
 
-        // Refresh the profile data
         refreshRefreshid(widget.profileid.id!);
 
+        // ignore: use_build_context_synchronously
         Navigator.of(context).pop();
       } else {
         // Show an error message if the new password is the same as the existing password

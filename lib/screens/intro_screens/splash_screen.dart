@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:traverse_1/data/models/profile/user.dart';
 // import 'package:traverse_1/screens/intro_screens/app_board.dart';
 import 'package:traverse_1/screens/home_page.dart';
-import 'package:traverse_1/screens/intro_screens/identity_page.dart';
+import 'package:traverse_1/screens/intro_screens/sign_or_login.dart';
 import '../../data/functions/profile.dart';
 
 class Splashscreen extends StatefulWidget {
@@ -55,6 +55,7 @@ class _SplashscreenState extends State<Splashscreen> {
 
     if (userData != null) {
       // User is logged in, navigate to bottomNavigationBar
+      // ignore: use_build_context_synchronously
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
           builder: (context) => Homescreen(
@@ -64,6 +65,7 @@ class _SplashscreenState extends State<Splashscreen> {
         (route) => false,
       );
     } else {
+      // ignore: use_build_context_synchronously
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
           builder: (context) => const Identity(),

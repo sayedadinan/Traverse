@@ -18,7 +18,7 @@ class Companiendetails extends StatelessWidget {
             SizedBox(
               width: screenSize.width * 0.04,
             ),
-            Text(
+            const Text(
               'Companions',
               style: TextStyle(color: Colors.amber, fontSize: 28),
             )
@@ -27,14 +27,12 @@ class Companiendetails extends StatelessWidget {
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: FutureBuilder<List<Map<String, dynamic>>>(
-            future: getCompanions(
-                trip.id!), // Assuming widget.trip.id is the trip ID
+            future: getCompanions(trip.id!),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const CircularProgressIndicator(); // Display a loading indicator while fetching data
+                return const CircularProgressIndicator();
               } else if (snapshot.hasError) {
-                return Text(
-                    'Error: ${snapshot.error}'); // Display an error if fetching data fails
+                return Text('Error: ${snapshot.error}');
               } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                 return const Padding(
                   padding: EdgeInsets.only(left: 110, top: 20),
@@ -42,7 +40,7 @@ class Companiendetails extends StatelessWidget {
                     'enjoy the trip',
                     style: TextStyle(color: Colors.amber, fontSize: 26),
                   ),
-                ); // Display a message if no data is available
+                );
               } else {
                 List<Map<String, dynamic>> companions = snapshot.data!;
                 return Row(
@@ -58,8 +56,7 @@ class Companiendetails extends StatelessWidget {
                               backgroundColor: Colors.amber,
                               maxRadius: 29,
                               child: Text(
-                                companion['name'][
-                                    0], // Assuming the name is stored in a field called 'name'
+                                companion['name'][0],
                                 style: const TextStyle(fontSize: 20),
                               ),
                             ),

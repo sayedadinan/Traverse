@@ -4,7 +4,6 @@ import 'package:traverse_1/data/functions/profile.dart';
 import 'package:traverse_1/screens/user_details/edit_user.dart';
 
 class Profilepage extends StatefulWidget {
-  // final Profile profileid;
   const Profilepage({
     Key? key,
   }) : super(key: key);
@@ -48,7 +47,7 @@ class _ProfilepageState extends State<Profilepage> {
                                 File(value.first.imagex!).existsSync()
                             ? FileImage(File(value.first.imagex!))
                                 as ImageProvider<Object>?
-                            : AssetImage(
+                            : const AssetImage(
                                 'assets/user.png',
                               ),
                         // radius: 70,
@@ -116,7 +115,7 @@ class _ProfilepageState extends State<Profilepage> {
                           const Size(350, 55),
                         ),
                         backgroundColor: MaterialStateProperty.all(
-                          const Color.fromARGB(255, 37, 62, 207),
+                          Colors.teal[200],
                         ),
                       ),
                       onPressed: () {
@@ -126,9 +125,10 @@ class _ProfilepageState extends State<Profilepage> {
                                 )));
                         // addProfile();
                       },
-                      child: const Text(
+                      child: Text(
                         'Edit User',
-                        style: TextStyle(color: Colors.amber, fontSize: 25),
+                        style:
+                            TextStyle(color: Colors.green[800], fontSize: 25),
                       ),
                     ),
                   ],
@@ -145,16 +145,17 @@ class _ProfilepageState extends State<Profilepage> {
                           const Size(350, 55),
                         ),
                         backgroundColor: MaterialStateProperty.all(
-                          const Color.fromARGB(255, 37, 62, 207),
+                          Colors.teal[200],
                         ),
                       ),
                       onPressed: () {
                         Navigator.of(context).pop();
                         // addProfile();
                       },
-                      child: const Text(
+                      child: Text(
                         'Save User',
-                        style: TextStyle(color: Colors.amber, fontSize: 25),
+                        style:
+                            TextStyle(color: Colors.green[800], fontSize: 25),
                       ),
                     ),
                   ],
