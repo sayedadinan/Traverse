@@ -42,6 +42,14 @@ class _UpcomingtripsState extends State<Upcomingtrips> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Colors.teal[200],
+        title: const Text(
+          'Upcoming Trips',
+          style: TextStyle(color: Colors.amber, fontWeight: FontWeight.w500),
+        ),
+      ),
       body: Stack(
         children: [
           // Background Image

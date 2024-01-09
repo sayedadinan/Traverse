@@ -29,9 +29,9 @@ class _HomescreenState extends State<Homescreen> {
     getalltrip(widget.profileid);
     return Scaffold(
       appBar: AppBar(
-        // backgroundColor: Color.fromARGB(255, 40, 57, 41),
         backgroundColor: Colors.teal[200],
         centerTitle: true,
+        titleSpacing: 5,
         title: const Text(
           'TRAVERSE',
           style: TextStyle(color: Colors.amber),

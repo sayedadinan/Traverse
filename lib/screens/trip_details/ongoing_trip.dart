@@ -37,6 +37,14 @@ class _OngoingtripsState extends State<Ongoingtrips> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.teal[200],
+        centerTitle: true,
+        title: const Text(
+          'Ongoing Trips',
+          style: TextStyle(color: Colors.amber),
+        ),
+      ),
       body: Stack(
         children: [
           // Background Image
@@ -69,6 +77,11 @@ class _OngoingtripsState extends State<Ongoingtrips> {
                   itemCount: snapshot.data!.length,
                   itemBuilder: (context, index) {
                     final trip = snapshot.data![index];
+                    String firstImagePath = trip.imagePaths.isNotEmpty
+                        ? trip.imagePaths.first.toString()
+                        : 'assets/traverse 8.jpg';
+                    ImageProvider firstImageProvider =
+                        AssetImage(firstImagePath);
                     return Card(
                       color: Colors.green[200],
                       elevation: 4,
@@ -89,6 +102,10 @@ class _OngoingtripsState extends State<Ongoingtrips> {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             ListTile(
+                              leading: CircleAvatar(
+                                radius: 28,
+                                backgroundImage: firstImageProvider,
+                              ),
                               contentPadding: const EdgeInsets.all(16),
                               title: Text(
                                 trip.tripname,

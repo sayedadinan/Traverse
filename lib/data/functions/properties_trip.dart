@@ -5,6 +5,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:traverse_1/custom_widgets/trip_widgets/companiens_add.dart';
 import 'package:traverse_1/data/functions/tripdata.dart';
 import 'package:traverse_1/data/models/trip/expenses_model.dart';
+import 'package:traverse_1/data/models/trip/feedback_model.dart';
 import 'package:traverse_1/data/models/trip/media_model.dart';
 
 // import 'package:traverse_1/data/functions/tripdata.dart';
@@ -34,6 +35,8 @@ Future<void> initproperties() async {
             reason TEXT ,
             sponsor TEXT,
             amount INTEGER)''');
+      await db.execute(
+          '''CREATE TABLE feedbacktable (id INTEGER PRIMARY KEY, tripID INTEGER, feedback TEXT, feedbackdate TEXT)''');
     },
   );
 }
@@ -169,4 +172,36 @@ Future<int> getbalance(int tripId) async {
   } else {
     return -1;
   }
+}
+
+/////////////////////////////////////////////feedback adding session ...............////////////////////////////////////
+Future<int> feedbckadding(FeedbackModel values, int tripId) async {
+  try {
+    final id = await db!.insert('feedbacktable', {
+      'tripID': tripId, // Updated field name to 'tripID'
+      'feedback': values.feedback,
+      'feedbackdate': values.feedbackdate, // Added 'feedbackdate'
+    });
+    print('added');
+    return id;
+  } catch (e) {
+    print('Error adding feedback: $e');
+    throw Exception('Failed to add feedback');
+  }
+}
+
+Future<List<Map<String, dynamic>>> getfeedback(int tripid) async {
+  List<Map<String, dynamic>> feedbackList = [];
+  try {
+    feedbackList = await db!
+        .query('feedbacktable', where: 'tripID = ?', whereArgs: [tripid]);
+    return feedbackList;
+  } catch (e) {
+    print('Error retrieving feedback: $e');
+    return feedbackList;
+  }
+}
+
+Future<void> deletefeedback(int feedbackid) async {
+  await db!.delete('feedbacktable', where: 'id = ?', whereArgs: [feedbackid]);
 }

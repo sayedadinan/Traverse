@@ -14,7 +14,6 @@ class Identity extends StatelessWidget {
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Text(
                 'MAKE',
@@ -30,7 +29,7 @@ class Identity extends StatelessWidget {
                     const Size(220, 25),
                   ),
                   backgroundColor: MaterialStateProperty.all(
-                    const Color.fromARGB(255, 40, 57, 41),
+                    Colors.teal,
                   ),
                 ),
                 onPressed: () {
@@ -51,7 +50,7 @@ class Identity extends StatelessWidget {
                     const Size(220, 25),
                   ),
                   backgroundColor: MaterialStateProperty.all(
-                    const Color.fromARGB(255, 40, 57, 41),
+                    Colors.teal,
                   ),
                 ),
                 onPressed: () {

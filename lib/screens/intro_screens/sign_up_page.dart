@@ -46,10 +46,11 @@ class _SignupState extends State<Signup> {
                 const Text(
                   ' Glad to see You,\nCreate a account',
                   style: TextStyle(
-                    fontSize: 42,
-                    fontWeight: FontWeight.w500,
-                    color: Color.fromARGB(255, 63, 95, 65),
-                  ),
+                      fontSize: 42,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.amber
+                      // color: Color.fromARGB(255, 63, 95, 65),
+                      ),
                 ),
                 const SizedBox(
                   height: 17,
@@ -212,7 +213,7 @@ class _SignupState extends State<Signup> {
                       const Size(350, 55),
                     ),
                     backgroundColor: MaterialStateProperty.all(
-                      const Color.fromARGB(255, 40, 57, 41),
+                      Colors.teal,
                     ),
                   ),
                   onPressed: () {

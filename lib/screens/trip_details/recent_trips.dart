@@ -37,6 +37,14 @@ class _UpcomingtripsState extends State<Recenttrips> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.teal[200],
+        centerTitle: true,
+        title: const Text(
+          'Previous Trips',
+          style: TextStyle(color: Colors.amber),
+        ),
+      ),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(

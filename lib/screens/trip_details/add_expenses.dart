@@ -20,7 +20,37 @@ class ExpensesState extends State<Expenses> {
   final sponsorController = TextEditingController();
   final reasonController = TextEditingController();
   final moneyController = TextEditingController();
-  final _formKey = GlobalKey<FormState>(); // Step 1: Create a GlobalKey
+  final _formKey = GlobalKey<FormState>();
+  List<String> sponsors = [];
+  String? selectedSponsor;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchSponsors();
+  }
+
+  Future<void> fetchSponsors() async {
+    try {
+      List<Map<String, dynamic>> fetchedCompanions =
+          await getCompanions(widget.trip.id!);
+
+      if (fetchedCompanions.isEmpty) {
+        setState(() {
+          sponsors = ['Me'];
+        });
+      } else {
+        setState(() {
+          sponsors = fetchedCompanions
+              .map((companion) => companion['name'] as String)
+              .toList();
+          sponsors.insert(0, 'Me');
+        });
+      }
+    } catch (e) {
+      log(-1);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +64,7 @@ class ExpensesState extends State<Expenses> {
       body: Padding(
         padding: const EdgeInsets.only(left: 20, right: 20),
         child: Form(
-          // Step 2: Wrap your form with a Form widget
-          key: _formKey, // Step 3: Attach the GlobalKey to the Form
+          key: _formKey,
           child: Column(
             children: [
               SizedBox(
@@ -43,14 +72,27 @@ class ExpensesState extends State<Expenses> {
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 23),
-                child: Inputfield(
-                  label: 'Sponsor',
-                  hinttext: 'who is that?',
-                  controller: sponsorController,
-                  keyboardType: TextInputType.name,
+                child: DropdownButtonFormField<String>(
+                  decoration: const InputDecoration(
+                    labelText: 'Sponsor',
+                    hintText: 'Select sponsor',
+                    border: OutlineInputBorder(),
+                  ),
+                  value: selectedSponsor,
+                  items: sponsors.map((String sponsor) {
+                    return DropdownMenuItem<String>(
+                      value: sponsor,
+                      child: Text(sponsor),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      selectedSponsor = newValue;
+                    });
+                  },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter a value';
+                      return 'Please select a sponsor';
                     }
                     return null;
                   },
@@ -127,7 +169,7 @@ class ExpensesState extends State<Expenses> {
     try {
       var expense = ExpenseModel(
         reason: reasonController.text,
-        sponsor: sponsorController.text,
+        sponsor: selectedSponsor ?? '',
         amount: int.parse(moneyController.text),
         tripID: widget.trip.id!,
         userId: widget.trip.userid!,

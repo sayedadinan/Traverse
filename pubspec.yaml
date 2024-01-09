@@ -42,6 +42,7 @@ dependencies:
   carousel_slider: ^4.2.1
   fluttercontactpicker: ^4.7.0
   image_cropper: ^5.0.1
+  intl: ^0.18.1
   
   
   

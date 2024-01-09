@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:traverse_1/custom_widgets/trip_widgets/details_tab.dart';
 import 'package:traverse_1/custom_widgets/trip_widgets/expense_detail.dart';
+import 'package:traverse_1/custom_widgets/trip_widgets/feedback_details.dart';
 import 'package:traverse_1/custom_widgets/trip_widgets/media_widget.dart';
 import 'package:traverse_1/data/functions/properties_trip.dart';
 import 'package:traverse_1/data/models/trip/trip_model.dart';
@@ -30,7 +31,7 @@ class _TripdetailsState extends State<Tripdetails>
   @override
   void initState() {
     super.initState();
-    tabController = TabController(length: 3, vsync: this);
+    tabController = TabController(length: 4, vsync: this);
   }
 
   @override
@@ -101,8 +102,7 @@ class _TripdetailsState extends State<Tripdetails>
                 } else {
                   return CarouselSlider(
                     options: CarouselOptions(
-                      height: screenSize.height *
-                          0.2, // Adjust the height as needed
+                      height: screenSize.height * 0.2,
                       enlargeCenterPage: true,
                       enableInfiniteScroll: true,
                       autoPlay: true,
@@ -158,6 +158,7 @@ class _TripdetailsState extends State<Tripdetails>
                     Tab(text: 'Details'),
                     Tab(text: 'Expenses'),
                     Tab(text: 'Media'),
+                    Tab(text: 'Feedback')
                   ],
                 ),
               ),
@@ -174,6 +175,9 @@ class _TripdetailsState extends State<Tripdetails>
                     trip: widget.trip,
                   ),
                   Mymedia(
+                    trip: widget.trip,
+                  ),
+                  Feedbackdetails(
                     trip: widget.trip,
                   ),
                 ],

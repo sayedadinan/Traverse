@@ -1,5 +1,4 @@
 // ignore_for_file: unnecessary_null_comparison
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:fluttercontactpicker/fluttercontactpicker.dart';
@@ -53,11 +52,34 @@ class MyCompanion extends StatelessWidget {
     );
   }
 
+  // Future<dynamic> selectCompanions() async {
+  //   try {
+  //     final contact = await FlutterContactPicker.pickPhoneContact();
+
+  //     if (contact == null) {
+  //       return;
+  //     }
+
+  //     String companionName = contact.fullName ?? '';
+  //     String companionNumber = contact.phoneNumber?.number ?? '';
+  //     if (companionName.isNotEmpty && companionNumber.isNotEmpty) {
+  //       companionList.add({
+  //         "name": companionName,
+  //         "number": companionNumber,
+  //       });
+  //     } else {}
+  //   } catch (e) {
+  //     log(-1);
+  //   }
+  // }
+
   Future<dynamic> selectCompanions() async {
     try {
       final contact = await FlutterContactPicker.pickPhoneContact();
 
       if (contact == null) {
+        // User canceled contact picking
+        print('User canceled picking a contact');
         return;
       }
 
@@ -68,9 +90,14 @@ class MyCompanion extends StatelessWidget {
           "name": companionName,
           "number": companionNumber,
         });
-      } else {}
+
+        print('$companionName==$companionNumber');
+        print('added ${companionList.length}');
+      } else {
+        print('List is Empty');
+      }
     } catch (e) {
-      log(-1);
+      print('Error picking contact: $e');
     }
   }
 
@@ -86,7 +113,6 @@ class MyCompanion extends StatelessWidget {
               return ListView.separated(
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  // Check if the map at the current index is not null before accessing its properties
                   final companion = companionList[index];
                   // check what is constain key
                   if (companion != null &&
