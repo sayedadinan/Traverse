@@ -50,9 +50,7 @@ class _EditCoverimageState extends State<EditCoverimage> {
   }
 
   Future<void> updateSelectedImagesList(List<File> newlySelectedImages) async {
-    // Check if there are already some selected images
     if (selectedImages.isNotEmpty) {
-      // Add newly selected images to the existing list if not already present
       for (var image in newlySelectedImages) {
         // ignore: iterable_contains_unrelated_type
         if (!selectedImages.contains(image)) {
@@ -60,10 +58,8 @@ class _EditCoverimageState extends State<EditCoverimage> {
         }
       }
     } else {
-      // If no images were previously selected, directly assign the newly selected images
       selectedImages.addAll(newlySelectedImages as Iterable<XFile>);
     }
-    // Notify the widget tree about the changes in selected images
     setState(() {});
   }
 
@@ -86,7 +82,6 @@ class _EditCoverimageState extends State<EditCoverimage> {
           itemCount: selectedImages.isNotEmpty ? selectedImages.length : 1,
           itemBuilder: (context, index, realIndex) {
             if (selectedImages.isEmpty) {
-              // Show placeholder image or any default content when no images are available
               return GestureDetector(
                 onTap: () {
                   pickMultipleImagesFromGallery();
@@ -98,8 +93,6 @@ class _EditCoverimageState extends State<EditCoverimage> {
                     image: const DecorationImage(
                         image: AssetImage('assets/traverse 8.jpg')),
                     borderRadius: BorderRadius.circular(20),
-                    // color: const Color.fromARGB(
-                    //     255, 218, 174, 41), // Placeholder color
                   ),
                   child: const Icon(
                     Icons.image_not_supported,

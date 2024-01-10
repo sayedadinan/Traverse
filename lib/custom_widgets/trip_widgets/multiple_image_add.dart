@@ -21,7 +21,7 @@ class MultipleImageSelectorState extends State<MultipleImageSelector> {
 
     if (pickedImages.isNotEmpty) {
       setState(() {
-        selectedImages.clear(); // Clear existing images
+        selectedImages.clear();
         selectedImages.addAll(pickedImages);
       });
       widget.onImagesSelected(
@@ -63,7 +63,6 @@ class MultipleImageSelectorState extends State<MultipleImageSelector> {
                   },
                 )
               : Container(
-                  // Display a placeholder container
                   width: 370,
                   height: 150,
                   decoration: BoxDecoration(

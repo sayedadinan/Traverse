@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:traverse_1/custom_widgets/trip_widgets/edit_companion.dart';
 import 'package:traverse_1/custom_widgets/trip_widgets/edit_coverimage.dart';
 import 'package:traverse_1/data/functions/properties_trip.dart';
 import 'package:traverse_1/data/models/trip/trip_model.dart';
@@ -57,9 +58,9 @@ class _EditingtripState extends State<Editingtrip> {
       final List<Map<String, dynamic>> existingCompanions = await getCompanions(
           widget.trip.id!); // Fetch existing companions from the database
       setState(() {
-        companionList
+        editcontactlist
             .clear(); // Clear the existing list before adding fetched companions
-        companionList
+        editcontactlist
             .addAll(existingCompanions); // Add fetched companions to the list
       });
     } catch (e) {
@@ -196,7 +197,7 @@ class _EditingtripState extends State<Editingtrip> {
                         'Family',
                         'Other'
                       ],
-                      initialValue: 'Business',
+                      initialValue: 'Other',
                       // initialValue: triptypeController,
                       onChanged: (String newValue) {
                         if (newValue.isNotEmpty) {
@@ -259,26 +260,38 @@ class _EditingtripState extends State<Editingtrip> {
                   const SizedBox(
                     height: 10,
                   ),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: MyCompanion(
-                            context: context,
-                            functionCheck: true,
-                            text: '  Select companions',
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 12,
-                        ),
-                        Expanded(
-                          child: MyCompanion(
-                            text: '  Show companions',
-                            context: context,
-                          ),
-                        ),
-                      ]),
+                  // Editcompanion(),
+                  Editcompanion(
+                    trip: widget.trip,
+                    context: context,
+                    text: 'edit companion',
+                    functionCheck: true,
+                  ),
+                  Editcompanion(
+                    trip: widget.trip,
+                    text: 'show contact',
+                    context: context,
+                  ),
+                  // Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: [
+                  //       Expanded(
+                  //         child: MyCompanion(
+                  //           context: context,
+                  //           functionCheck: true,
+                  //           text: '  Select companions',
+                  //         ),
+                  //       ),
+                  //       const SizedBox(
+                  //         width: 12,
+                  //       ),
+                  //       Expanded(
+                  //         child: MyCompanion(
+                  //           text: '  Show companions',
+                  //           context: context,
+                  //         ),
+                  //       ),
+                  //     ]),
                   const SizedBox(
                     height: 15,
                   ),
@@ -342,8 +355,8 @@ class _EditingtripState extends State<Editingtrip> {
           widget.trip.id,
           widget.trip.userid,
           newlySelectedImages,
-          companionList);
-
+          editcontactlist);
+      print(editcontactlist);
       await getalltrip(widget.trip.userid!);
       // ignore: use_build_context_synchronously
       Navigator.of(context).pushAndRemoveUntil(

@@ -47,7 +47,7 @@ Future<int> tripAdding(
     if (tripId > 0) {
       final companionFuture = Future.wait(companionList.map((companion) async {
         companion['tripID'] = tripId;
-        return addCompanions(companion);
+        return addCompanions(companion, tripId);
       }));
 
       final imagesFuture = Future.wait(selectedImages.map((imagePath) async {
@@ -148,7 +148,7 @@ Future<int> editTrip(
   id,
   userid,
   List<XFile> newlySelectedImages,
-  List<Map<String, dynamic>> companionList,
+  List<Map<String, dynamic>> editcontactlist,
 ) async {
   try {
     final tripValues = {
@@ -171,7 +171,7 @@ Future<int> editTrip(
     );
 
     await updateImagesInDatabase(id, convertXFilesToFiles(newlySelectedImages));
-
+    await updateCompanion(editcontactlist, id);
     return rowsAffected;
   } catch (e) {
     return -1;

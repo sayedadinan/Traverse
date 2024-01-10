@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:traverse_1/custom_widgets/trip_widgets/companiens_add.dart';
@@ -7,8 +6,6 @@ import 'package:traverse_1/data/functions/tripdata.dart';
 import 'package:traverse_1/data/models/trip/expenses_model.dart';
 import 'package:traverse_1/data/models/trip/feedback_model.dart';
 import 'package:traverse_1/data/models/trip/media_model.dart';
-
-// import 'package:traverse_1/data/functions/tripdata.dart';
 
 ValueNotifier<List<ExpenseModel>> propertydata =
     ValueNotifier<List<ExpenseModel>>([]);
@@ -21,13 +18,13 @@ Future<void> initproperties() async {
     onCreate: (db, version) async {
       await db.execute(
           'CREATE TABLE companions (id INTEGER PRIMARY KEY, name TEXT, number TEXT, tripID INTEGER)');
-/////////////////////////////////////////////////////////media//////////////////////////////////////////////////
+/////////////////////////////////////////////////////////media//////////////////////////////////////////////////...................
       await db.execute('''CREATE TABLE media(
             id INTEGER PRIMARY KEY,
             userID INTEGER ,
             tripID INTEGER ,
             mediaPic TEXT )''');
-/////////////////////////////////////////////////////////expenses///////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////expenses/////////////////////////////////////////////////................
       await db.execute('''CREATE TABLE expense(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             userID INTEGER ,
@@ -42,8 +39,9 @@ Future<void> initproperties() async {
 }
 
 //////////////////////////////////////////////adding companien/////////////////////////
-Future<void> addCompanions(Map<String, dynamic> companion) async {
+Future<void> addCompanions(Map<String, dynamic> companion, int tripId) async {
   try {
+    companion['tripID'] = tripId;
     await db!.insert('companions', companion);
     companionList.clear();
   } catch (e) {
@@ -56,10 +54,24 @@ Future<List<Map<String, dynamic>>> getCompanions(int tripId) async {
       .query('companions', where: 'tripID = ?', whereArgs: [tripId]);
 }
 
-Future<void> contactupdate(
-  List<Map<String, dynamic>> companionList,
-) async {
-  await db!.update('companions', companionList as Map<String, Object?>);
+Future<void> updateCompanion(
+    List<Map<String, dynamic>> editcontactlist, int id) async {
+  try {
+    for (var companion in editcontactlist) {
+      await addCompanions(companion, id);
+      checkDatabase();
+    }
+  } catch (e) {
+    log(-1);
+  }
+}
+
+Future<void> checkDatabase() async {
+  List<Map<String, dynamic>> companionsData =
+      await db!.rawQuery('SELECT * FROM companions');
+
+  // Print the fetched data
+  print('Companions in the database after updateCompanion: $companionsData');
 }
 
 ////////////////////////...............................mediaadding.......................///////////////////////
@@ -178,14 +190,12 @@ Future<int> getbalance(int tripId) async {
 Future<int> feedbckadding(FeedbackModel values, int tripId) async {
   try {
     final id = await db!.insert('feedbacktable', {
-      'tripID': tripId, // Updated field name to 'tripID'
+      'tripID': tripId,
       'feedback': values.feedback,
-      'feedbackdate': values.feedbackdate, // Added 'feedbackdate'
+      'feedbackdate': values.feedbackdate,
     });
-    print('added');
     return id;
   } catch (e) {
-    print('Error adding feedback: $e');
     throw Exception('Failed to add feedback');
   }
 }
@@ -197,7 +207,6 @@ Future<List<Map<String, dynamic>>> getfeedback(int tripid) async {
         .query('feedbacktable', where: 'tripID = ?', whereArgs: [tripid]);
     return feedbackList;
   } catch (e) {
-    print('Error retrieving feedback: $e');
     return feedbackList;
   }
 }

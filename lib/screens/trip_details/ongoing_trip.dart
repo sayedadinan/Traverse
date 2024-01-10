@@ -47,7 +47,6 @@ class _OngoingtripsState extends State<Ongoingtrips> {
       ),
       body: Stack(
         children: [
-          // Background Image
           Image.asset(
             'assets/traverse image 2.jpg',
             fit: BoxFit.cover,
@@ -58,13 +57,9 @@ class _OngoingtripsState extends State<Ongoingtrips> {
             future: _futureTrips,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
+                return const Center(child: CircularProgressIndicator());
               } else if (snapshot.hasError) {
-                return Center(
-                  child: Text('Error: ${snapshot.error}'), // Error message
-                );
+                return Center(child: Text('Error: ${snapshot.error}'));
               } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                 return const Center(
                   child: Text(

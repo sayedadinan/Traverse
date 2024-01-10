@@ -25,7 +25,7 @@ class _FeedbackdetailsState extends State<Feedbackdetails> {
 
   @override
   Widget build(BuildContext context) {
-    final Size screenSize = MediaQuery.of(context).size;
+    // final Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 30, 28, 28),
       body: FutureBuilder(
@@ -102,101 +102,101 @@ class _FeedbackdetailsState extends State<Feedbackdetails> {
                             },
                           );
                         },
-                        onTap: () {
-                          setState(() {
-                            sponsorController.text = data[index]['sponsor'];
-                            reasonController.text = data[index]['reason'];
-                            moneyController.text =
-                                data[index]['amount'].toString();
-                          });
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                actions: [
-                                  Row(
-                                    children: [
-                                      TextButton(
-                                        onPressed: () {
-                                          // if (Form.of(context).validate()) {
-                                          editExpense(data[index]['id']);
-                                          Navigator.pushReplacement(
-                                              context,
-                                              (MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      Tripdetails(
-                                                        trip: widget.trip,
-                                                      ))));
-                                          // Navigator.pop(context);
-                                          // }
-                                        },
-                                        child: const Text("Update"),
-                                      ),
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: const Text("Cancel"),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                                title: const Text("Update note"),
-                                content: Form(
-                                  autovalidateMode: AutovalidateMode.always,
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      SizedBox(
-                                        height: screenSize.height * 0.01,
-                                      ),
-                                      TextFormField(
-                                        validator: (value) {
-                                          if (value!.isEmpty) {
-                                            return "Sponsor is required";
-                                          }
-                                          return null;
-                                        },
-                                        controller: sponsorController,
-                                        decoration: const InputDecoration(
-                                          prefixIcon: Icon(Icons.person),
-                                          labelText: 'Sponsor',
-                                        ),
-                                      ),
-                                      TextFormField(
-                                        validator: (value) {
-                                          if (value!.isEmpty) {
-                                            return "Reason is required";
-                                          }
-                                          return null;
-                                        },
-                                        controller: reasonController,
-                                        decoration: const InputDecoration(
-                                          prefixIcon: Icon(Icons.description),
-                                          labelText: 'Reason',
-                                        ),
-                                      ),
-                                      TextFormField(
-                                        validator: (value) {
-                                          if (value!.isEmpty) {
-                                            return "Amount is required";
-                                          }
-                                          return null;
-                                        },
-                                        controller: moneyController,
-                                        keyboardType: TextInputType.number,
-                                        decoration: const InputDecoration(
-                                          prefixIcon: Icon(Icons.money),
-                                          labelText: 'Amount',
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
-                          );
-                        },
+                        // onTap: () {
+                        //   setState(() {
+                        //     sponsorController.text = data[index]['sponsor'];
+                        //     reasonController.text = data[index]['reason'];
+                        //     moneyController.text =
+                        //         data[index]['amount'].toString();
+                        //   });
+                        //   showDialog(
+                        //     context: context,
+                        //     builder: (context) {
+                        //       return AlertDialog(
+                        //         actions: [
+                        //           Row(
+                        //             children: [
+                        //               TextButton(
+                        //                 onPressed: () {
+                        //                   // if (Form.of(context).validate()) {
+                        //                   editExpense(data[index]['id']);
+                        //                   Navigator.pushReplacement(
+                        //                       context,
+                        //                       (MaterialPageRoute(
+                        //                           builder: (context) =>
+                        //                               Tripdetails(
+                        //                                 trip: widget.trip,
+                        //                               ))));
+                        //                   // Navigator.pop(context);
+                        //                   // }
+                        //                 },
+                        //                 child: const Text("Update"),
+                        //               ),
+                        //               TextButton(
+                        //                 onPressed: () {
+                        //                   Navigator.of(context).pop();
+                        //                 },
+                        //                 child: const Text("Cancel"),
+                        //               ),
+                        //             ],
+                        //           ),
+                        //         ],
+                        //         title: const Text("Update note"),
+                        //         content: Form(
+                        //           autovalidateMode: AutovalidateMode.always,
+                        //           child: Column(
+                        //             mainAxisSize: MainAxisSize.min,
+                        //             children: [
+                        //               SizedBox(
+                        //                 height: screenSize.height * 0.01,
+                        //               ),
+                        //               TextFormField(
+                        //                 validator: (value) {
+                        //                   if (value!.isEmpty) {
+                        //                     return "Sponsor is required";
+                        //                   }
+                        //                   return null;
+                        //                 },
+                        //                 controller: sponsorController,
+                        //                 decoration: const InputDecoration(
+                        //                   prefixIcon: Icon(Icons.person),
+                        //                   labelText: 'Sponsor',
+                        //                 ),
+                        //               ),
+                        //               TextFormField(
+                        //                 validator: (value) {
+                        //                   if (value!.isEmpty) {
+                        //                     return "Reason is required";
+                        //                   }
+                        //                   return null;
+                        //                 },
+                        //                 controller: reasonController,
+                        //                 decoration: const InputDecoration(
+                        //                   prefixIcon: Icon(Icons.description),
+                        //                   labelText: 'Reason',
+                        //                 ),
+                        //               ),
+                        //               TextFormField(
+                        //                 validator: (value) {
+                        //                   if (value!.isEmpty) {
+                        //                     return "Amount is required";
+                        //                   }
+                        //                   return null;
+                        //                 },
+                        //                 controller: moneyController,
+                        //                 keyboardType: TextInputType.number,
+                        //                 decoration: const InputDecoration(
+                        //                   prefixIcon: Icon(Icons.money),
+                        //                   labelText: 'Amount',
+                        //                 ),
+                        //               ),
+                        //             ],
+                        //           ),
+                        //         ),
+                        //       );
+                        //     },
+                        //   );
+                        // },
                       ),
                     ),
                   );
