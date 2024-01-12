@@ -237,7 +237,7 @@ class _UpcomingdetailsState extends State<Upcomingdetails>
                     'Travel Type',
                     style: TextStyle(
                         color: Color.fromARGB(255, 209, 137, 235),
-                        fontSize: 29),
+                        fontSize: 22),
                   ),
                   ElevatedButton(
                     style: ButtonStyle(
@@ -246,6 +246,28 @@ class _UpcomingdetailsState extends State<Upcomingdetails>
                     onPressed: () {},
                     child: Text(widget.trip.triptype),
                   ),
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        const TextSpan(
+                          text: 'Transport: ',
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 209, 137, 235),
+                              fontSize: 21
+                              // Add other style properties as needed
+                              ),
+                        ),
+                        TextSpan(
+                          text: widget.trip.transport,
+                          style: const TextStyle(
+                            fontSize: 19,
+                            color: Colors.white, // Color for the database value
+                            // Add other style properties as needed
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
                 ],
               ),
               const Divider(

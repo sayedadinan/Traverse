@@ -9,7 +9,6 @@ import 'package:traverse_1/data/models/trip/trip_model.dart';
 import 'package:traverse_1/screens/home_page.dart';
 import '../../custom_widgets/elevatedbuttons.dart';
 import '../../custom_widgets/trip_widgets/choichips.dart';
-import '../../custom_widgets/trip_widgets/companiens_add.dart';
 import '../../custom_widgets/trip_widgets/drop_down.dart';
 import '../../custom_widgets/trip_widgets/textfields.dart';
 import '../../data/functions/tripdata.dart';
@@ -269,7 +268,7 @@ class _EditingtripState extends State<Editingtrip> {
                   ),
                   Editcompanion(
                     trip: widget.trip,
-                    text: 'show contact',
+                    text: 'show companion',
                     context: context,
                   ),
                   // Row(

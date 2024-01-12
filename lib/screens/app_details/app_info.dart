@@ -9,6 +9,9 @@ class Appinfo extends StatelessWidget {
       appBar: AppBar(
         title: const Text('App Info'),
       ),
+      body: const Column(
+        children: [Text('')],
+      ),
     );
   }
 }

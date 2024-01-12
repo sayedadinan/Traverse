@@ -3,16 +3,19 @@ class FeedbackModel {
   String? feedback;
   String? feedbackdate;
   int? tripID;
+  String? imagepath;
   FeedbackModel(
       {this.id,
       required this.tripID,
       required this.feedback,
-      required this.feedbackdate});
+      required this.feedbackdate,
+      required this.imagepath});
   static FeedbackModel fromJson(map) {
     return FeedbackModel(
         id: map['id'],
         feedback: map['feedback'],
-        feedbackdate: map[''],
+        feedbackdate: map['feedbackdate'],
+        imagepath: map['imagepath'],
         tripID: map['tripID']);
   }
 
@@ -20,6 +23,8 @@ class FeedbackModel {
     return {
       'feedback': feedback,
       'tripID': tripID,
+      'imagepath': imagepath,
+      'feedbackdate': feedbackdate
     };
   }
 }

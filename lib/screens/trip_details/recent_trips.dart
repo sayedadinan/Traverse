@@ -42,7 +42,7 @@ class _UpcomingtripsState extends State<Recenttrips> {
         centerTitle: true,
         title: const Text(
           'Previous Trips',
-          style: TextStyle(color: Colors.amber),
+          style: TextStyle(color: Color.fromARGB(255, 9, 108, 60)),
         ),
       ),
       body: Container(

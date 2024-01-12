@@ -47,19 +47,19 @@ class _UpcomingtripsState extends State<Upcomingtrips> {
         backgroundColor: Colors.teal[200],
         title: const Text(
           'Upcoming Trips',
-          style: TextStyle(color: Colors.amber, fontWeight: FontWeight.w500),
+          style: TextStyle(
+              color: Color.fromARGB(255, 9, 108, 60),
+              fontWeight: FontWeight.w500),
         ),
       ),
       body: Stack(
         children: [
-          // Background Image
           Image.asset(
-            'assets/pexels-jarod-lovekamp-2404444.jpg', // Replace with your image path
+            'assets/pexels-jarod-lovekamp-2404444.jpg',
             fit: BoxFit.cover,
             width: double.infinity,
             height: double.infinity,
           ),
-
           FutureBuilder<List<Tripmodel>>(
             future: _futureTrips,
             builder: (context, snapshot) {

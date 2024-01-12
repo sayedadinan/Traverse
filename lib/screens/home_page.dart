@@ -8,7 +8,6 @@ import 'package:traverse_1/screens/trip_details/recent_trips.dart';
 import 'package:traverse_1/screens/trip_details/search_trip.dart';
 import 'package:traverse_1/screens/trip_details/upcoming_trips.dart';
 import '../data/functions/profile.dart';
-// import 'trip_adding/trip_add1.dart';
 
 class Homescreen extends StatefulWidget {
   final int profileid;
@@ -34,7 +33,7 @@ class _HomescreenState extends State<Homescreen> {
         titleSpacing: 5,
         title: const Text(
           'TRAVERSE',
-          style: TextStyle(color: Colors.amber),
+          style: TextStyle(color: Color.fromARGB(255, 9, 108, 60)),
         ),
         actions: [
           IconButton(

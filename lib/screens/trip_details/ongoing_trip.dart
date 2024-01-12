@@ -42,7 +42,7 @@ class _OngoingtripsState extends State<Ongoingtrips> {
         centerTitle: true,
         title: const Text(
           'Ongoing Trips',
-          style: TextStyle(color: Colors.amber),
+          style: TextStyle(color: Color.fromARGB(255, 9, 108, 60)),
         ),
       ),
       body: Stack(

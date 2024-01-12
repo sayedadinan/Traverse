@@ -43,10 +43,10 @@ class MultipleImageSelectorState extends State<MultipleImageSelector> {
               ? CarouselSlider.builder(
                   itemCount: selectedImages.length,
                   options: CarouselOptions(
-                    aspectRatio: 16 / 9,
-                    enlargeCenterPage: true,
-                    enableInfiniteScroll: false,
-                  ),
+                      aspectRatio: 16 / 9,
+                      enlargeCenterPage: true,
+                      enableInfiniteScroll: selectedImages.length > 2,
+                      autoPlay: false),
                   itemBuilder:
                       (BuildContext context, int index, int realIndex) {
                     return Container(
@@ -66,7 +66,7 @@ class MultipleImageSelectorState extends State<MultipleImageSelector> {
                   width: 370,
                   height: 150,
                   decoration: BoxDecoration(
-                    color: Colors.grey, // Placeholder color
+                    color: Colors.grey,
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: const Icon(

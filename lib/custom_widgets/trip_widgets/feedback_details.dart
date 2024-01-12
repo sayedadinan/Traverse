@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:traverse_1/data/functions/properties_trip.dart';
 import 'package:traverse_1/data/models/trip/trip_model.dart';
@@ -36,7 +37,7 @@ class _FeedbackdetailsState extends State<Feedbackdetails> {
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
-            final data = snapshot.data; // Use nullable type
+            final data = snapshot.data;
             if (data == null || data.isEmpty) {
               return const Center(
                 child: Text(
@@ -54,6 +55,12 @@ class _FeedbackdetailsState extends State<Feedbackdetails> {
                       elevation: 20,
                       color: const Color.fromARGB(255, 59, 58, 54),
                       child: ListTile(
+                        leading: CircleAvatar(
+                          backgroundImage: data[index]['imagepath'] != null
+                              ? FileImage(File(data[index]['imagepath']))
+                                  as ImageProvider
+                              : const AssetImage('assets/traverse 8.jpg'),
+                        ),
                         title: Text(
                           '${data[index]['feedback']}',
                           style: const TextStyle(

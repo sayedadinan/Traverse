@@ -29,8 +29,6 @@ class _MyChoiceChipState extends State<MyChoiceChip> {
 
   @override
   Widget build(BuildContext context) {
-    // final TextTheme textTheme = Theme.of(context).textTheme;
-
     return Wrap(
       spacing: 8,
       children: List.generate(

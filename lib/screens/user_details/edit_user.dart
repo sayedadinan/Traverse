@@ -52,6 +52,23 @@ class _EditmailState extends State<Edituser> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      // GestureDetector(
+                      //   onTap: () {
+                      //     pickImageFromGallery();
+                      //   },
+                      //   child: CircleAvatar(
+                      //     radius: 70,
+                      //     backgroundColor: Colors.transparent,
+                      //     backgroundImage: selectedImage != null
+                      //         ? FileImage(selectedImage!)
+                      //         : value.first.imagex != null &&
+                      //                 File(value.first.imagex!).existsSync()
+                      //             ? FileImage(File(value.first.imagex!)) as ima
+                      //             : const AssetImage(
+                      //                 'assets/user.png',
+                      //               ),
+                      //   ),
+                      // )
                       GestureDetector(
                         onTap: () {
                           pickImageFromGallery();

@@ -33,7 +33,7 @@ Future<void> initproperties() async {
             sponsor TEXT,
             amount INTEGER)''');
       await db.execute(
-          '''CREATE TABLE feedbacktable (id INTEGER PRIMARY KEY, tripID INTEGER, feedback TEXT, feedbackdate TEXT)''');
+          '''CREATE TABLE feedbacktable (id INTEGER PRIMARY KEY, tripID INTEGER, feedback TEXT, feedbackdate TEXT, imagepath TEXT)''');
     },
   );
 }
@@ -104,6 +104,7 @@ Future<List<Map<String, dynamic>>?> getmediapics(int tripId) async {
 ////////////////////////////////////////////..............media deleting.................////////////////////////////////////////////
 deletemedia(int? mediaid) async {
   await db!.rawDelete('DELETE FROM media WHERE id = ?', [mediaid]);
+  print('value deleted');
 }
 
 //////////////////////////////..........................expenses adding .........................///////////////////////////////
@@ -193,6 +194,7 @@ Future<int> feedbckadding(FeedbackModel values, int tripId) async {
       'tripID': tripId,
       'feedback': values.feedback,
       'feedbackdate': values.feedbackdate,
+      'imagepath': values.imagepath
     });
     return id;
   } catch (e) {
