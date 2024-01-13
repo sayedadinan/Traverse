@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fluttercontactpicker/fluttercontactpicker.dart';
-import 'package:traverse_1/data/functions/properties_trip.dart';
 import 'package:traverse_1/data/models/trip/trip_model.dart';
 
 List<Map<String, dynamic>> editcontactlist = [];
@@ -66,7 +65,7 @@ class _EditcompanionState extends State<Editcompanion> {
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   final companion = editcontactlist[index];
-                  if (companion != null &&
+                  if (companion.isNotEmpty &&
                       companion.containsKey("name") &&
                       companion.containsKey("number")) {
                     return Container(

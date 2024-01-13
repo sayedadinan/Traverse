@@ -5,7 +5,7 @@ class Coverpic {
   int userId;
   Coverpic({
     this.id,
-    this.imagePath,
+    required this.imagePath,
     required this.tripID,
     required this.userId,
   });

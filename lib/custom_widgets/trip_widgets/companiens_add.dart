@@ -52,27 +52,6 @@ class MyCompanion extends StatelessWidget {
     );
   }
 
-  // Future<dynamic> selectCompanions() async {
-  //   try {
-  //     final contact = await FlutterContactPicker.pickPhoneContact();
-
-  //     if (contact == null) {
-  //       return;
-  //     }
-
-  //     String companionName = contact.fullName ?? '';
-  //     String companionNumber = contact.phoneNumber?.number ?? '';
-  //     if (companionName.isNotEmpty && companionNumber.isNotEmpty) {
-  //       companionList.add({
-  //         "name": companionName,
-  //         "number": companionNumber,
-  //       });
-  //     } else {}
-  //   } catch (e) {
-  //     log(-1);
-  //   }
-  // }
-
   Future<dynamic> selectCompanions() async {
     try {
       final contact = await FlutterContactPicker.pickPhoneContact();
@@ -114,7 +93,6 @@ class MyCompanion extends StatelessWidget {
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   final companion = companionList[index];
-                  // check what is constain key
                   if (companion != null &&
                       companion.containsKey("name") &&
                       companion.containsKey("number")) {

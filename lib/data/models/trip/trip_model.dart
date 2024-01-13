@@ -12,7 +12,7 @@ class Tripmodel {
   final String endingDate;
   final dynamic coverpic;
   List<CompanionModel> companions;
-  final List<String> imagePaths;
+  List<String> imagePaths;
   Tripmodel({
     required this.tripname,
     required this.destination,

@@ -225,17 +225,25 @@ Future<List<Tripmodel>> searchTripsByName(String searchTerm, int userId) async {
 }
 
 //////////////////////////////////////////////////ongoingtrip////////////////////////////////////////////
+
 Future<List<Tripmodel>> getOngoingTrips(int userId) async {
   List<Tripmodel> ongoingTrips = [];
   DateTime currentDate = DateTime.now();
   String convertedDate = DateFormat('dd-MMM-yyyy').format(currentDate);
+
   var trips = await tripdb!.query('tripdata',
       where: 'userid=? AND startingDate <=? AND endingDate >=?',
       whereArgs: [userId, convertedDate, convertedDate]);
+
   tripdatas.value.clear();
+
   for (var map in trips) {
     if (map['startingDate'] != null) {
       Tripmodel obj = Tripmodel.fromMap(map);
+
+      List<String> coverImagePaths = await getCoverImages(obj.id!);
+      obj.imagePaths = coverImagePaths;
+
       ongoingTrips.add(obj);
     }
   }
