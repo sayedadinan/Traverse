@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:fluttercontactpicker/fluttercontactpicker.dart';
 import 'package:traverse_1/data/models/trip/trip_model.dart';
@@ -41,14 +43,11 @@ class _EditcompanionState extends State<Editcompanion> {
           "name": companionName,
           "number": companionNumber,
         });
-
-        print('$companionName==$companionNumber');
-        print('added ${editcontactlist.length}');
       } else {
-        print('List is Empty');
+        log(-1);
       }
     } catch (e) {
-      print('Error picking contact: $e');
+      log(-1);
     }
   }
 

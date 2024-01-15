@@ -97,16 +97,12 @@ class _SettingsState extends State<Settings> {
                   ElevatedButton(
                     child: const Text('OK'),
                     onPressed: () {
-                      // Call the sign-out function only when the user clicks "OK"
                       signoutUser();
-                      // Close the dialog
-                      Navigator.of(context).pop();
-                      // Navigate to the Identity screen if needed
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
                             builder: (context) => const Identity()),
-                        (route) => route.isFirst,
+                        (route) => false,
                       );
                     },
                   ),
