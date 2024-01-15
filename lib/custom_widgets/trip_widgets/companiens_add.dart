@@ -1,5 +1,7 @@
 // ignore_for_file: unnecessary_null_comparison
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:fluttercontactpicker/fluttercontactpicker.dart';
 
@@ -58,7 +60,6 @@ class MyCompanion extends StatelessWidget {
 
       if (contact == null) {
         // User canceled contact picking
-        print('User canceled picking a contact');
         return;
       }
 
@@ -69,14 +70,9 @@ class MyCompanion extends StatelessWidget {
           "name": companionName,
           "number": companionNumber,
         });
-
-        print('$companionName==$companionNumber');
-        print('added ${companionList.length}');
-      } else {
-        print('List is Empty');
-      }
+      } else {}
     } catch (e) {
-      print('Error picking contact: $e');
+      log(-1);
     }
   }
 

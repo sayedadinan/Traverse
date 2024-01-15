@@ -30,9 +30,9 @@ class _EditcompanionState extends State<Editcompanion> {
     try {
       final contact = await FlutterContactPicker.pickPhoneContact();
 
+      // ignore: unnecessary_null_comparison
       if (contact == null) {
         // User canceled contact picking
-        print('User canceled picking a contact');
         return;
       }
 

@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_use_of_protected_member
+
 import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
@@ -130,6 +132,7 @@ Future<List<Tripmodel>> getalltrip(int userId) async {
     tripList.add(trip);
   }
   tripdatas.value = tripList;
+  // ignore: invalid_use_of_visible_for_testing_member
   tripdatas.notifyListeners();
   return tripList;
 }

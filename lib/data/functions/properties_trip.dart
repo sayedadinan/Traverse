@@ -69,9 +69,8 @@ Future<void> updateCompanion(
 Future<void> checkDatabase() async {
   List<Map<String, dynamic>> companionsData =
       await db!.rawQuery('SELECT * FROM companions');
-
+  log(companionsData as num);
   // Print the fetched data
-  print('Companions in the database after updateCompanion: $companionsData');
 }
 
 ////////////////////////...............................mediaadding.......................///////////////////////
@@ -104,7 +103,6 @@ Future<List<Map<String, dynamic>>?> getmediapics(int tripId) async {
 ////////////////////////////////////////////..............media deleting.................////////////////////////////////////////////
 deletemedia(int? mediaid) async {
   await db!.rawDelete('DELETE FROM media WHERE id = ?', [mediaid]);
-  print('value deleted');
 }
 
 //////////////////////////////..........................expenses adding .........................///////////////////////////////

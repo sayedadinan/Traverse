@@ -28,6 +28,7 @@ import 'dart:typed_data'; // Import this for Uint8List
 // import 'package:your_app_path/data/functions/properties_trip.dart';
 
 class Feedbackshowing extends StatelessWidget {
+  // ignore: use_key_in_widget_constructors
   const Feedbackshowing({Key? key});
 
   @override
@@ -38,14 +39,14 @@ class Feedbackshowing extends StatelessWidget {
         future: getFeedbackFromDatabase(), // Replace with your actual function
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
             List<Map<String, dynamic>> feedbackList = snapshot.data ?? [];
 
             if (feedbackList.isEmpty) {
-              return Center(child: Text('No feedback available'));
+              return const Center(child: Text('No feedback available'));
             } else {
               String feedbackText = feedbackList[0]['feedbackText'] ?? '';
               String feedbackDate = feedbackList[0]['feedbackDate'] ?? '';
@@ -61,7 +62,7 @@ class Feedbackshowing extends StatelessWidget {
                       image: DecorationImage(
                         image: imageBytes.isNotEmpty
                             ? MemoryImage(imageBytes) as ImageProvider
-                            : AssetImage('assets/traverse 8.jpg'),
+                            : const AssetImage('assets/traverse 8.jpg'),
                         fit: BoxFit.cover,
                       ),
                     ),

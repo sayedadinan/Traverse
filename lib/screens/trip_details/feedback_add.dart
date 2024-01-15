@@ -131,6 +131,7 @@ class _FeedbackpageState extends State<Feedbackpage> {
   Future<void> addingfeedback() async {
     try {
       var feedback = FeedbackModel(
+          // ignore: prefer_null_aware_operators
           imagepath: selectedImage != null ? selectedImage!.path : null,
           feedbackdate: dateController.text,
           id: widget.trip.id,

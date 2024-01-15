@@ -355,7 +355,6 @@ class _EditingtripState extends State<Editingtrip> {
           widget.trip.userid,
           newlySelectedImages,
           editcontactlist);
-      print(editcontactlist);
       await getalltrip(widget.trip.userid!);
       // ignore: use_build_context_synchronously
       Navigator.of(context).pushAndRemoveUntil(
