@@ -261,8 +261,7 @@ class _UpcomingdetailsState extends State<Upcomingdetails>
                           text: widget.trip.transport,
                           style: const TextStyle(
                             fontSize: 19,
-                            color: Colors.white, // Color for the database value
-                            // Add other style properties as needed
+                            color: Colors.white,
                           ),
                         ),
                       ],
@@ -297,10 +296,9 @@ class _UpcomingdetailsState extends State<Upcomingdetails>
                   future: getCompanions(widget.trip.id!),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const CircularProgressIndicator(); // Display a loading indicator while fetching data
+                      return const CircularProgressIndicator();
                     } else if (snapshot.hasError) {
-                      return Text(
-                          'Error: ${snapshot.error}'); // Display an error if fetching data fails
+                      return Text('Error: ${snapshot.error}');
                     } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                       return const Padding(
                         padding: EdgeInsets.only(left: 120, top: 20),
@@ -392,7 +390,7 @@ class _UpcomingdetailsState extends State<Upcomingdetails>
               child: const Text('Delete'),
               onPressed: () {
                 deletetrip(widget.trip.id, widget.trip.userid);
-                deleteFunction(); // Call the delete function passed as an argument
+                deleteFunction();
                 Navigator.of(context).pop();
               },
             ),

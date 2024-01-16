@@ -1,31 +1,5 @@
-// import 'package:flutter/material.dart';
-
-// class Feedbackshowing extends StatelessWidget {
-//   const Feedbackshowing({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(),
-//       body: FutureBuilder(future: ,
-//         child: Column(
-//           children: [
-//             Container(
-//               width: 200,
-//               height: 180,
-//               decoration:
-//                   BoxDecoration(image: DecorationImage(image: AssetImage())),
-//             ),Text('date '),
-//             Text('feedback')
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
 import 'package:flutter/material.dart';
-import 'dart:typed_data'; // Import this for Uint8List
-// import 'package:your_app_path/data/functions/properties_trip.dart';
+import 'dart:typed_data';
 
 class Feedbackshowing extends StatelessWidget {
   // ignore: use_key_in_widget_constructors
@@ -36,7 +10,7 @@ class Feedbackshowing extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(),
       body: FutureBuilder<List<Map<String, dynamic>>>(
-        future: getFeedbackFromDatabase(), // Replace with your actual function
+        future: getFeedbackFromDatabase(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -94,10 +68,7 @@ class Feedbackshowing extends StatelessWidget {
     );
   }
 
-  // Replace this with your actual function to fetch feedback from the database
   Future<List<Map<String, dynamic>>> getFeedbackFromDatabase() async {
-    // Your database fetching logic here
-    // Return a list of feedback maps
     return [];
   }
 }

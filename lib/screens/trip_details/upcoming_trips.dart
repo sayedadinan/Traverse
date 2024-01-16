@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:traverse_1/data/functions/tripdata.dart';
 import 'package:traverse_1/data/models/trip/trip_model.dart';
@@ -34,8 +36,7 @@ class _UpcomingtripsState extends State<Upcomingtrips> {
 
   @override
   void dispose() {
-    tripdatas.removeListener(
-        _listener); // Remove the listener when disposing of the widget
+    tripdatas.removeListener(_listener);
     super.dispose();
   }
 
@@ -65,11 +66,11 @@ class _UpcomingtripsState extends State<Upcomingtrips> {
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(
-                  child: CircularProgressIndicator(), // Loading indicator
+                  child: CircularProgressIndicator(),
                 );
               } else if (snapshot.hasError) {
                 return Center(
-                  child: Text('Error: ${snapshot.error}'), // Error message
+                  child: Text('Error: ${snapshot.error}'),
                 );
               } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                 return const Center(
@@ -82,11 +83,15 @@ class _UpcomingtripsState extends State<Upcomingtrips> {
                   ),
                 );
               } else {
-                // Display your ListView.builder with retrieved trips
                 return ListView.builder(
                   itemCount: snapshot.data!.length,
                   itemBuilder: (context, index) {
                     final trip = snapshot.data![index];
+                    String firstImagePath =
+                        trip.imagePaths.isNotEmpty ? trip.imagePaths.first : '';
+                    File firstImageFile = File(firstImagePath);
+                    ImageProvider firstImageProvider =
+                        FileImage(firstImageFile);
                     // Build your UI for each trip here
                     return Card(
                       color: Colors.green[200],
@@ -108,6 +113,10 @@ class _UpcomingtripsState extends State<Upcomingtrips> {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             ListTile(
+                              leading: CircleAvatar(
+                                radius: 28,
+                                backgroundImage: firstImageProvider,
+                              ),
                               contentPadding: const EdgeInsets.all(16),
                               title: Text(
                                 trip.tripname,

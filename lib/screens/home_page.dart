@@ -62,7 +62,6 @@ class _HomescreenState extends State<Homescreen> {
                     builder: (context) =>
                         Ongoingtrips(userId: widget.profileid),
                   ));
-                  // Navigate to the next page here
                 },
                 child: Center(
                   child: Container(
@@ -71,7 +70,7 @@ class _HomescreenState extends State<Homescreen> {
                     decoration: BoxDecoration(
                       image: const DecorationImage(
                         image: AssetImage('assets/traverse image 2.jpg'),
-                        fit: BoxFit.cover, // Adjust the fit as needed
+                        fit: BoxFit.cover,
                       ),
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -104,7 +103,6 @@ class _HomescreenState extends State<Homescreen> {
                       userId: widget.profileid,
                     ),
                   ));
-                  // Navigate to the next page here
                 },
                 child: Center(
                   child: Container(
@@ -113,7 +111,7 @@ class _HomescreenState extends State<Homescreen> {
                     decoration: BoxDecoration(
                       image: const DecorationImage(
                         image: AssetImage('assets/traverse image.jpg'),
-                        fit: BoxFit.cover, // Adjust the fit as needed
+                        fit: BoxFit.cover,
                       ),
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -146,7 +144,6 @@ class _HomescreenState extends State<Homescreen> {
                       userId: widget.profileid,
                     ),
                   ));
-                  // Navigate to the next page here
                 },
                 child: Center(
                   child: Container(
@@ -155,7 +152,7 @@ class _HomescreenState extends State<Homescreen> {
                     decoration: BoxDecoration(
                       image: const DecorationImage(
                         image: AssetImage('assets/traverse 8.jpg'),
-                        fit: BoxFit.cover, // Adjust the fit as needed
+                        fit: BoxFit.cover,
                       ),
                       borderRadius: BorderRadius.circular(10),
                     ),

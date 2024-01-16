@@ -104,8 +104,9 @@ class _TripdetailsState extends State<Tripdetails>
                     options: CarouselOptions(
                       height: screenSize.height * 0.2,
                       enlargeCenterPage: true,
-                      enableInfiniteScroll: true,
-                      autoPlay: true,
+                      enableInfiniteScroll: snapshot.data!.length > 1,
+                      // autoPlay: true,
+                      autoPlay: false,
                     ),
                     items: snapshot.data!.map((imagePath) {
                       File imageFile = File(imagePath);
@@ -164,7 +165,7 @@ class _TripdetailsState extends State<Tripdetails>
               ),
             ),
             SizedBox(
-              height: 700, // Adjust height as needed
+              height: 700,
               child: TabBarView(
                 controller: tabController,
                 children: [

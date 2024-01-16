@@ -48,9 +48,7 @@ class _SignupState extends State<Signup> {
                   style: TextStyle(
                       fontSize: 42,
                       fontWeight: FontWeight.w500,
-                      color: Colors.amber
-                      // color: Color.fromARGB(255, 63, 95, 65),
-                      ),
+                      color: Colors.amber),
                 ),
                 const SizedBox(
                   height: 17,
@@ -72,15 +70,11 @@ class _SignupState extends State<Signup> {
                     },
                     controller: _userController,
                     keyboardType: TextInputType.name,
-
-                    // keyboardType: TextInputType.visiblePassword,
-                    // obscureText: true,
                     decoration: InputDecoration(
                       fillColor: const Color.fromARGB(255, 244, 241, 241),
                       filled: true,
                       labelText: 'User Name',
                       hintText: 'Enter your name',
-                      // errorText: validateuser ? 'value cant be Empty' : null,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -109,7 +103,6 @@ class _SignupState extends State<Signup> {
                       filled: true,
                       labelText: 'Email',
                       hintText: 'Enter your Email',
-                      // errorText: validateemail ? 'value cant be Empty' : null,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -133,16 +126,12 @@ class _SignupState extends State<Signup> {
                       return null;
                     },
                     controller: _passController,
-
-                    // keyboardType: TextInputType.visiblePassword,
                     obscureText: !isVisible,
                     decoration: InputDecoration(
                       fillColor: const Color.fromARGB(255, 244, 241, 241),
                       filled: true,
                       labelText: 'Password',
                       hintText: 'Enter your password',
-                      // errorText:
-                      //     validatepassword ? 'value cant be Empty' : null,
                       suffixIcon: IconButton(
                         onPressed: () {
                           setState(() {
@@ -179,15 +168,12 @@ class _SignupState extends State<Signup> {
                       return null;
                     },
                     controller: _confirmpassController,
-
-                    // keyboardType: TextInputType.visiblePassword,
                     obscureText: !confirmpass,
                     decoration: InputDecoration(
                       fillColor: const Color.fromARGB(255, 244, 241, 241),
                       filled: true,
                       labelText: ' Confirm Password',
                       hintText: 'Enter your password',
-                      // errorText: validateconfirm ? 'password dont' : null,
                       suffixIcon: IconButton(
                         onPressed: () {
                           setState(() {
@@ -274,8 +260,6 @@ class _SignupState extends State<Signup> {
       );
       return;
     }
-
-    // Perform form validation and set validation flags
     setState(() {
       validateuser = _userController.text.isEmpty;
       validateemail =

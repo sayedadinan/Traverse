@@ -126,11 +126,11 @@ class Detailstab extends StatelessWidget {
             ),
             const Text(
               'Travel Type',
-              style: TextStyle(color: Colors.amber, fontSize: 22),
+              style: TextStyle(color: Colors.amber, fontSize: 16),
             ),
             ElevatedButton(
                 style: const ButtonStyle(
-                    minimumSize: MaterialStatePropertyAll(Size(0, 18))),
+                    minimumSize: MaterialStatePropertyAll(Size(0, 12))),
                 onPressed: () {},
                 child: Text(trip.triptype)),
             SizedBox(
@@ -141,14 +141,14 @@ class Detailstab extends StatelessWidget {
                 children: [
                   const TextSpan(
                     text: 'Transport: ',
-                    style: TextStyle(color: Colors.amber, fontSize: 22
+                    style: TextStyle(color: Colors.amber, fontSize: 19
                         // Add other style properties as needed
                         ),
                   ),
                   TextSpan(
                     text: trip.transport,
                     style: const TextStyle(
-                      fontSize: 19,
+                      fontSize: 16,
                       color: Colors.white, // Color for the database value
                       // Add other style properties as needed
                     ),

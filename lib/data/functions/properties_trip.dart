@@ -67,9 +67,10 @@ Future<void> updateCompanion(
 }
 
 Future<void> checkDatabase() async {
+  // ignore: unused_local_variable
   List<Map<String, dynamic>> companionsData =
       await db!.rawQuery('SELECT * FROM companions');
-  log(companionsData as num);
+  // log(companionsData as num);
   // Print the fetched data
 }
 

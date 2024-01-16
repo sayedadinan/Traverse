@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:traverse_1/data/models/profile/user.dart';
-// import 'package:traverse_1/screens/intro_screens/app_board.dart';
 import 'package:traverse_1/screens/home_page.dart';
 import 'package:traverse_1/screens/intro_screens/sign_or_login.dart';
 import '../../data/functions/profile.dart';
@@ -33,8 +32,8 @@ class _SplashscreenState extends State<Splashscreen> {
             ),
           ),
           const Positioned(
-            top: 180, // Adjust the top position as needed
-            left: 102, // Adjust the left position as needed
+            top: 180,
+            left: 102,
             child: Text(
               'Shall We Go',
               style: TextStyle(
@@ -54,7 +53,6 @@ class _SplashscreenState extends State<Splashscreen> {
     Profile? userData = await getUserLogged();
 
     if (userData != null) {
-      // User is logged in, navigate to bottomNavigationBar
       // ignore: use_build_context_synchronously
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(

@@ -26,7 +26,6 @@ class _EditmailState extends State<Edituser> {
     super.initState();
     nameController.text = widget.profileid.username;
     emailController.text = widget.profileid.email;
-    // passController.text = widget.profileid.password;
     newPasswordController.text = widget.profileid.password;
   }
 
@@ -52,23 +51,6 @@ class _EditmailState extends State<Edituser> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // GestureDetector(
-                      //   onTap: () {
-                      //     pickImageFromGallery();
-                      //   },
-                      //   child: CircleAvatar(
-                      //     radius: 70,
-                      //     backgroundColor: Colors.transparent,
-                      //     backgroundImage: selectedImage != null
-                      //         ? FileImage(selectedImage!)
-                      //         : value.first.imagex != null &&
-                      //                 File(value.first.imagex!).existsSync()
-                      //             ? FileImage(File(value.first.imagex!)) as ima
-                      //             : const AssetImage(
-                      //                 'assets/user.png',
-                      //               ),
-                      //   ),
-                      // )
                       GestureDetector(
                         onTap: () {
                           pickImageFromGallery();
@@ -112,8 +94,6 @@ class _EditmailState extends State<Edituser> {
                         }
                         return null;
                       },
-                      // textcontent: 'Full Name',
-                      // keyType: TextInputType.name,
                       controller: nameController,
                     ),
                   ),
@@ -158,8 +138,6 @@ class _EditmailState extends State<Edituser> {
                         filled: true,
                         labelText: 'password',
                         hintText: 'Enter your new password',
-
-                        // errorText: validateuser ? 'value cant be Empty' : null,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -184,7 +162,6 @@ class _EditmailState extends State<Edituser> {
                         ),
                         onPressed: () {
                           editProfileClicked(context);
-                          // Navigator.of(context).pop();
                         },
                         child: Text(
                           'UPDATE',
@@ -240,7 +217,6 @@ class _EditmailState extends State<Edituser> {
         // ignore: use_build_context_synchronously
         Navigator.of(context).pop();
       } else {
-        // Show an error message if the new password is the same as the existing password
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text(

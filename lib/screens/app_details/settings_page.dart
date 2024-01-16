@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:traverse_1/custom_widgets/bottomnav_bar.dart';
 import 'package:traverse_1/screens/app_details/app_info.dart';
-import 'package:traverse_1/screens/home_page.dart';
 import 'package:traverse_1/screens/intro_screens/sign_or_login.dart';
 import 'package:traverse_1/screens/app_details/privacy_policy.dart';
 import 'package:traverse_1/screens/trip_adding/trip_date_adding.dart';
 import '../../data/functions/profile.dart';
-import '../intro_screens/app_board.dart';
 import '../user_details/profile_page.dart';
 
 class Settings extends StatefulWidget {
@@ -60,18 +58,6 @@ class _SettingsState extends State<Settings> {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => const Appinfo(),
-            ),
-          );
-        },
-      },
-      {
-        'icon': Icons.delete_outline_rounded,
-        'text': 'Clear App Data',
-        'trail': Icons.arrow_forward_ios,
-        'action': () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => const Appboard(),
             ),
           );
         },
@@ -160,11 +146,7 @@ class _SettingsState extends State<Settings> {
             );
           },
           navigateToHome: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => Homescreen(profileid: widget.profileid),
-              ),
-            );
+            Navigator.of(context).pop();
           },
         ),
       ),

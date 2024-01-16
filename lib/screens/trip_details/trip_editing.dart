@@ -271,26 +271,6 @@ class _EditingtripState extends State<Editingtrip> {
                     text: 'show companion',
                     context: context,
                   ),
-                  // Row(
-                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //     children: [
-                  //       Expanded(
-                  //         child: MyCompanion(
-                  //           context: context,
-                  //           functionCheck: true,
-                  //           text: '  Select companions',
-                  //         ),
-                  //       ),
-                  //       const SizedBox(
-                  //         width: 12,
-                  //       ),
-                  //       Expanded(
-                  //         child: MyCompanion(
-                  //           text: '  Show companions',
-                  //           context: context,
-                  //         ),
-                  //       ),
-                  //     ]),
                   const SizedBox(
                     height: 15,
                   ),
@@ -363,11 +343,9 @@ class _EditingtripState extends State<Editingtrip> {
             profileid: widget.trip.userid!,
           ),
         ),
-        (route) =>
-            false, // Replace 'false' with the condition to stop removing routes
+        (route) => false,
       );
     } else {
-      // Show an error message if there are validation errors
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Please correct the errors in the form.'),

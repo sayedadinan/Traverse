@@ -50,8 +50,6 @@ class _ProfilepageState extends State<Profilepage> {
                             : const AssetImage(
                                 'assets/user.png',
                               ),
-                        // radius: 70,
-                        // backgroundImage: AssetImage('assets/user.png'),
                       ),
                     )
                   ],
@@ -123,7 +121,6 @@ class _ProfilepageState extends State<Profilepage> {
                             builder: (context) => Edituser(
                                   profileid: value.first,
                                 )));
-                        // addProfile();
                       },
                       child: Text(
                         'Edit User',
@@ -150,7 +147,6 @@ class _ProfilepageState extends State<Profilepage> {
                       ),
                       onPressed: () {
                         Navigator.of(context).pop();
-                        // addProfile();
                       },
                       child: Text(
                         'Save User',
