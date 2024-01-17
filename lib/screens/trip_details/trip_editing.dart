@@ -89,6 +89,9 @@ class _EditingtripState extends State<Editingtrip> {
                     trip: widget.trip,
                   ),
                   const SizedBox(height: 13),
+                  // Editingpagefields(
+                  //   trip: widget.trip,
+                  // ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 14),
                     child: Inputfield(

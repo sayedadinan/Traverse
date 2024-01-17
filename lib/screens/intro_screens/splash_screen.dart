@@ -33,7 +33,7 @@ class _SplashscreenState extends State<Splashscreen> {
           ),
           const Positioned(
             top: 180,
-            left: 102,
+            left: 129,
             child: Text(
               'Shall We Go',
               style: TextStyle(

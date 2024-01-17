@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:traverse_1/custom_widgets/elevatedbuttons.dart';
 import 'package:traverse_1/custom_widgets/trip_widgets/textfields.dart';
@@ -57,62 +56,55 @@ class ExpensesState extends State<Expenses> {
     final Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.teal[200],
-        title: const Text('Add your expenses'),
-        centerTitle: true,
-      ),
+          backgroundColor: Colors.teal[200],
+          title: const Text('Add your expenses'),
+          centerTitle: true),
       body: Padding(
         padding: const EdgeInsets.only(left: 20, right: 20),
         child: Form(
           key: _formKey,
           child: Column(
             children: [
-              SizedBox(
-                height: screenSize.height * 0.05,
-              ),
+              SizedBox(height: screenSize.height * 0.05),
               Padding(
-                padding: const EdgeInsets.only(bottom: 23),
-                child: DropdownButtonFormField<String>(
-                  decoration: const InputDecoration(
-                    labelText: 'Sponsor',
-                    hintText: 'Select sponsor',
-                    border: OutlineInputBorder(),
-                  ),
-                  value: selectedSponsor,
-                  items: sponsors.map((String sponsor) {
-                    return DropdownMenuItem<String>(
-                      value: sponsor,
-                      child: Text(sponsor),
-                    );
-                  }).toList(),
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      selectedSponsor = newValue;
-                    });
-                  },
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please select a sponsor';
-                    }
-                    return null;
-                  },
-                ),
-              ),
+                  padding: const EdgeInsets.only(bottom: 23),
+                  child: DropdownButtonFormField<String>(
+                      decoration: const InputDecoration(
+                        labelText: 'Sponsor',
+                        hintText: 'Select sponsor',
+                        border: OutlineInputBorder(),
+                      ),
+                      value: selectedSponsor,
+                      items: sponsors.map((String sponsor) {
+                        return DropdownMenuItem<String>(
+                          value: sponsor,
+                          child: Text(sponsor),
+                        );
+                      }).toList(),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          selectedSponsor = newValue;
+                        });
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please select a sponsor';
+                        }
+                        return null;
+                      })),
               Padding(
-                padding: const EdgeInsets.only(bottom: 23),
-                child: Inputfield(
-                  label: 'Spending Purpose',
-                  hinttext: 'what is the usage ?',
-                  controller: reasonController,
-                  keyboardType: TextInputType.text,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter a value';
-                    }
-                    return null;
-                  },
-                ),
-              ),
+                  padding: const EdgeInsets.only(bottom: 23),
+                  child: Inputfield(
+                      label: 'Spending Purpose',
+                      hinttext: 'what is the usage ?',
+                      controller: reasonController,
+                      keyboardType: TextInputType.text,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter a value';
+                        }
+                        return null;
+                      })),
               Padding(
                 padding: const EdgeInsets.only(bottom: 23),
                 child: Inputfield(

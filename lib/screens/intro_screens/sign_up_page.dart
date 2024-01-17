@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:traverse_1/custom_widgets/signup_fields_widget.dart';
 import 'package:traverse_1/data/models/profile/user.dart';
 import 'package:traverse_1/screens/intro_screens/login_page.dart';
 import 'package:traverse_1/screens/home_page.dart';
@@ -48,66 +49,40 @@ class _SignupState extends State<Signup> {
                   style: TextStyle(
                       fontSize: 42,
                       fontWeight: FontWeight.w500,
-                      color: Colors.amber),
+                      color: Color.fromARGB(255, 3, 70, 37)),
                 ),
                 const SizedBox(
                   height: 17,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 17, right: 17),
-                  child: TextFormField(
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "username is required";
-                      }
-                      final namePattern = RegExp(r'^[a-zA-Z]+(?: [a-zA-Z]+)*$');
-
-                      if (!namePattern.hasMatch(value)) {
-                        return 'Please enter a valid name';
-                      }
-                      return null;
-                    },
-                    controller: _userController,
-                    keyboardType: TextInputType.name,
-                    decoration: InputDecoration(
-                      fillColor: const Color.fromARGB(255, 244, 241, 241),
-                      filled: true,
-                      labelText: 'User Name',
-                      hintText: 'Enter your name',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                  ),
+                CustomTextField(
+                  controller: _userController,
+                  labelText: 'User Name',
+                  hintText: 'Enter your name',
+                  autoValidate: true,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Username is required';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(
                   height: 17,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 17, right: 17),
-                  child: TextFormField(
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Email is required';
-                      } else if (!isValidEmail(value)) {
-                        return 'Enter a valid email';
-                      }
-                      return null;
-                    },
-                    controller: _emailController,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                      fillColor: const Color.fromARGB(255, 244, 241, 241),
-                      filled: true,
-                      labelText: 'Email',
-                      hintText: 'Enter your Email',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                  ),
+                CustomTextField(
+                  controller: _emailController,
+                  labelText: 'Email',
+                  hintText: 'Enter your Email',
+                  autoValidate: true,
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Email is required';
+                    } else if (!isValidEmail(value)) {
+                      return 'Enter a valid email';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(
                   height: 17,
@@ -199,7 +174,7 @@ class _SignupState extends State<Signup> {
                       const Size(350, 55),
                     ),
                     backgroundColor: MaterialStateProperty.all(
-                      Colors.teal,
+                      Colors.teal[300],
                     ),
                   ),
                   onPressed: () {
@@ -210,7 +185,7 @@ class _SignupState extends State<Signup> {
                   },
                   child: const Text(
                     'Next',
-                    style: TextStyle(color: Colors.amber),
+                    style: TextStyle(color: Color.fromARGB(255, 3, 70, 37)),
                   ),
                 ),
                 Row(

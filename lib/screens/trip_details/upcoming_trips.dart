@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:traverse_1/data/functions/tripdata.dart';
 import 'package:traverse_1/data/models/trip/trip_model.dart';
@@ -87,14 +85,13 @@ class _UpcomingtripsState extends State<Upcomingtrips> {
                   itemCount: snapshot.data!.length,
                   itemBuilder: (context, index) {
                     final trip = snapshot.data![index];
-                    String firstImagePath =
-                        trip.imagePaths.isNotEmpty ? trip.imagePaths.first : '';
-                    File firstImageFile = File(firstImagePath);
-                    ImageProvider firstImageProvider =
-                        FileImage(firstImageFile);
-                    // Build your UI for each trip here
+                    // String firstImagePath =
+                    //     trip.imagePaths.isNotEmpty ? trip.imagePaths.first : '';
+                    // File firstImageFile = File(firstImagePath);
+                    // ImageProvider firstImageProvider =
+                    //     FileImage(firstImageFile);
                     return Card(
-                      color: Colors.green[200],
+                      color: const Color.fromARGB(255, 214, 218, 214),
                       elevation: 4,
                       margin: const EdgeInsets.symmetric(
                         vertical: 8,
@@ -113,10 +110,10 @@ class _UpcomingtripsState extends State<Upcomingtrips> {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             ListTile(
-                              leading: CircleAvatar(
-                                radius: 28,
-                                backgroundImage: firstImageProvider,
-                              ),
+                              // leading: CircleAvatar(
+                              //   radius: 28,
+                              //   backgroundImage: firstImageProvider,
+                              // ),
                               contentPadding: const EdgeInsets.all(16),
                               title: Text(
                                 trip.tripname,

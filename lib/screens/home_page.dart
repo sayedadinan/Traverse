@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:traverse_1/custom_widgets/bottomnav_bar.dart';
+import 'package:traverse_1/custom_widgets/container_homescreen.dart';
 import 'package:traverse_1/data/functions/tripdata.dart';
 import 'package:traverse_1/screens/app_details/settings_page.dart';
 import 'package:traverse_1/screens/trip_adding/trip_date_adding.dart';
-import 'package:traverse_1/screens/trip_details/ongoing_trip.dart';
-import 'package:traverse_1/screens/trip_details/recent_trips.dart';
 import 'package:traverse_1/screens/trip_details/search_trip.dart';
-import 'package:traverse_1/screens/trip_details/upcoming_trips.dart';
 import '../data/functions/profile.dart';
 
 class Homescreen extends StatefulWidget {
@@ -56,124 +54,26 @@ class _HomescreenState extends State<Homescreen> {
               const SizedBox(
                 height: 15,
               ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) =>
-                        Ongoingtrips(userId: widget.profileid),
-                  ));
-                },
-                child: Center(
-                  child: Container(
-                    width: 400,
-                    height: 210,
-                    decoration: BoxDecoration(
-                      image: const DecorationImage(
-                        image: AssetImage('assets/traverse image 2.jpg'),
-                        fit: BoxFit.cover,
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: const Stack(
-                      children: [
-                        Positioned(
-                          top: 30,
-                          right: 20,
-                          child: Text(
-                            'Ongoing',
-                            style: TextStyle(
-                              fontSize: 48,
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromRGBO(247, 246, 246, 1),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+              Containerforhome(
+                areaText: 'Ongoing',
+                imagePath: 'assets/traverse image 2.jpg',
+                profileid: widget.profileid,
               ),
               const SizedBox(
                 height: 24,
               ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => Upcomingtrips(
-                      userId: widget.profileid,
-                    ),
-                  ));
-                },
-                child: Center(
-                  child: Container(
-                    width: 400,
-                    height: 210,
-                    decoration: BoxDecoration(
-                      image: const DecorationImage(
-                        image: AssetImage('assets/traverse image.jpg'),
-                        fit: BoxFit.cover,
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: const Stack(
-                      children: [
-                        Positioned(
-                          top: 30,
-                          right: 20,
-                          child: Text(
-                            'Up Coming',
-                            style: TextStyle(
-                              fontSize: 48,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+              Containerforhome(
+                areaText: 'Upcoming',
+                imagePath: 'assets/traverse image.jpg',
+                profileid: widget.profileid,
               ),
               const SizedBox(
                 height: 24,
               ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => Recenttrips(
-                      userId: widget.profileid,
-                    ),
-                  ));
-                },
-                child: Center(
-                  child: Container(
-                    width: 400,
-                    height: 210,
-                    decoration: BoxDecoration(
-                      image: const DecorationImage(
-                        image: AssetImage('assets/traverse 8.jpg'),
-                        fit: BoxFit.cover,
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: const Stack(
-                      children: [
-                        Positioned(
-                          top: 30,
-                          right: 20,
-                          child: Text(
-                            'Previous ',
-                            style: TextStyle(
-                              fontSize: 48,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+              Containerforhome(
+                areaText: 'Previous',
+                imagePath: 'assets/traverse 8.jpg',
+                profileid: widget.profileid,
               ),
             ],
           ),

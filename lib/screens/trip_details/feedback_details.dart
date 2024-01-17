@@ -4,7 +4,6 @@ import 'dart:typed_data';
 class Feedbackshowing extends StatelessWidget {
   // ignore: use_key_in_widget_constructors
   const Feedbackshowing({Key? key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,21 +25,17 @@ class Feedbackshowing extends StatelessWidget {
               String feedbackDate = feedbackList[0]['feedbackDate'] ?? '';
               Uint8List imageBytes =
                   feedbackList[0]['imageBytes'] ?? Uint8List(0);
-
               return Column(
                 children: [
                   Container(
-                    width: 200,
-                    height: 180,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: imageBytes.isNotEmpty
-                            ? MemoryImage(imageBytes) as ImageProvider
-                            : const AssetImage('assets/traverse 8.jpg'),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
+                      width: 200,
+                      height: 180,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: imageBytes.isNotEmpty
+                                  ? MemoryImage(imageBytes) as ImageProvider
+                                  : const AssetImage('assets/traverse 8.jpg'),
+                              fit: BoxFit.cover))),
                   const SizedBox(height: 10),
                   Text(
                     'Date: $feedbackDate',

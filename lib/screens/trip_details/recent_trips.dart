@@ -15,7 +15,6 @@ class Recenttrips extends StatefulWidget {
 class _UpcomingtripsState extends State<Recenttrips> {
   late Future<List<Tripmodel>> _futureTrips;
   late VoidCallback _listener;
-
   @override
   void initState() {
     super.initState();
@@ -38,20 +37,15 @@ class _UpcomingtripsState extends State<Recenttrips> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.teal[200],
-        centerTitle: true,
-        title: const Text(
-          'Previous Trips',
-          style: TextStyle(color: Color.fromARGB(255, 9, 108, 60)),
-        ),
-      ),
+          backgroundColor: Colors.teal[200],
+          centerTitle: true,
+          title: const Text('Previous Trips',
+              style: TextStyle(color: Color.fromARGB(255, 9, 108, 60)))),
       body: Container(
         decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/pexels-dmitriy-ganin-7772716.jpg'),
-            fit: BoxFit.cover,
-          ),
-        ),
+            image: DecorationImage(
+                image: AssetImage('assets/pexels-dmitriy-ganin-7772716.jpg'),
+                fit: BoxFit.cover)),
         child: FutureBuilder<List<Tripmodel>>(
           future: _futureTrips,
           builder: (context, snapshot) {
@@ -76,43 +70,34 @@ class _UpcomingtripsState extends State<Recenttrips> {
                 itemBuilder: (context, index) {
                   final trip = snapshot.data![index];
                   return Card(
-                    color: Colors.green[200],
+                    color: const Color.fromARGB(255, 214, 218, 214),
                     elevation: 4,
                     margin:
                         const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
+                        borderRadius: BorderRadius.circular(12)),
                     child: GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => Tripdetails(trip: trip),
-                        ));
+                            builder: (context) => Tripdetails(trip: trip)));
                       },
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           ListTile(
-                            contentPadding: const EdgeInsets.all(16),
-                            title: Text(
-                              trip.tripname,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 27,
-                                color: Colors.green[800],
-                              ),
-                            ),
-                            subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const SizedBox(height: 8),
-                                Text(
-                                  'Destination: ${trip.destination}',
-                                  style: const TextStyle(fontSize: 18),
-                                ),
-                              ],
-                            ),
-                          ),
+                              contentPadding: const EdgeInsets.all(16),
+                              title: Text(trip.tripname,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 27,
+                                      color: Colors.green[800])),
+                              subtitle: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(height: 8),
+                                    Text('Destination: ${trip.destination}',
+                                        style: const TextStyle(fontSize: 18))
+                                  ])),
                         ],
                       ),
                     ),

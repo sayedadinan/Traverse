@@ -13,7 +13,6 @@ import 'package:intl/intl.dart';
 class Feedbackpage extends StatefulWidget {
   final Tripmodel trip;
   const Feedbackpage({super.key, required this.trip});
-
   @override
   State<Feedbackpage> createState() => _FeedbackpageState();
 }
@@ -44,82 +43,89 @@ class _FeedbackpageState extends State<Feedbackpage> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                // Text('adss'),
                 SizedBox(
                   height: screenSize.height * 0.06,
                 ),
                 GestureDetector(
-                  onTap: () {
-                    pickImageFromGallery();
-                  },
-                  child: Container(
-                    height: screenSize.height * 0.4,
-                    width: screenSize.width * 0.6,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      image: selectedImage != null
-                          ? DecorationImage(
-                              image: FileImage(selectedImage!),
-                              fit: BoxFit.cover,
-                            )
-                          : const DecorationImage(
-                              image: AssetImage('assets/traverse 8.jpg'),
-                              fit: BoxFit.cover,
+                    onTap: () {
+                      pickImageFromGallery();
+                    },
+                    child: Stack(children: [
+                      Container(
+                          height: screenSize.height * 0.4,
+                          width: screenSize.width * 0.6,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              image: selectedImage != null
+                                  ? DecorationImage(
+                                      image: FileImage(selectedImage!),
+                                      fit: BoxFit.cover,
+                                    )
+                                  : const DecorationImage(
+                                      image:
+                                          AssetImage('assets/traverse 8.jpg'),
+                                      fit: BoxFit.cover,
+                                    ))),
+                      Positioned(
+                          bottom: 16, // Adjust the position as needed
+                          right: 16, // Adjust the position as needed
+                          child: IconButton(
+                            icon: const Icon(
+                              Icons.add_a_photo,
+                              color: Colors.white,
+                              size: 35,
                             ),
-                    ),
-                  ),
-                ),
+                            onPressed: () {},
+                          ))
+                    ])),
                 SizedBox(
                   height: screenSize.height * 0.06,
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 23),
-                  child: Inputfield(
-                    label: 'Todays date',
-                    hinttext: 'say about today',
-                    controller: dateController,
-                    keyboardType: TextInputType.text,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter a value';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
+                    padding: const EdgeInsets.only(bottom: 23),
+                    child: Inputfield(
+                      label: 'Todays date',
+                      hinttext: 'say about today',
+                      controller: dateController,
+                      keyboardType: TextInputType.text,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter a value';
+                        }
+                        return null;
+                      },
+                    )),
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 23),
-                  child: Inputfield(
-                    label: 'Add feedback',
-                    hinttext: 'say your experience',
-                    controller: feedbackcontroller,
-                    keyboardType: TextInputType.text,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter a value';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
+                    padding: const EdgeInsets.only(bottom: 23),
+                    child: Inputfield(
+                      label: 'Add feedback',
+                      hinttext: 'say your experience',
+                      controller: feedbackcontroller,
+                      keyboardType: TextInputType.text,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter a value';
+                        }
+                        return null;
+                      },
+                    )),
                 Elebuttons(
-                  text: 'Save',
-                  butcolor: const Color.fromARGB(255, 119, 200, 192),
-                  textcolor: Colors.orange,
-                  function: () async {
-                    if (_formKey.currentState!.validate()) {
-                      await addingfeedback();
-                      // await getExpenses(widget.trip.id!);
-                      // ignore: use_build_context_synchronously
-                      Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(
-                          builder: (context) => Tripdetails(trip: widget.trip),
-                        ),
-                        (Route<dynamic> route) => false,
-                      );
-                    }
-                  },
-                ),
+                    text: 'Save',
+                    butcolor: const Color.fromARGB(255, 119, 200, 192),
+                    textcolor: Colors.orange,
+                    function: () async {
+                      if (_formKey.currentState!.validate()) {
+                        await addingfeedback();
+                        // ignore: use_build_context_synchronously
+                        Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                Tripdetails(trip: widget.trip),
+                          ),
+                          (Route<dynamic> route) => false,
+                        );
+                      }
+                    }),
               ],
             ),
           ),
@@ -149,13 +155,8 @@ class _FeedbackpageState extends State<Feedbackpage> {
         await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedImage == null) return;
     final file = File(pickedImage.path);
-    // await addMediapics(MediaModel(
-    //     userId: widget.trip.userid!,
-    //     tripId: widget.trip.id!,
-    //     mediaImage: file.path));
     setState(() {
       selectedImage = file;
-      // selectedImages.add(File(pickedImage.path));
     });
   }
 }

@@ -5,7 +5,6 @@ import 'package:traverse_1/screens/intro_screens/sign_up_page.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
-
   @override
   State<Login> createState() => _LoginState();
 }
@@ -26,7 +25,10 @@ class _LoginState extends State<Login> {
             children: [
               const Text(
                 'Enter your details',
-                style: TextStyle(fontSize: 32, fontWeight: FontWeight.w400),
+                style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.w400,
+                    color: Color.fromARGB(255, 3, 70, 37)),
               ),
               const Text(' enter your account username and\n password.'),
               const SizedBox(
@@ -43,9 +45,6 @@ class _LoginState extends State<Login> {
                     return null;
                   },
                   controller: _userController,
-
-                  // keyboardType: TextInputType.visiblePassword,
-                  // obscureText: true,
                   decoration: InputDecoration(
                     fillColor: const Color.fromARGB(255, 244, 241, 241),
                     filled: true,
@@ -71,7 +70,6 @@ class _LoginState extends State<Login> {
                     return null;
                   },
                   controller: _passController,
-
                   // keyboardType: TextInputType.visiblePassword,
                   obscureText: !isVisible,
                   decoration: InputDecoration(
@@ -98,36 +96,25 @@ class _LoginState extends State<Login> {
                 height: 25,
               ),
               ElevatedButton(
-                style: ButtonStyle(
-                  fixedSize: MaterialStateProperty.all(
-                    const Size(350, 55),
-                  ),
-                  backgroundColor: MaterialStateProperty.all(
-                    const Color.fromARGB(255, 40, 57, 41),
-                  ),
-                ),
-                onPressed: () {
-                  login();
-                },
-                child: const Text(
-                  'LOGIN',
-                  style: TextStyle(color: Colors.amber),
-                ),
-              ),
+                  style: ButtonStyle(
+                      fixedSize: MaterialStateProperty.all(const Size(350, 55)),
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.teal[300])),
+                  onPressed: () {
+                    login();
+                  },
+                  child: const Text('LOGIN',
+                      style: TextStyle(color: Color.fromARGB(255, 3, 70, 37)))),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text("Dont'have an account?"),
                   TextButton(
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const Signup(),
-                        ),
-                      );
-                    },
-                    child: const Text('SIGN UP'),
-                  ),
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const Signup()));
+                      },
+                      child: const Text('SIGN UP')),
                 ],
               ),
             ],
