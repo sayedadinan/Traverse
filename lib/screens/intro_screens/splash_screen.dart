@@ -31,16 +31,23 @@ class _SplashscreenState extends State<Splashscreen> {
               ),
             ),
           ),
-          const Positioned(
-            top: 180,
-            left: 129,
-            child: Text(
-              'Shall We Go',
-              style: TextStyle(
-                fontSize: 40,
-                color: Color.fromARGB(255, 52, 102, 79),
-                fontWeight: FontWeight.bold,
-              ),
+          SizedBox(
+            width: double.maxFinite,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                  'Shall We Go',
+                  style: TextStyle(
+                    fontSize: 40,
+                    color: Color.fromARGB(255, 52, 102, 79),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(),
+                SizedBox()
+              ],
             ),
           ),
         ],

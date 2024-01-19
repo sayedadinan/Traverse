@@ -1,5 +1,4 @@
 // ignore_for_file: invalid_use_of_protected_member
-
 import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
@@ -43,7 +42,6 @@ Future<int> tripAdding(
       'startingDate': tripModel.startingDate,
       'endingDate': tripModel.endingDate,
     };
-
     int tripId = await tripdb!.insert('tripdata', tripValues);
 
     if (tripId > 0) {
@@ -51,14 +49,11 @@ Future<int> tripAdding(
         companion['tripID'] = tripId;
         return addCompanions(companion, tripId);
       }));
-
       final imagesFuture = Future.wait(selectedImages.map((imagePath) async {
         await addCoverImage(tripId, imagePath);
       }));
-
       // Wait for both companions and images insertion to complete
       await Future.wait([companionFuture, imagesFuture]);
-
       await getalltrip(tripModel.userid!);
     }
     return tripId;
@@ -70,7 +65,6 @@ Future<int> tripAdding(
 Future<void> addCoverImage(int tripId, File imagePathFile) async {
   try {
     String imagePathValue = imagePathFile.path.toString();
-
     final imageValue = {
       'tripID': tripId,
       'imagePath': imagePathValue,
@@ -86,11 +80,9 @@ Future<List<String>> getCoverImages(int tripId) async {
     final result = await tripdb!
         .query('coverimage', where: 'tripID = ?', whereArgs: [tripId]);
     final List<String> coverImagePaths = [];
-
     for (var data in result) {
       coverImagePaths.add(data['imagePath'].toString());
     }
-
     return coverImagePaths;
   } catch (e) {
     return [];
@@ -101,7 +93,6 @@ Future<void> updateImagesInDatabase(
     int tripId, List<File> newlySelectedImages) async {
   try {
     await deleteExistingImagesFromDatabase(tripId);
-
     // Loop through newlySelectedImages and add images one by one
     for (var image in newlySelectedImages) {
       await addCoverImage(tripId, image);
@@ -138,7 +129,6 @@ Future<List<Tripmodel>> getalltrip(int userId) async {
 }
 
 ///////////////////////////////////////editing trip///////////////////////////////////////
-
 Future<int> editTrip(
   tripname,
   destination,
@@ -172,7 +162,6 @@ Future<int> editTrip(
       where: 'id = ?',
       whereArgs: [id],
     );
-
     await updateImagesInDatabase(id, convertXFilesToFiles(newlySelectedImages));
     await updateCompanion(editcontactlist, id);
     return rowsAffected;
@@ -206,7 +195,6 @@ Future<void> deletetrip(id, userid) async {
 }
 
 //////////////////////////////////////searchquery///////////////////////////////////
-
 Future<List<Tripmodel>> searchTripsByName(String searchTerm, int userId) async {
   List<Tripmodel> searchResults = [];
   try {
@@ -228,7 +216,6 @@ Future<List<Tripmodel>> searchTripsByName(String searchTerm, int userId) async {
 }
 
 //////////////////////////////////////////////////ongoingtrip////////////////////////////////////////////
-
 Future<List<Tripmodel>> getOngoingTrips(int userId) async {
   List<Tripmodel> ongoingTrips = [];
   DateTime currentDate = DateTime.now();

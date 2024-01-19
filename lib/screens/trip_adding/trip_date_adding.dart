@@ -130,7 +130,7 @@ class _AddDateState extends State<AddDate> {
                   },
                   text: 'Back',
                   butcolor: Colors.grey,
-                  textcolor: const Color.fromARGB(255, 37, 62, 207),
+                  textcolor: Color.fromARGB(255, 9, 108, 60),
                 ),
                 const SizedBox(
                   height: 22,
@@ -148,13 +148,8 @@ class _AddDateState extends State<AddDate> {
                     }
                   },
                   text: 'Next',
-                  butcolor: const Color.fromARGB(
-                    255,
-                    119,
-                    200,
-                    192,
-                  ),
-                  textcolor: Colors.orange,
+                  butcolor: const Color.fromARGB(255, 93, 228, 215),
+                  textcolor: Color.fromARGB(255, 9, 108, 60),
                 ),
               ],
             ),

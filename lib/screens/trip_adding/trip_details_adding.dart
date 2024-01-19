@@ -222,7 +222,7 @@ class _AddtripdetailState extends State<Addtripdetail> {
                     },
                     text: 'Finish',
                     butcolor: const Color.fromARGB(255, 119, 200, 192),
-                    textcolor: Colors.orange,
+                    textcolor: Color.fromARGB(255, 9, 108, 60),
                   ),
                   const SizedBox(
                     height: 25,

@@ -165,8 +165,9 @@ class _EditmailState extends State<Edituser> {
                         },
                         child: Text(
                           'UPDATE',
-                          style:
-                              TextStyle(color: Colors.green[800], fontSize: 25),
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 9, 108, 60),
+                              fontSize: 25),
                         ),
                       ),
                     ],

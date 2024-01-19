@@ -30,6 +30,7 @@ class _BottomnavbarState extends State<Bottomnavbar> {
         child: BottomNavigationBar(
           elevation: 12,
           showUnselectedLabels: true,
+          // selectedItemColor: Colors.amber,
           currentIndex: _selectedIndex,
           onTap: (int index) {
             setState(() {
