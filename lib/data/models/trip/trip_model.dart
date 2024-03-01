@@ -13,6 +13,7 @@ class Tripmodel {
   final dynamic coverpic;
   List<CompanionModel> companions;
   List<String> imagePaths;
+
   Tripmodel({
     required this.tripname,
     required this.destination,
@@ -40,16 +41,17 @@ class Tripmodel {
     final coverpic = map['coverpic'] as dynamic;
     final userid = map['userid'] as int;
     return Tripmodel(
-        tripname: tripname,
-        destination: destination,
-        budget: budget,
-        transport: transport,
-        triptype: triptype,
-        startingDate: startingDate,
-        endingDate: endingDate,
-        coverpic: coverpic,
-        id: id,
-        userid: userid);
+      tripname: tripname,
+      destination: destination,
+      budget: budget,
+      transport: transport,
+      triptype: triptype,
+      startingDate: startingDate,
+      endingDate: endingDate,
+      coverpic: coverpic,
+      id: id,
+      userid: userid,
+    );
   }
 
   toMap() {}

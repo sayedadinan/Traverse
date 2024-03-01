@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:traverse_1/custom_widgets/trip_widgets/companiens_add.dart';
+import 'package:traverse_1/components/trip_widgets/companiens_add.dart';
 import 'package:traverse_1/data/functions/tripdata.dart';
 import 'package:traverse_1/data/models/trip/expenses_model.dart';
 import 'package:traverse_1/data/models/trip/feedback_model.dart';

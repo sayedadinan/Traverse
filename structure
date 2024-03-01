@@ -1,0 +1,18 @@
+my_flutter_app/
+|-- lib/
+|   |-- main.dart
+|   |-- screens/
+|   |   |-- home_screen.dart
+|   |-- components/
+|   |   |-- custom_button.dart
+|   |   |-- ...
+|   |-- models/
+|   |   |-- user.dart
+|   |   |-- ...
+|   |-- services/
+|   |   |-- api_service.dart
+|   |   |-- ...
+|-- assets/
+|   |-- images/
+|   |   |-- logo.png
+|-- pubspec.yaml

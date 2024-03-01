@@ -43,6 +43,7 @@ dependencies:
   fluttercontactpicker: ^4.7.0
   image_cropper: ^5.0.1
   intl: ^0.18.1
+  lottie: ^3.1.0
   
   
   
@@ -92,6 +93,12 @@ flutter:
     - assets/pexels-maria-orlova-4947416.jpg
     - assets/pexels-dmitriy-ganin-7772716.jpg
     - assets/pexels-jarod-lovekamp-2404444.jpg
+    - assets/testanimation.json
+    - assets/Animation - 1708881817289.json
+    - assets/animated traverse 2.avif
+    - assets/for traverse3.webp
+    - assets/secondanimation.json
+    - assets/Animation - 1708963245059.json
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
